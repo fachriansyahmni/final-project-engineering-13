@@ -13,37 +13,11 @@ type EventRepository struct {
 }
 
 type EventRepositoryInterface interface {
-	FetchAll() ([]entity.Event, error)
 	Create(a *entity.Event) error
-	Delete(id int64) error
 }
 
 func NewEventRepository(db *sql.DB) *EventRepository {
 	return &EventRepository{db}
-}
-
-func (ar *EventRepository) FetchAll() ([]entity.Event, error) {
-	rows, err := ar.db.Query("SELECT * FROM events")
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	events := []entity.Event{}
-	for rows.Next() {
-		var a entity.Event
-		err := rows.Scan(&a.ID, &a.AuthorID, &a.Title, &a.BannerImg, &a.Content, &a.CategoryID, &a.StartTimeEvent, &a.EndTimeEvent, &a.StartDateEvent, &a.EndDateEvent, &a.Contact, &a.IDPrice, &a.TypeEventID, &a.LocationDetails, &a.RegisterUrl, &a.CreatedAt, &a.UpdatedAt)
-		if err != nil {
-			return nil, err
-		}
-		events = append(events, a)
-	}
-
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-
-	return events, nil
 }
 
 func (ar *EventRepository) Create(ev *payloads.EventRequest) error {
@@ -69,13 +43,5 @@ func (ar *EventRepository) Create(ev *payloads.EventRequest) error {
 		return err
 	}
 
-	return nil
-}
-
-func (ar *EventRepository) Delete(id int64) error {
-	_, err := ar.db.Exec("DELETE FROM events WHERE id = ?", id)
-	if err != nil {
-		return err
-	}
 	return nil
 }
