@@ -45,3 +45,43 @@ func (ar *EventRepository) Create(ev *payloads.EventRequest) error {
 
 	return nil
 }
+
+func (ar *EventRepository) GetAll() ([]*payloads.EventRequest, error) {
+	rows, err := ar.db.Query("SELECT author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url FROM events")
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var events []*payloads.EventRequest
+	for rows.Next() {
+		var ev payloads.EventRequest
+		err := rows.Scan(&ev.AuthorID, &ev.Title, &ev.BannerImg, &ev.Content, &ev.CategoryID, &ev.StartTimeEvent, &ev.EndTimeEvent, &ev.StartDateEvent, &ev.EndDateEvent, &ev.Contact, &ev.IDPrice, &ev.TypeEventID, &ev.LocationDetails, &ev.RegisterUrl)
+		if err != nil {
+			return nil, err
+		}
+
+		events = append(events, &ev)
+	}
+
+	return events, nil
+}
+
+func (ar *EventRepository) GetByID(id int64) (*payloads.EventRequest, error) {
+	row, err := ar.db.Query("SELECT author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url FROM events WHERE id = ?", id)
+	if err != nil {
+		return nil, err
+	}
+
+	defer row.Close()
+
+	var ev payloads.EventRequest
+	for row.Next() {
+		err := row.Scan(&ev.AuthorID, &ev.Title, &ev.BannerImg, &ev.Content, &ev.CategoryID, &ev.StartTimeEvent, &ev.EndTimeEvent, &ev.StartDateEvent, &ev.EndDateEvent, &ev.Contact, &ev.IDPrice, &ev.TypeEventID, &ev.LocationDetails, &ev.RegisterUrl)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return &ev, nil
+}

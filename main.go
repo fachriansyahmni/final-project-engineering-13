@@ -20,5 +20,5 @@ func main() {
 	eventHandler := handler.NewEvent(*repository.NewEventRepository(db))
 
 	router := route.NewRouter(eventHandler)
-	router.Run(":8080")
+	router.Run(":8090")
 }

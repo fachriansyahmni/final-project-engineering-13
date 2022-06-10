@@ -10,5 +10,6 @@ func NewRouter(event *handler.EventHandler) *gin.Engine {
 	apiGroup := r.Group("/api/v1")
 
 	apiGroup.POST("/event/create", event.Create)
+	apiGroup.GET("/event", event.GetEvent)
 	return r
 }
