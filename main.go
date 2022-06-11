@@ -18,7 +18,7 @@ func main() {
 
 	router := route.Newrouter(
 		handler.NewAuthHandler(service.NewAuthService(repository.NewUserRepo(db))),
-		handler.NewEvent(*repository.NewEventRepository(db)),
+		handler.NewEventHandler(service.NewEventService(repository.NewEventRepository(db))),
 	)
 	router.Run(":8080")
 }

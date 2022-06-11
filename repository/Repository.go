@@ -15,7 +15,8 @@ type UserRepository interface {
 	DeleteUser(id int) error
 }
 
-type EventRepositoryInterface interface {
-	GetAuthorID(id int) (int, error)
-	Create(a *entity.Event) error
+type EventRepoInterface interface {
+	GetAll() ([]*payloads.EventRequest, error)
+	GetByID(id int64) (*payloads.EventRequest, error)
+	Create(ev *payloads.EventRequest) error
 }

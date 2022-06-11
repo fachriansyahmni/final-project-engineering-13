@@ -11,12 +11,12 @@ type EventRepository struct {
 	db *sql.DB
 }
 
-func NewEventRepository(db *sql.DB) *EventRepository {
+func NewEventRepository(db *sql.DB) EventRepoInterface {
 	return &EventRepository{db}
 }
 
-func (ar *EventRepository) Create(ev *payloads.EventRequest) error {
-	_, err := ar.db.Exec("INSERT INTO events (author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+func (er *EventRepository) Create(ev *payloads.EventRequest) error {
+	_, err := er.db.Exec("INSERT INTO events (author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		ev.AuthorID,
 		ev.Title,
 		ev.BannerImg,
@@ -41,8 +41,8 @@ func (ar *EventRepository) Create(ev *payloads.EventRequest) error {
 	return nil
 }
 
-func (ar *EventRepository) GetAll() ([]*payloads.EventRequest, error) {
-	rows, err := ar.db.Query("SELECT author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url FROM events")
+func (er *EventRepository) GetAll() ([]*payloads.EventRequest, error) {
+	rows, err := er.db.Query("SELECT author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url FROM events")
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +63,8 @@ func (ar *EventRepository) GetAll() ([]*payloads.EventRequest, error) {
 	return events, nil
 }
 
-func (ar *EventRepository) GetByID(id int64) (*payloads.EventRequest, error) {
-	row, err := ar.db.Query("SELECT author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url FROM events WHERE id = ?", id)
+func (er *EventRepository) GetByID(id int64) (*payloads.EventRequest, error) {
+	row, err := er.db.Query("SELECT author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url FROM events WHERE id = ?", id)
 	if err != nil {
 		return nil, err
 	}

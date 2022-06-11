@@ -20,3 +20,10 @@ type UserService interface {
 	// GetAllProfile() ([]entity.User, error)
 	// DeleteProfile(id int64) error
 }
+
+type EventService interface {
+	Create(event payloads.EventRequest) error
+	GetAuthorID(token string) (int, error)
+	GetAll() ([]*payloads.EventRequest, error)
+	GetByID(id int64) (*payloads.EventRequest, error)
+}
