@@ -4,16 +4,11 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/rg-km/final-project-engineering-13/entity"
 	"github.com/rg-km/final-project-engineering-13/payloads"
 )
 
 type EventRepository struct {
 	db *sql.DB
-}
-
-type EventRepositoryInterface interface {
-	Create(a *entity.Event) error
 }
 
 func NewEventRepository(db *sql.DB) *EventRepository {
