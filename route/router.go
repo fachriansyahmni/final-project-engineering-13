@@ -9,7 +9,7 @@ type Router struct {
 	route *gin.Engine
 }
 
-func Newrouter(authentication *handler.AuthHandler) *Router {
+func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHandler) *Router {
 	router := &Router{
 		route: gin.Default(),
 	}
@@ -25,6 +25,12 @@ func Newrouter(authentication *handler.AuthHandler) *Router {
 			auth.POST("/register", authentication.Register)
 			auth.POST("/logout", authentication.Logout)
 		}
+
+		api.Use(handler.SetupAuthenticationMiddleware())
+		api.GET("/profile", userHandler.GetProfile)
+		api.PUT("/profile", userHandler.UpdateProfile)
+		api.PUT("/password", userHandler.UpdatePassword)
+		api.PUT("/photo", userHandler.UpdatePhoto)
 	}
 
 	return router

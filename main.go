@@ -16,6 +16,9 @@ func main() {
 
 	defer db.Close()
 
-	router := route.Newrouter(handler.NewAuthHandler(service.NewAuthService(repository.NewUserRepo(db))))
+	router := route.Newrouter(
+		handler.NewAuthHandler(service.NewAuthService(repository.NewUserRepo(db))),
+		handler.NewUserHandler(service.NewUserService(repository.NewUserRepo(db))),
+	)
 	router.Run(":8080")
 }

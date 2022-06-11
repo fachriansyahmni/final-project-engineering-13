@@ -14,6 +14,8 @@ func SetupAuthenticationMiddleware() gin.HandlerFunc {
 				"status":  401,
 				"message": err.Error(),
 			})
+			c.Abort()
+			return
 		}
 
 		c.Next()

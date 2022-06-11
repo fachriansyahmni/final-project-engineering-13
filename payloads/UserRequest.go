@@ -15,8 +15,8 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
-type UserDetail struct {
-	ID        int    `json:"id"`
-	Username  string `json:"username"`
-	Authorize string `json:"authorized"`
-}
+// type UserDetail struct {
+// 	ID        string `json:"id"`
+// 	Username  string `json:"username"`
+// 	Authorize string `json:"authorized"`
+// }
