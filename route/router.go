@@ -30,6 +30,8 @@ func Newrouter(authentication *handler.AuthHandler, event *handler.EventHandler)
 		{
 			ev.GET("/", event.GetEvent)
 			ev.POST("/create", handler.AuthMiddlerware(event.Create))
+			ev.PUT("/update", handler.AuthMiddlerware(event.Update))
+			ev.DELETE("/delete", handler.AuthMiddlerware(event.Delete))
 		}
 	}
 

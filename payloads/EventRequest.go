@@ -16,3 +16,7 @@ type EventRequest struct {
 	LocationDetails string `json:"locationDetails"`
 	RegisterUrl     string `json:"registerUrl"`
 }
+
+type EventIdRequest struct {
+	ID int64 `json:"id"`
+}

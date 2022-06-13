@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rg-km/final-project-engineering-13/entity"
 	"github.com/rg-km/final-project-engineering-13/payloads"
 	"github.com/rg-km/final-project-engineering-13/securities"
 	"github.com/rg-km/final-project-engineering-13/service"
@@ -66,11 +67,56 @@ func (eh *EventHandler) Create(c *gin.Context) {
 	})
 }
 
+func (eh *EventHandler) Update(c *gin.Context) {
+	var event entity.Event
+	if err := c.ShouldBindJSON(&event); err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	err := eh.eventService.Update(event)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "success",
+	})
+}
+
+func (eh *EventHandler) Delete(c *gin.Context) {
+	var event payloads.EventIdRequest
+	if err := c.ShouldBindJSON(&event); err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	err := eh.eventService.Delete(event.ID)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "success deleted",
+	})
+
+}
+
 func (eh *EventHandler) GetEvent(c *gin.Context) {
 	if c.Query("id") != "" {
 		id := c.Query("id")
 		idi, _ := strconv.ParseInt(id, 10, 64)
-		// events, err := eh.eventRepo.GetByID(idi)
 		events, err := eh.eventService.GetByID(idi)
 		if len(events.Title) == 0 {
 			c.JSON(404, gin.H{

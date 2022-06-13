@@ -26,4 +26,6 @@ type EventService interface {
 	GetAuthorID(token string) (int, error)
 	GetAll() ([]*payloads.EventRequest, error)
 	GetByID(id int64) (*payloads.EventRequest, error)
+	Delete(id int64) error
+	Update(event entity.Event) error
 }
