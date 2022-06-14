@@ -55,7 +55,18 @@ func GetConnection() (*sql.DB, error) {
 			FOREIGN KEY (id_price) REFERENCES prices(id),
 			FOREIGN KEY (type_event_id) REFERENCES type_events(id)
 			);
-		`,
+
+		CREATE TABLE IF NOT EXISTS categories_event (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			name VARCHAR(255)
+			);
+
+		CREATE TABLE IF NOT EXISTS prices (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			price INTEGER DEFAULT 0
+			);
+	
+			`,
 	)
 
 	if err != nil {
