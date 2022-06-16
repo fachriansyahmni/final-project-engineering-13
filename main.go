@@ -21,5 +21,5 @@ func main() {
 		handler.NewUserHandler(service.NewUserService(repository.NewUserRepo(db))),
 		handler.NewEventHandler(service.NewEventService(repository.NewEventRepository(db))),
 	)
-	router.Run(":8080")
+	router.Run(":8090")
 }

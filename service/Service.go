@@ -23,8 +23,8 @@ type UserService interface {
 type EventService interface {
 	Create(event payloads.EventRequest) error
 	GetAuthorID(token string) (int, error)
-	GetAll() ([]*payloads.EventRequest, error)
-	GetByID(id int64) (*payloads.EventRequest, error)
+	GetAll() ([]*entity.ListEvent, error)
+	GetByID(id int64) (*entity.ListEvent, error)
 	Delete(id int64) error
 	Update(event entity.Event) error
 }
