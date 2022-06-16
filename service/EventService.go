@@ -99,7 +99,7 @@ func (e *EventServiceImpl) GetAuthorID(token string) (int, error) {
 	return authorData.ID, nil
 }
 
-func (e *EventServiceImpl) GetAll() ([]*payloads.EventRequest, error) {
+func (e *EventServiceImpl) GetAll() ([]*entity.ListEvent, error) {
 	result, err := e.eventRepo.GetAll()
 	if err != nil {
 		return nil, errors.New("NOT_FOUND")
@@ -108,7 +108,7 @@ func (e *EventServiceImpl) GetAll() ([]*payloads.EventRequest, error) {
 	return result, nil
 }
 
-func (e *EventServiceImpl) GetByID(id int64) (*payloads.EventRequest, error) {
+func (e *EventServiceImpl) GetByID(id int64) (*entity.ListEvent, error) {
 	result, err := e.eventRepo.GetByID(id)
 	if err != nil {
 		return nil, errors.New("EVENT_NOT_FOUND")

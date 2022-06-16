@@ -49,7 +49,7 @@ func GetConnection() (*sql.DB, error) {
 			register_url VARCHAR(255),
 			created_at TIMESTAMP,
 			updated_at TIMESTAMP,
-			
+
 			FOREIGN KEY (author_id) REFERENCES users(id),
 			FOREIGN KEY (category_id) REFERENCES categories_event(id),
 			FOREIGN KEY (id_price) REFERENCES prices(id),
@@ -61,11 +61,16 @@ func GetConnection() (*sql.DB, error) {
 			name VARCHAR(255)
 			);
 
+		CREATE TABLE IF NOT EXISTS type_event (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			name VARCHAR(255)
+			);
+
 		CREATE TABLE IF NOT EXISTS prices (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			price INTEGER DEFAULT 0
 			);
-	
+
 			`,
 	)
 
