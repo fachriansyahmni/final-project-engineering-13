@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/rg-km/final-project-engineering-13/securities"
 )
@@ -40,13 +42,16 @@ func AuthMiddlerware(next gin.HandlerFunc) gin.HandlerFunc {
 
 //setup allow origin
 func SetupAllowOriginMiddleware() gin.HandlerFunc {
-	allowedHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization,X-CSRF-Token"
+	allowedHeaders := "text/html; charset=utf-8"
 	return func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")
 		c.Header("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		c.Header("Access-Control-Allow-Credentials", "true")
 		c.Header("Content-Type", allowedHeaders)
+		if c.Request.Method == "OPTIONS" {
+			c.Writer.WriteHeader(http.StatusOK)
+		}
 		c.Next()
 	}
 }
