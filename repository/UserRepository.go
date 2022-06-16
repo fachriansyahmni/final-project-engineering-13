@@ -20,7 +20,7 @@ func (u *UserRepo) GetUser() ([]entity.User, error) {
 	return nil, nil
 }
 
-func (u *UserRepo) GetUserByID(id int64) (entity.User, error) {
+func (u *UserRepo) GetUserByID(id int) (entity.User, error) {
 	user := entity.User{}
 	row := u.db.QueryRow("SELECT id, username, first_name, last_name, email, password, contact, photo FROM users WHERE id = ?", id)
 	err := row.Scan(

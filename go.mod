@@ -8,6 +8,9 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/mattn/go-sqlite3 v1.14.13
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e
+)
+
+require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

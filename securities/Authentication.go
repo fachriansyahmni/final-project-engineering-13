@@ -11,7 +11,6 @@ import (
 
 func GetAuthentication(c *gin.Context) error {
 	token, err := VerifyToken(c)
-
 	if err != nil {
 		return err
 	}
@@ -19,6 +18,10 @@ func GetAuthentication(c *gin.Context) error {
 	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
 		return err
 	}
+
+	claims, _ := token.Claims.(jwt.MapClaims)
+
+	c.Set("claims", claims)
 
 	return nil
 }
@@ -48,8 +51,9 @@ func ExtractToken(c *gin.Context) string {
 		return token
 	}
 
-	c.Writer.Header()
-	authHeader := c.GetHeader("Authorization")
+	// c.Writer.Header()
+	// authHeader := c.GetHeader("Authorization")
+	authHeader := c.Request.Header.Get("Authorization")
 	bearerToken := strings.Split(authHeader, " ")
 
 	if len(bearerToken) == 2 {

@@ -29,3 +29,9 @@ type UserDetailClaims struct {
 	Authorize bool   `json:"authorized"`
 	jwt.StandardClaims
 }
+
+// type UserDetail struct {
+// 	ID        string `json:"id"`
+// 	Username  string `json:"username"`
+// 	Authorize string `json:"authorized"`
+// }

@@ -2,21 +2,20 @@ package config
 
 import (
 	"database/sql"
-	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func GetConnection() (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", "../app.db")
+	db, err := sql.Open("sqlite3", Configuration.DB_PATH)
 	if err != nil {
 		return nil, err
 	}
 
-	db.SetMaxIdleConns(10)
-	db.SetMaxOpenConns(100)
-	db.SetConnMaxIdleTime(5 * time.Minute)
-	db.SetConnMaxLifetime(60 * time.Minute)
+	db.SetMaxIdleConns(Configuration.DB_MAX_IDLE_CONNECTIONS)
+	db.SetMaxOpenConns(Configuration.DB_MAX_CONNECTIONS)
+	db.SetConnMaxIdleTime(Configuration.DB_MAX_IDLE_TIME)
+	db.SetConnMaxLifetime(Configuration.DB_MAX_LIFE_TIME)
 
 	_, err = db.Exec(`
             CREATE TABLE IF NOT EXISTS users (
