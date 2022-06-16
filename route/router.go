@@ -19,18 +19,13 @@ func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHan
 
 	api := router.route.Group("/api/v1")
 	{
+		api.Use(handler.SetupAllowOriginMiddleware())
 		auth := api.Group("/auth")
 		{
 			auth.POST("/login", authentication.Login)
 			auth.POST("/register", authentication.Register)
 			auth.POST("/logout", authentication.Logout)
 		}
-
-		api.Use(handler.SetupAuthenticationMiddleware())
-		api.GET("/profile", userHandler.GetProfile)
-		api.PUT("/profile", userHandler.UpdateProfile)
-		api.PUT("/password", userHandler.UpdatePassword)
-		api.PUT("/photo", userHandler.UpdatePhoto)
 
 		ev := api.Group("/event")
 		{
@@ -39,6 +34,13 @@ func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHan
 			ev.PUT("/update", handler.AuthMiddlerware(event.Update))
 			ev.DELETE("/delete", handler.AuthMiddlerware(event.Delete))
 		}
+
+		api.Use(handler.SetupAuthenticationMiddleware())
+		api.GET("/profile", userHandler.GetProfile)
+		api.PUT("/profile", userHandler.UpdateProfile)
+		api.PUT("/password", userHandler.UpdatePassword)
+		api.PUT("/photo", userHandler.UpdatePhoto)
+
 	}
 
 	return router
