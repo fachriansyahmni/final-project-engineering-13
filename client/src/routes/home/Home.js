@@ -23,7 +23,7 @@ export default function Home () {
                                 <h5 className=" fst-italic text-primary fs-1" style={{letterSpacing:'0.205em'}}>Make Your</h5>
                                 <h5 className=" fst-italic text-primary fs-1" style={{letterSpacing:'0.205em'}}>Events</h5>
                                 <p className="">Mengadakan acara luar biasa, bagikan pengetahuan, bangun dan kembangkan komunitas Anda, ciptakan peluang</p>
-                                <button type="button" className="btn btn-outline-success ">Click Here</button>
+                                <button type="button" className="btn btn-outline-success ">Create Event</button>
                             </div>
                         </div>
                         <div className="col-5 text-center" >
