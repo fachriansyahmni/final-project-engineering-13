@@ -10,8 +10,6 @@ import ManagementsIcon from "../../assets/home/Managements.svg"
 import PlatformIcon from "../../assets/home/Platform.svg"
 
 export default function Home () {
-    const {token} = dataStore()
-    console.log(token,'ini dari home')
     return (
         <>
             <Navbar />
