@@ -49,10 +49,10 @@ func (e *EventServiceImpl) Update(event entity.Event) error {
 	eventUpdateReq.Content = event.Content
 	eventUpdateReq.CategoryID = event.CategoryID
 	eventUpdateReq.StartTimeEvent = event.StartTimeEvent
-	eventUpdateReq.EndTimeEvent = event.EndTimeEvent
 	eventUpdateReq.Contact = event.Contact
-	eventUpdateReq.IDPrice = event.IDPrice
+	eventUpdateReq.Price = event.Price
 	eventUpdateReq.TypeEventID = event.TypeEventID
+	eventUpdateReq.ModelID = event.ModelID
 	eventUpdateReq.LocationDetails = event.LocationDetails
 	eventUpdateReq.RegisterUrl = event.RegisterUrl
 
@@ -99,7 +99,7 @@ func (e *EventServiceImpl) GetAuthorID(token string) (int, error) {
 	return authorData.ID, nil
 }
 
-func (e *EventServiceImpl) GetAll() ([]*payloads.EventRequest, error) {
+func (e *EventServiceImpl) GetAll() ([]*entity.ListEvent, error) {
 	result, err := e.eventRepo.GetAll()
 	if err != nil {
 		return nil, errors.New("NOT_FOUND")
@@ -108,7 +108,7 @@ func (e *EventServiceImpl) GetAll() ([]*payloads.EventRequest, error) {
 	return result, nil
 }
 
-func (e *EventServiceImpl) GetByID(id int64) (*payloads.EventRequest, error) {
+func (e *EventServiceImpl) GetByID(id int64) (*entity.ListEvent, error) {
 	result, err := e.eventRepo.GetByID(id)
 	if err != nil {
 		return nil, errors.New("EVENT_NOT_FOUND")

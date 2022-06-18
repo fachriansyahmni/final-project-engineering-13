@@ -7,7 +7,7 @@ import (
 
 type UserRepository interface {
 	GetUser() ([]entity.User, error)
-	GetUserByID(id int64) (entity.User, error)
+	GetUserByID(id int) (entity.User, error)
 	GetUserByUsername(username string) (entity.User, error)
 	GetUserByEmail(email string) (entity.User, error)
 	CreateUser(user payloads.CreateRequest) error
@@ -16,8 +16,8 @@ type UserRepository interface {
 }
 
 type EventRepoInterface interface {
-	GetAll() ([]*payloads.EventRequest, error)
-	GetByID(id int64) (*payloads.EventRequest, error)
+	GetAll() ([]*entity.ListEvent, error)
+	GetByID(id int64) (*entity.ListEvent, error)
 	Create(ev *payloads.EventRequest) error
 	Delete(id int64) error
 	Update(id int64, ev *payloads.EventRequest) error

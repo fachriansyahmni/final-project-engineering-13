@@ -14,6 +14,8 @@ func SetupAuthenticationMiddleware() gin.HandlerFunc {
 				"status":  401,
 				"message": err.Error(),
 			})
+			c.Abort()
+			return
 		}
 
 		c.Next()
@@ -33,5 +35,21 @@ func AuthMiddlerware(next gin.HandlerFunc) gin.HandlerFunc {
 		}
 
 		next(c)
+	}
+}
+
+//setup allow origin
+func SetupAllowOriginMiddleware() gin.HandlerFunc {
+	allowedHeaders := "application/json"
+	return func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Header("Access-Control-Allow-Credentials", "true")
+		c.Header("Content-Type", allowedHeaders)
+		if c.Request.Method == "OPTIONS" {
+			c.Writer.WriteHeader(200)
+		}
+		c.Next()
 	}
 }
