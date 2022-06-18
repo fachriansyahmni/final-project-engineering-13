@@ -105,7 +105,7 @@ export default function Main () {
         event.preventDefault();
 
         try {
-            const response = await axios.post('api/v1/auth/logout',token)
+            const response = await axios.post('http://localhost:8090/api/v1/auth/logout',token)
             console.log('berhasil logout')
             setToken(null)
         }catch (e) {
@@ -130,9 +130,7 @@ export default function Main () {
         getUserData(token)
     }, [token])    
 
-    if (token != null) {
-        // <NavLink to={'/logout'} className="nav-link">Login</NavLink>
-        // button = <button onClick={handleLogout}>Log out</button>
+    if (token != 'Bearer null') {
         button = <div className={Style['navbar-profile'] + " ms-lg-2 d-flex flex-column gap-2 rounded p-1 position-relative"} onClick={() => {setShow(!show)}}>
             <div className={"d-flex flex-row"}>
                 <div className="d-none d-lg-flex align-items-center" style={{color: '#fff'}}>
@@ -140,9 +138,6 @@ export default function Main () {
                 </div>
                 <img src={defaultProfilePics} />
             </div>
-            {/* <div className={show}>
-                <button>Logout</button>
-            </div> */}
             <div className={Style['modal-profile'] + profileModal + " rounded"}>
                 <ul className="d-flex gap-1 flex-column"> 
                     <li><NavLink to={'/profile'} className="navLink-profile">Profile</NavLink></li>
@@ -159,9 +154,6 @@ export default function Main () {
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
                     <a class="navbar-brand" href="/">Ruang Event</a>
-                    {/* <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    </button> */}
                     <div className="d-flex flex-row gap-2">
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -195,21 +187,12 @@ export default function Main () {
                             </li>
 
                             <li class="nav-item">
-                                {/* <a class="nav-link" href="/bantuan">Bantuan</a> */}
                                 <NavLink to={'/bantuan'} className="nav-link">Bantuan</NavLink>
                             </li>
                         </ul>
-                        {/* <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form> */}
-                        {/* <button type="button" class="btn btn-outline-success" >Sign In</button> */}
-                        {
-                            
-                        }
                         {button}
                     </div>
-                    {/* <p>Diluar tootle</p> */}
+                   
                 </div>
             </nav>
         </>

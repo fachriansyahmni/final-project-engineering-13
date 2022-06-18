@@ -47,6 +47,7 @@ const navigate = useNavigate()
             // const response = await axios.post('https://reqres.in/api/register',{email: "eve.holt@reqres.in", password: "pistol"})
             const form = {
                 "email": email,
+                "username": username,
                 "first_name": firstname,
                 "last_name": lastname,
                 "photo": "link photo",
@@ -56,7 +57,7 @@ const navigate = useNavigate()
             const response = await axios.post('/api/v1/auth/register',form)
             console.log(response, 'dari register')
 
-            navigate('/')
+            navigate('/login')
             console.log('jalan dari register ke home')
         } catch(err) {
             console.log(err.response)
