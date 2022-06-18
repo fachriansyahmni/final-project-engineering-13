@@ -22,7 +22,7 @@ func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHan
 		api.Use(handler.SetupAllowOriginMiddleware())
 		auth := api.Group("/auth")
 		{
-			auth.POST("/login", authentication.Login)
+			auth.Any("/login", authentication.Login)
 			auth.POST("/register", authentication.Register)
 			auth.POST("/logout", authentication.Logout)
 		}

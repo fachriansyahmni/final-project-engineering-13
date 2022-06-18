@@ -15,6 +15,19 @@ func NewAuthHandler(authService service.AuthService) *AuthHandler {
 }
 
 func (a *AuthHandler) Login(c *gin.Context) {
+	if c.Request.Method == "OPTIONS" {
+		c.Writer.WriteHeader(200)
+		return
+	}
+
+	if c.Request.Method != "POST" {
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": "Method Not Allowed",
+		})
+		return
+	}
+
 	var loginReq payloads.LoginRequest
 	if err := c.ShouldBindJSON(&loginReq); err != nil {
 		c.JSON(400, gin.H{
@@ -32,9 +45,11 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	}
 
 	c.Header("Authorization", "Bearer "+token)
+	data := map[string]string{"token": token}
 	c.JSON(200, gin.H{
 		"status":  200,
 		"message": "Login Success",
+		"data":    data,
 	})
 }
 
