@@ -38,12 +38,11 @@ func GetConnection() (*sql.DB, error) {
 			content TEXT not null,
 			category_id INTEGER,
 			start_time_event DATETIME,
-			end_time_event DATETIME,
 			start_date_event DATE,
-			end_date_event DATE,
 			contact VARCHAR(255),
-			id_price INTEGER,
+			price INTEGER DEFAULT 0,
 			type_event_id INTEGER,
+			model_id INTEGER NOT NULL,
 			location_details VARCHAR(255),
 			register_url VARCHAR(255),
 			created_at TIMESTAMP,
@@ -51,8 +50,8 @@ func GetConnection() (*sql.DB, error) {
 
 			FOREIGN KEY (author_id) REFERENCES users(id),
 			FOREIGN KEY (category_id) REFERENCES categories_event(id),
-			FOREIGN KEY (id_price) REFERENCES prices(id),
-			FOREIGN KEY (type_event_id) REFERENCES type_events(id)
+			FOREIGN KEY (type_event_id) REFERENCES type_events(id),
+			FOREIGN KEY (model_id) REFERENCES models(id)
 			);
 
 		CREATE TABLE IF NOT EXISTS categories_event (
@@ -65,9 +64,9 @@ func GetConnection() (*sql.DB, error) {
 			name VARCHAR(255)
 			);
 
-		CREATE TABLE IF NOT EXISTS prices (
+		CREATE TABLE IF NOT EXISTS models (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			price INTEGER DEFAULT 0
+			name VARCHAR(50) NOT NULL
 			);
 
 			`,

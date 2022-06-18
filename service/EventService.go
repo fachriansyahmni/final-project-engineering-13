@@ -49,10 +49,10 @@ func (e *EventServiceImpl) Update(event entity.Event) error {
 	eventUpdateReq.Content = event.Content
 	eventUpdateReq.CategoryID = event.CategoryID
 	eventUpdateReq.StartTimeEvent = event.StartTimeEvent
-	eventUpdateReq.EndTimeEvent = event.EndTimeEvent
 	eventUpdateReq.Contact = event.Contact
-	eventUpdateReq.IDPrice = event.IDPrice
+	eventUpdateReq.Price = event.Price
 	eventUpdateReq.TypeEventID = event.TypeEventID
+	eventUpdateReq.ModelID = event.ModelID
 	eventUpdateReq.LocationDetails = event.LocationDetails
 	eventUpdateReq.RegisterUrl = event.RegisterUrl
 

@@ -27,7 +27,7 @@ func (er *EventRepository) ValidateEventUser(eventId, userId int64) error {
 
 func (er *EventRepository) ById(eventId int64) (entity.Event, error) {
 	event := entity.Event{}
-	row := er.db.QueryRow("SELECT id, author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url, created_at, updated_at FROM events WHERE id = ?", eventId)
+	row := er.db.QueryRow("SELECT id, author_id, title, banner_img, content, category_id, start_time_event, start_date_event, contact, price, type_event_id, model_id, location_details, register_url, created_at, updated_at FROM events WHERE id = ?", eventId)
 	err := row.Scan(
 		&event.ID,
 		&event.AuthorID,
@@ -36,12 +36,11 @@ func (er *EventRepository) ById(eventId int64) (entity.Event, error) {
 		&event.Content,
 		&event.CategoryID,
 		&event.StartTimeEvent,
-		&event.EndTimeEvent,
 		&event.StartDateEvent,
-		&event.EndDateEvent,
 		&event.Contact,
-		&event.IDPrice,
+		&event.Price,
 		&event.TypeEventID,
+		&event.ModelID,
 		&event.LocationDetails,
 		&event.RegisterUrl,
 		&event.CreatedAt,
@@ -55,19 +54,18 @@ func (er *EventRepository) ById(eventId int64) (entity.Event, error) {
 }
 
 func (er *EventRepository) Create(ev *payloads.EventRequest) error {
-	_, err := er.db.Exec("INSERT INTO events (author_id, title, banner_img, content, category_id, start_time_event, end_time_event, start_date_event, end_date_event, contact, id_price, type_event_id, location_details, register_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+	_, err := er.db.Exec("INSERT INTO events (author_id, title, banner_img, content, category_id, start_time_event, start_date_event, contact, price, type_event_id, model_id, location_details, register_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 		ev.AuthorID,
 		ev.Title,
 		ev.BannerImg,
 		ev.Content,
 		ev.CategoryID,
 		ev.StartTimeEvent,
-		ev.EndTimeEvent,
 		ev.StartDateEvent,
-		ev.EndDateEvent,
 		ev.Contact,
-		ev.IDPrice,
+		ev.Price,
 		ev.TypeEventID,
+		ev.ModelID,
 		ev.LocationDetails,
 		ev.RegisterUrl,
 		time.Now(),
@@ -81,18 +79,17 @@ func (er *EventRepository) Create(ev *payloads.EventRequest) error {
 }
 
 func (er *EventRepository) Update(id int64, ev *payloads.EventRequest) error {
-	_, err := er.db.Exec("UPDATE events SET title = ?, banner_img = ?, content = ?, category_id = ?, start_time_event = ?, end_time_event = ?, start_date_event = ?, end_date_event = ?, contact = ?, id_price = ?, type_event_id = ?, location_details = ?, register_url = ?, updated_at = ? WHERE id = ?",
+	_, err := er.db.Exec("UPDATE events SET title = ?, banner_img = ?, content = ?, category_id = ?, start_time_event = ?, start_date_event = ?, contact = ?, price = ?, type_event_id = ?, model_id = ?, location_details = ?, register_url = ?, updated_at = ? WHERE id = ?",
 		ev.Title,
 		ev.BannerImg,
 		ev.Content,
 		ev.CategoryID,
 		ev.StartTimeEvent,
-		ev.EndTimeEvent,
 		ev.StartDateEvent,
-		ev.EndDateEvent,
 		ev.Contact,
-		ev.IDPrice,
+		ev.Price,
 		ev.TypeEventID,
+		ev.ModelID,
 		ev.LocationDetails,
 		ev.RegisterUrl,
 		time.Now(),
@@ -114,7 +111,7 @@ func (er *EventRepository) Delete(id int64) error {
 }
 
 func (er *EventRepository) GetAll() ([]*entity.ListEvent, error) {
-	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, ce.name , e.start_time_event, e.end_time_event, e.start_date_event, e.end_date_event, u.contact, p.price, te.name , e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN prices p ON e.id_price = p.id INNER JOIN type_event te ON e.type_event_id = te.id")
+	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, ce.name , e.start_time_event, e.start_date_event, u.contact, price, te.name , m.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models m ON e.model_id = m.id INNER JOIN type_event te ON e.type_event_id = te.id")
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +121,7 @@ func (er *EventRepository) GetAll() ([]*entity.ListEvent, error) {
 	var events []*entity.ListEvent
 	for rows.Next() {
 		var ev entity.ListEvent
-		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category, &ev.StartTimeEvent, &ev.EndTimeEvent, &ev.StartDateEvent, &ev.EndDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.Model, &ev.LocationDetails, &ev.RegisterUrl)
 		if err != nil {
 			return nil, err
 		}
@@ -136,7 +133,7 @@ func (er *EventRepository) GetAll() ([]*entity.ListEvent, error) {
 }
 
 func (er *EventRepository) GetByID(id int64) (*entity.ListEvent, error) {
-	row, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, ce.name , e.start_time_event, e.end_time_event, e.start_date_event, e.end_date_event, u.contact, p.price, te.name , e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN prices p ON e.id_price = p.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.id = ?", id)
+	row, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, ce.name , e.start_time_event, e.start_date_event, u.contact, price, te.name, m.name , e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models m ON e.model_id = m.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.id = ?", id)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +142,7 @@ func (er *EventRepository) GetByID(id int64) (*entity.ListEvent, error) {
 
 	var ev entity.ListEvent
 	for row.Next() {
-		err := row.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category, &ev.StartTimeEvent, &ev.EndTimeEvent, &ev.StartDateEvent, &ev.EndDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		err := row.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.Model, &ev.LocationDetails, &ev.RegisterUrl)
 		if err != nil {
 			return nil, err
 		}

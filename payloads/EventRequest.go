@@ -3,18 +3,17 @@ package payloads
 type EventRequest struct {
 	AuthorID        int64  `json:"author_id"`
 	Title           string `json:"title"`
-	BannerImg       string `json:"bannerImg"`
+	BannerImg       string `json:"banner_img"`
 	Content         string `json:"content"`
-	CategoryID      int64  `json:"categoryId"`
-	StartTimeEvent  string `json:"startTimeEvent"`
-	EndTimeEvent    string `json:"endTimeEvent"`
-	StartDateEvent  string `json:"startDateEvent"`
-	EndDateEvent    string `json:"endDateEvent"`
+	CategoryID      int64  `json:"category_id"`
+	StartTimeEvent  string `json:"start_time_event"`
+	StartDateEvent  string `json:"start_date_event"`
 	Contact         string `json:"contact"`
-	IDPrice         int64  `json:"idPrice"`
-	TypeEventID     int64  `json:"typeEventId"`
-	LocationDetails string `json:"locationDetails"`
-	RegisterUrl     string `json:"registerUrl"`
+	Price           int64  `json:"price"`
+	TypeEventID     int64  `json:"type_event_id"`
+	ModelID         int64  `json:"model_id"`
+	LocationDetails string `json:"location_details"`
+	RegisterUrl     string `json:"register_url"`
 }
 
 type EventIdRequest struct {
