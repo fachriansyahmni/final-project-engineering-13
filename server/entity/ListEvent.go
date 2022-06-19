@@ -12,7 +12,7 @@ type ListEvent struct {
 	Contact         string `json:"contact"`
 	Price           int64  `json:"price"`
 	TypeEvent       string `json:"type_event"`
-	Model           string `json:"model"`
+	ModelEvent      string `json:"model"`
 	LocationDetails string `json:"location_details"`
 	RegisterUrl     string `json:"register_url"`
 }
