@@ -9,6 +9,7 @@ const Register = () => {
 const [username,setUsername] = useState('');
 const [firstname,setFirstname] = useState('');
 const [lastname,setLastname] = useState('');
+const [photo, setPhoto] = useState('link photo')
 const [email,setEmail] = useState('');
 const [password,setPassword] = useState('');
 
@@ -40,6 +41,11 @@ const navigate = useNavigate()
         setPassword(value)
     }
 
+    const onChangePhoto = (e) => {
+        const value = e.target.value
+        setPhoto(value)
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         
@@ -50,7 +56,7 @@ const navigate = useNavigate()
                 "username": username,
                 "first_name": firstname,
                 "last_name": lastname,
-                "photo": "link photo",
+                "photo": photo,
                 "password": password,
                 "contact": " "
             }
@@ -87,6 +93,10 @@ const navigate = useNavigate()
                         <div className="mb-3">
                             <label  className="form-label">Last Name</label>
                             <input type="text" className="form-control"  placeholder="Last Name" value={lastname} onChange={onChangeLastname}/>
+                        </div>
+                        <div className="mb-3">
+                            <label  className="form-label">Photo URL</label>
+                            <input type="text" className="form-control"  placeholder="Photo url" value={photo} onChange={onChangePhoto}/>
                         </div>
                         <div className="mb-3">
                             <label  className="form-label">Email</label>
