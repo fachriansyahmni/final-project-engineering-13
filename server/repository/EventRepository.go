@@ -149,3 +149,13 @@ func (er *EventRepository) GetByID(id int64) (*entity.ListEvent, error) {
 	}
 	return &ev, nil
 }
+
+func (er *EventRepository) CheckCategory(id int64) (bool, error) {
+	row, err := er.db.Query("SELECT id FROM categories_event WHERE id = ?", id)
+	if err != nil {
+		return false, err
+	}
+
+	defer row.Close()
+	return true, nil
+}

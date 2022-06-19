@@ -24,3 +24,17 @@ type EventRepoInterface interface {
 	ValidateEventUser(eventId, userId int64) error
 	ById(id int64) (entity.Event, error)
 }
+
+type CategoryEventRepoInterface interface {
+	GetCategory() ([]entity.Category_Event, error)
+	GetCategoryByID(id int) (entity.Category_Event, error)
+}
+
+type TypeEventRepoInterface interface {
+	GetTypes() ([]entity.Type_Event, error)
+	GetTypeByID(id int) (entity.Type_Event, error)
+}
+
+type ModelRepoInterface interface {
+	GetModelByID(id int) (entity.Model, error)
+}

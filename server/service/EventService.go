@@ -11,16 +11,35 @@ import (
 )
 
 type EventServiceImpl struct {
-	eventRepo repository.EventRepoInterface
+	eventRepo      repository.EventRepoInterface
+	categoriesRepo repository.CategoryEventRepoInterface
+	typeEventRepo  repository.TypeEventRepoInterface
+	modelEventRepo repository.ModelRepoInterface
 }
 
-func NewEventService(eventRepo repository.EventRepoInterface) *EventServiceImpl {
-	return &EventServiceImpl{eventRepo}
+func NewEventService(eventRepo repository.EventRepoInterface, categoriesRepo repository.CategoryEventRepoInterface, typeEventRepo repository.TypeEventRepoInterface, modelEventRepo repository.ModelRepoInterface) *EventServiceImpl {
+	return &EventServiceImpl{eventRepo, categoriesRepo, typeEventRepo, modelEventRepo}
 }
 
 func (e *EventServiceImpl) Validate(event payloads.EventRequest) error {
-	if event.Title == "" || event.Content == "" {
+
+	if event.Title == "" || event.Content == "" || event.CategoryID == 0 || event.TypeEventID == 0 || event.ModelID == 0 {
 		return errors.New("INVALID_DATA")
+	}
+
+	_, err := e.categoriesRepo.GetCategoryByID(int(event.CategoryID))
+	if err != nil {
+		return errors.New("CATEGORY_NOT_FOUND")
+	}
+
+	_, err = e.typeEventRepo.GetTypeByID(int(event.TypeEventID))
+	if err != nil {
+		return errors.New("TYPE_EVENT_NOT_FOUND")
+	}
+
+	_, err = e.modelEventRepo.GetModelByID(int(event.ModelID))
+	if err != nil {
+		return errors.New("MODEL_NOT_FOUND")
 	}
 
 	return nil
