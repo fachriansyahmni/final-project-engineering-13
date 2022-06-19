@@ -61,7 +61,7 @@ const dataUser = create((set) => ({
         try {
             const response = await axios.get('/api/v1/profile', {
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NTU1NzE4OTksImlkIjoxLCJ1c2VybmFtZSI6InVzZXIifQ.3o-TiNE75kOjt7DS4VwZ8vzQfnvfLMxG79K-j1nWWgw'
+                    'Authorization': `${token}`
                 }
             })
             console.log(response, 'profile dari datastore')

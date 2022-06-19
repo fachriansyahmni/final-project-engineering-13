@@ -22,9 +22,11 @@ export default function Main () {
         try {
             const response = await axios.post('http://localhost:8090/api/v1/auth/logout',token)
             console.log('berhasil logout')
-            setToken(null)
+            // setToken(null)
         }catch (e) {
             console.log(e)
+        } finally {
+            setToken(null) // jaga" kalau token kadaluarsa
         }
     }
     
