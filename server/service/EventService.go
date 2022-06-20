@@ -127,6 +127,15 @@ func (e *EventServiceImpl) GetAll() ([]*entity.ListEvent, error) {
 	return result, nil
 }
 
+func (e *EventServiceImpl) GetByCategory(category_id int64) ([]*entity.ListEvent, error) {
+	result, err := e.eventRepo.GetByCategory(category_id)
+	if err != nil {
+		return nil, errors.New("NOT_FOUND")
+	}
+
+	return result, nil
+}
+
 func (e *EventServiceImpl) GetByID(id int64) (*entity.ListEvent, error) {
 	result, err := e.eventRepo.GetByID(id)
 	if err != nil {

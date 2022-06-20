@@ -17,6 +17,7 @@ type UserRepository interface {
 
 type EventRepoInterface interface {
 	GetAll() ([]*entity.ListEvent, error)
+	GetByCategory(category_id int64) ([]*entity.ListEvent, error)
 	GetByID(id int64) (*entity.ListEvent, error)
 	Create(ev *payloads.EventRequest) error
 	Delete(id int64) error
