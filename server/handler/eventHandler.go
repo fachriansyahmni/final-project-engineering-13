@@ -114,6 +114,55 @@ func (eh *EventHandler) Delete(c *gin.Context) {
 }
 
 func (eh *EventHandler) GetEvent(c *gin.Context) {
+	if c.Query("category") != "" {
+		if c.Query("id") != "" {
+			id := c.Query("id")
+			idi, _ := strconv.ParseInt(id, 10, 64)
+			events, err := eh.eventService.GetByID(idi)
+			if len(events.Title) == 0 {
+				c.JSON(404, gin.H{
+					"error": "event not found",
+				})
+				return
+			}
+			if err != nil {
+				c.JSON(400, gin.H{
+					"error": err.Error(),
+				})
+				return
+			}
+
+			c.JSON(200, gin.H{
+				"status":  200,
+				"message": "success",
+				"data":    events,
+			})
+			return
+		}
+		cid := c.Query("category")
+		cid2, _ := strconv.ParseInt(cid, 10, 64)
+		events, err := eh.eventService.GetByCategory(cid2)
+		if events == nil {
+			c.JSON(404, gin.H{
+				"error": "category not found",
+			})
+			return
+		}
+		if err != nil {
+			c.JSON(400, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"status":  200,
+			"message": "success",
+			"data":    events,
+		})
+		return
+	}
+
 	if c.Query("id") != "" {
 		id := c.Query("id")
 		idi, _ := strconv.ParseInt(id, 10, 64)
@@ -136,19 +185,19 @@ func (eh *EventHandler) GetEvent(c *gin.Context) {
 			"message": "success",
 			"data":    events,
 		})
-	} else {
-		events, err := eh.eventService.GetAll()
-		if err != nil {
-			c.JSON(400, gin.H{
-				"error": err.Error(),
-			})
-			return
-		}
-
-		c.JSON(200, gin.H{
-			"status":  200,
-			"message": "success",
-			"data":    events,
-		})
+		return
 	}
+	events, err := eh.eventService.GetAll()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "success",
+		"data":    events,
+	})
 }
