@@ -152,3 +152,51 @@ func (eh *EventHandler) GetEvent(c *gin.Context) {
 		})
 	}
 }
+
+func (eh *EventHandler) GetAllCategories(c *gin.Context) {
+	categories, err := eh.eventService.GetAllCategory()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "success",
+		"data":    categories,
+	})
+}
+
+func (eh *EventHandler) GetAllModels(c *gin.Context) {
+	models, err := eh.eventService.GetAllModel()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "success",
+		"data":    models,
+	})
+}
+
+func (eh *EventHandler) GetAllTypes(c *gin.Context) {
+	types, err := eh.eventService.GetAllTypeEvent()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "success",
+		"data":    types,
+	})
+}

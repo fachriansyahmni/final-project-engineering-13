@@ -36,5 +36,6 @@ type TypeEventRepoInterface interface {
 }
 
 type ModelRepoInterface interface {
+	GetModels() ([]entity.Model, error)
 	GetModelByID(id int) (entity.Model, error)
 }

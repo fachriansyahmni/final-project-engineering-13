@@ -35,6 +35,10 @@ func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHan
 			ev.DELETE("/delete", handler.AuthMiddlerware(event.Delete))
 		}
 
+		api.GET("/models", event.GetAllModels)
+		api.GET("/categories", event.GetAllCategories)
+		api.GET("/types", event.GetAllTypes)
+
 		api.Use(handler.SetupAuthenticationMiddleware())
 		api.GET("/profile", userHandler.GetProfile)
 		api.PUT("/profile", userHandler.UpdateProfile)

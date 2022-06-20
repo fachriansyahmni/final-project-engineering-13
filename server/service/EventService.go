@@ -135,3 +135,30 @@ func (e *EventServiceImpl) GetByID(id int64) (*entity.ListEvent, error) {
 
 	return result, nil
 }
+
+func (e *EventServiceImpl) GetAllCategory() ([]entity.Category_Event, error) {
+	result, err := e.categoriesRepo.GetCategory()
+	if err != nil {
+		return nil, errors.New("CATEGORIES_NOT_FOUND")
+	}
+
+	return result, nil
+}
+
+func (e *EventServiceImpl) GetAllTypeEvent() ([]entity.Type_Event, error) {
+	result, err := e.typeEventRepo.GetTypes()
+	if err != nil {
+		return nil, errors.New("TYPE_EVENT_NOT_FOUND")
+	}
+
+	return result, nil
+}
+
+func (e *EventServiceImpl) GetAllModel() ([]entity.Model, error) {
+	result, err := e.modelEventRepo.GetModels()
+	if err != nil {
+		return nil, errors.New("MODELS_NOT_FOUND")
+	}
+
+	return result, nil
+}
