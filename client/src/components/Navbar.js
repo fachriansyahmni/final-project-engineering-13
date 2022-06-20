@@ -50,6 +50,15 @@ export default function Main () {
 
     let button
 
+    const loadPhoto = (param) => {
+        try {
+            const img = <img className={Style2['img-profile-nav']} src={param} alt="profile_pics"/>
+            return img
+        } catch (e) {
+            return <img className={Style2['img-profile-nav']} src={defaultProfilePics} />
+        }
+    }
+
     useEffect(() => {
         //console.log(token)
         const getData = async () => {
@@ -73,7 +82,20 @@ export default function Main () {
                 <div className="d-none d-lg-flex align-items-center" style={{color: '#fff'}}>
                     {name}
                 </div>
-                <img className={Style2['img-profile-nav']} src={photo === 'link photo' ? defaultProfilePics: photo} />
+                {/* <img className={Style2['img-profile-nav']} src={photo === 'link photo' ? defaultProfilePics: photo} /> */}
+                {/* {loadPhoto(photo)} */}
+                {/* <img 
+                    src={photo}
+                    alt="Profile Photo"
+                    // onError={event => {
+                    //     event.onerror = null
+                    //     event.target.src = "../assets/default_pp.svg"
+                        
+                    // }}
+                /> */}
+                {/* <object data={photo} type="image/png"> */}
+                    <img className={Style2['img-profile-nav']} src={defaultProfilePics}/>
+                {/* </object> */}
             </div>
             <div className={Style['modal-profile'] + profileModal + " rounded"}>
                 <ul className="d-flex gap-1 flex-column"> 
