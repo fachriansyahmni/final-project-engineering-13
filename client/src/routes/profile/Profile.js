@@ -16,6 +16,10 @@ export default function Profile () {
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
+    
+    const [changeData, setChangeData] = useState(false)
+    const handleSubmit = () => setChangeData(true)
+
 
     const [data, setData] = useState({})
 
@@ -34,18 +38,24 @@ export default function Profile () {
         }
 
         getData()
-    },[])
+    },[changeData])
 
     return (
         <>
             <Navbar />
-            <ProfileModal show={show} handleClose={handleClose}/>
+
+            <ProfileModal show={show} handleClose={handleClose} data={data} handleSubmit={handleSubmit}/>
+
             <div className="container">
                 <h1>Profile</h1>
                 <hr></hr>
                 <div className="row">
                     <div className="col">
-                        <img className={Style['img']} src={defaultPics} alt=""/>
+                        {data.photo ? (
+                            <img className={Style['img']} src={data.photo} alt=""/>
+                        ) : (
+                            <img className={Style['img']} src={defaultPics} alt=""/>
+                        )}
                     </div>
                     <div className="col">
                         <div className="col border rounded border-dark p-3">
