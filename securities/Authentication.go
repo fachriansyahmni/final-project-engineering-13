@@ -2,6 +2,7 @@ package securities
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -12,10 +13,12 @@ import (
 func GetAuthentication(c *gin.Context) error {
 	token, err := VerifyToken(c)
 	if err != nil {
+		log.Println("verify token error: ", err)
 		return err
 	}
 
 	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
+		log.Println("claims error: ", err)
 		return err
 	}
 

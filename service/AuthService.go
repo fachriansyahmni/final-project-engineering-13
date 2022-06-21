@@ -23,18 +23,18 @@ func (a *AuthServiceImpl) Login(loginReq payloads.LoginRequest) (string, error) 
 		hashPwd := findUser.Password
 		pwd := loginReq.Password
 
-		hash := securities.VerifyPassword(hashPwd, pwd)
+		err := securities.VerifyPassword(hashPwd, pwd)
 
-		if hash == nil {
+		if err == nil {
 			token, err := securities.GenerateToken(findUser.Email, findUser.ID)
 
 			if err != nil {
-				return "", err
+				return "", errors.New("GENERATE_TOKEN_FAILED, ERROR: " + err.Error())
 			}
 
 			return token, nil
 		} else {
-			return "", hash
+			return "", errors.New("PASSWORD_IS_WRONG, ERROR: " + err.Error())
 		}
 	} else {
 		return "", errors.New("USER_NOT_FOUND")

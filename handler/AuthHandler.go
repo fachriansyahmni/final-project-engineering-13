@@ -18,7 +18,8 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	var loginReq payloads.LoginRequest
 	if err := c.ShouldBindJSON(&loginReq); err != nil {
 		c.JSON(400, gin.H{
-			"error": err.Error(),
+			"status":  400,
+			"message": err.Error(),
 		})
 		return
 	}
@@ -26,7 +27,8 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	token, err := a.authService.Login(loginReq)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": err.Error(),
+			"status":  400,
+			"message": err.Error(),
 		})
 		return
 	}
@@ -42,7 +44,8 @@ func (a *AuthHandler) Register(c *gin.Context) {
 	var register payloads.CreateRequest
 	if err := c.ShouldBindJSON(&register); err != nil {
 		c.JSON(400, gin.H{
-			"error": err.Error(),
+			"status":  400,
+			"message": err.Error(),
 		})
 		return
 	}
@@ -50,7 +53,8 @@ func (a *AuthHandler) Register(c *gin.Context) {
 	err := a.authService.Register(register)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": err.Error(),
+			"status":  400,
+			"message": err.Error(),
 		})
 		return
 	}

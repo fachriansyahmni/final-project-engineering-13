@@ -3,5 +3,9 @@ package securities
 import "golang.org/x/crypto/bcrypt"
 
 func VerifyPassword(hashedPassword, password string) error {
-	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -6,8 +6,6 @@ type CreateRequest struct {
 	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
-	Contact   string `json:"contact"`
-	Photo     string `json:"photo"`
 }
 
 type UpdateRequest struct {

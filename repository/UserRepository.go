@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+	"errors"
 	"time"
 
 	"github.com/rg-km/final-project-engineering-13/entity"
@@ -84,8 +85,6 @@ func (u *UserRepo) CreateUser(user payloads.CreateRequest) error {
 		user.LastName,
 		user.Email,
 		user.Password,
-		user.Contact,
-		user.Photo,
 		time.Now(),
 		time.Now())
 	if err != nil {
@@ -95,19 +94,36 @@ func (u *UserRepo) CreateUser(user payloads.CreateRequest) error {
 	return nil
 }
 
-func (u *UserRepo) UpdateUser(user payloads.CreateRequest, idUser int) error {
-	_, err := u.db.Exec("UPDATE users SET username = ?, first_name = ?, last_name = ?, email = ?, password = ?, contact, photo, updated_at = ? WHERE id = ?",
+func (u *UserRepo) UpdateUser(user payloads.UpdateRequest, idUser int) error {
+	_, err := u.db.Exec("UPDATE users SET username = ?, first_name = ?, last_name = ?, email = ?, password = ?, updated_at = ? WHERE id = ?",
 		user.Username,
 		user.FirstName,
 		user.LastName,
 		user.Email,
-		user.Password,
 		user.Contact,
 		user.Photo,
 		time.Now(),
 		idUser)
 	if err != nil {
-		return err
+		return errors.New("Error updating user" + err.Error())
+	}
+
+	return nil
+}
+
+func (u *UserRepo) UpdatePassword(id int, passwordReq string) error {
+	_, err := u.db.Exec("UPDATE users SET password = ? WHERE id = ?", passwordReq, id)
+	if err != nil {
+		return errors.New("Error updating password" + err.Error())
+	}
+
+	return nil
+}
+
+func (u *UserRepo) UpdatePhoto(id int, photo string) error {
+	_, err := u.db.Exec("UPDATE users SET photo = ? WHERE id = ?", photo, id)
+	if err != nil {
+		return errors.New("Error updating photo, " + err.Error())
 	}
 
 	return nil
