@@ -11,7 +11,9 @@ type UserRepository interface {
 	GetUserByUsername(username string) (entity.User, error)
 	GetUserByEmail(email string) (entity.User, error)
 	CreateUser(user payloads.CreateRequest) error
-	UpdateUser(user payloads.CreateRequest, idUser int) error
+	UpdateUser(user payloads.UpdateRequest, idUser int) error
+	UpdatePassword(id int, passwordReq string) error
+	UpdatePhoto(id int, photo string) error
 	DeleteUser(id int) error
 }
 

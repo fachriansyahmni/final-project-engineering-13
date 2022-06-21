@@ -25,8 +25,8 @@ func GetConnection() (*sql.DB, error) {
             last_name varchar(255) not null,
             email varchar(255) not null,
             password varchar(255) not null,
-            contact varchar(255) not null,
-            photo varchar(255) not null,
+            contact varchar(255),
+            photo varchar(255),
             created_at varchar(255) not null,
             updated_at varchar(255) not null
         );

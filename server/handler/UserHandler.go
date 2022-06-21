@@ -16,7 +16,7 @@ func NewUserHandler(authService service.UserService) *UserHandler {
 }
 
 func (a *UserHandler) UpdateProfile(c *gin.Context) {
-	var userReq payloads.CreateRequest
+	var userReq payloads.UpdateRequest
 	if err := c.ShouldBindJSON(&userReq); err != nil {
 		c.JSON(400, gin.H{
 			"status":  400,
@@ -45,10 +45,10 @@ func (a *UserHandler) UpdateProfile(c *gin.Context) {
 }
 
 func (a *UserHandler) UpdatePassword(c *gin.Context) {
-	var passwordReq string
+	var passwordReq payloads.UpdatePasswordRequest
 	if err := c.ShouldBindJSON(&passwordReq); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
+			"status":  4001,
 			"message": err.Error(),
 		})
 		return
@@ -61,7 +61,7 @@ func (a *UserHandler) UpdatePassword(c *gin.Context) {
 	err := a.authService.UpdatePassword(id, passwordReq)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
+			"status":  4002,
 			"message": err.Error(),
 		})
 		return
@@ -74,7 +74,7 @@ func (a *UserHandler) UpdatePassword(c *gin.Context) {
 }
 
 func (a *UserHandler) UpdatePhoto(c *gin.Context) {
-	var photoReq string
+	var photoReq payloads.UpdatePhotoRequest
 	if err := c.ShouldBindJSON(&photoReq); err != nil {
 		c.JSON(400, gin.H{
 			"status":  400,
