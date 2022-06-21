@@ -16,7 +16,7 @@ export default function Main () {
     const {token, setToken} = dataStore()
     
     const [name, setName] = useState('name')
-    const [photo, setPhoto] = useState('link photo')
+    const [photo, setPhoto] = useState(null)
 
     // console.log(name,photo, 'dari navbarrrr')
 
@@ -87,14 +87,18 @@ export default function Main () {
                 {/* <img 
                     src={photo}
                     alt="Profile Photo"
-                    // onError={event => {
-                    //     event.onerror = null
-                    //     event.target.src = "../assets/default_pp.svg"
+                    onError={event => {
+                        event.onerror = null
+                        event.target.src = "../assets/default_pp.svg"
                         
-                    // }}
+                    }}
                 /> */}
                 {/* <object data={photo} type="image/png"> */}
-                    <img className={Style2['img-profile-nav']} src={defaultProfilePics}/>
+                    { photo ? (
+                        <img className={Style2['img-profile-nav']} src={photo}/>
+                    ) : (
+                        <img className={Style2['img-profile-nav']} src={defaultProfilePics}/>
+                    ) }
                 {/* </object> */}
             </div>
             <div className={Style['modal-profile'] + profileModal + " rounded"}>
