@@ -181,3 +181,25 @@ func (er *EventRepository) CheckCategory(id int64) (bool, error) {
 	defer row.Close()
 	return true, nil
 }
+
+func (er *EventRepository) Search(keyword string) ([]*entity.ListEvent, error) {
+	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, ce.name , e.start_time_event, e.start_date_event, e.contact, e.price, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.title LIKE ?", "%"+keyword+"%")
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var events []*entity.ListEvent
+	for rows.Next() {
+		var ev entity.ListEvent
+		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		if err != nil {
+			return nil, err
+		}
+
+		events = append(events, &ev)
+	}
+
+	return events, nil
+}

@@ -19,3 +19,7 @@ type EventRequest struct {
 type EventIdRequest struct {
 	ID int64 `json:"id"`
 }
+
+type SearchRequest struct {
+	Search string `json:"search"`
+}

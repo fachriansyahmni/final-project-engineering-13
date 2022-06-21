@@ -171,3 +171,12 @@ func (e *EventServiceImpl) GetAllModel() ([]entity.Model, error) {
 
 	return result, nil
 }
+
+func (e *EventServiceImpl) Search(keyword string) ([]*entity.ListEvent, error) {
+	result, err := e.eventRepo.Search(keyword)
+	if err != nil {
+		return nil, errors.New("EVENT_NOT_FOUND")
+	}
+
+	return result, nil
+}

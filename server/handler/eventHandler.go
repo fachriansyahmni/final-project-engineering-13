@@ -114,6 +114,10 @@ func (eh *EventHandler) Delete(c *gin.Context) {
 }
 
 func (eh *EventHandler) GetEvent(c *gin.Context) {
+	if c.Query("search") != "" {
+		eh.SearchEvents(c)
+		return
+	}
 	if c.Query("category") != "" {
 		if c.Query("id") != "" {
 			id := c.Query("id")
@@ -247,5 +251,31 @@ func (eh *EventHandler) GetAllTypes(c *gin.Context) {
 		"status":  200,
 		"message": "success",
 		"data":    types,
+	})
+}
+
+func (eh *EventHandler) SearchEvents(c *gin.Context) {
+	keywords := c.Query("search")
+	events, err := eh.eventService.Search(keywords)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	if len(events) == 0 {
+		c.JSON(200, gin.H{
+			"status":  200,
+			"message": "success",
+			"data":    "events not found",
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "success",
+		"data":    events,
 	})
 }

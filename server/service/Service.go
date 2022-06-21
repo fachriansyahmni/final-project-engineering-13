@@ -31,4 +31,5 @@ type EventService interface {
 	GetAllCategory() ([]entity.Category_Event, error)
 	GetAllTypeEvent() ([]entity.Type_Event, error)
 	GetAllModel() ([]entity.Model, error)
+	Search(keyword string) ([]*entity.ListEvent, error)
 }

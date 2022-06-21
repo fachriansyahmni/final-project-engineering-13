@@ -24,6 +24,7 @@ type EventRepoInterface interface {
 	Update(id int64, ev *payloads.EventRequest) error
 	ValidateEventUser(eventId, userId int64) error
 	ById(id int64) (entity.Event, error)
+	Search(keyword string) ([]*entity.ListEvent, error)
 }
 
 type CategoryEventRepoInterface interface {
