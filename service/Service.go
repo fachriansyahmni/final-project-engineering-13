@@ -12,7 +12,7 @@ type AuthService interface {
 
 type UserService interface {
 	UpdateProfile(userReq payloads.CreateRequest, idUser int) error
-	UpdatePassword(id int, password string) error
+	UpdatePassword(id int, password payloads.UpdatePasswordRequest) error
 	UpdatePhoto(id int, photo string) error
 	GetProfile(id int) (entity.User, error)
 	// GetProfileByUsername(username string) (entity.User, error)

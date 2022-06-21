@@ -21,18 +21,18 @@ func (us *UserServiceImpl) UpdateProfile(userReq payloads.CreateRequest, idUser 
 	return us.userRepo.UpdateUser(userReq, idUser)
 }
 
-func (us *UserServiceImpl) UpdatePassword(id int, password string) error {
+func (us *UserServiceImpl) UpdatePassword(id int, passwordReq payloads.UpdatePasswordRequest) error {
 	user, err := us.userRepo.GetUserByID(id)
 	if err != nil {
 		return err
 	}
 
-	err = securities.VerifyPassword(user.Password, password)
+	err = securities.VerifyPassword(user.Password, passwordReq.OldPassword)
 	if err != nil {
 		return err
 	}
 
-	hash, err := securities.HashPassword(password)
+	hash, err := securities.HashPassword(passwordReq.NewPassword)
 	if err != nil {
 		return err
 	}

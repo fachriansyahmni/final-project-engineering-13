@@ -45,7 +45,7 @@ func (a *UserHandler) UpdateProfile(c *gin.Context) {
 }
 
 func (a *UserHandler) UpdatePassword(c *gin.Context) {
-	var passwordReq string
+	var passwordReq payloads.UpdatePasswordRequest
 	if err := c.ShouldBindJSON(&passwordReq); err != nil {
 		c.JSON(400, gin.H{
 			"status":  400,

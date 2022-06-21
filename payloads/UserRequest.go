@@ -19,7 +19,7 @@ type UpdateRequest struct {
 	Photo     string `json:"photo"`
 }
 
-type uodatePasswordRequest struct {
+type UpdatePasswordRequest struct {
 	OldPassword string `json:"old_password"`
 	NewPassword string `json:"new_password"`
 }
