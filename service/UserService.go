@@ -27,6 +27,11 @@ func (us *UserServiceImpl) UpdatePassword(id int, password string) error {
 		return err
 	}
 
+	err = securities.VerifyPassword(user.Password, password)
+	if err != nil {
+		return err
+	}
+
 	hash, err := securities.HashPassword(password)
 	if err != nil {
 		return err

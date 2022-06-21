@@ -17,7 +17,7 @@ func NewAuthService(userRepo repository.UserRepository) AuthService {
 }
 
 func (a *AuthServiceImpl) Login(loginReq payloads.LoginRequest) (string, error) {
-	findUser, _ := a.userRepo.GetUserByUsername(loginReq.Username)
+	findUser, _ := a.userRepo.GetUserByEmail(loginReq.Email)
 
 	if findUser.Username != "" {
 		hashPwd := findUser.Password
@@ -26,7 +26,7 @@ func (a *AuthServiceImpl) Login(loginReq payloads.LoginRequest) (string, error) 
 		hash := securities.VerifyPassword(hashPwd, pwd)
 
 		if hash == nil {
-			token, err := securities.GenerateToken(findUser.Username, findUser.ID)
+			token, err := securities.GenerateToken(findUser.Email, findUser.ID)
 
 			if err != nil {
 				return "", err
