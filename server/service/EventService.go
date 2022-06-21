@@ -136,6 +136,15 @@ func (e *EventServiceImpl) GetByCategory(category_id int64) ([]*entity.ListEvent
 	return result, nil
 }
 
+func (e *EventServiceImpl) GetByModel(model_id int64) ([]*entity.ListEvent, error) {
+	result, err := e.eventRepo.GetByModel(model_id)
+	if err != nil {
+		return nil, errors.New("NOT_FOUND")
+	}
+
+	return result, nil
+}
+
 func (e *EventServiceImpl) GetByID(id int64) (*entity.ListEvent, error) {
 	result, err := e.eventRepo.GetByID(id)
 	if err != nil {

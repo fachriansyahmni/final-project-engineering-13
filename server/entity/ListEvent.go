@@ -6,6 +6,7 @@ type ListEvent struct {
 	Title           string `json:"title"`
 	BannerImg       string `json:"banner_img"`
 	Content         string `json:"content"`
+	Category_id     int64  `json:"category_id"`
 	Category        string `json:"category"`
 	StartTimeEvent  string `json:"start_time_event"`
 	StartDateEvent  string `json:"start_date_event"`
