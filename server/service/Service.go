@@ -25,6 +25,7 @@ type EventService interface {
 	GetAuthorID(token string) (int, error)
 	GetAll() ([]*entity.ListEvent, error)
 	GetByCategory(category_id int64) ([]*entity.ListEvent, error)
+	GetByModel(model_id int64) ([]*entity.ListEvent, error)
 	GetByID(id int64) (*entity.ListEvent, error)
 	Delete(id int64) error
 	Update(event entity.Event) error
