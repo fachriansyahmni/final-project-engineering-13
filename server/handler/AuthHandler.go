@@ -37,6 +37,7 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"status":  200,
 		"message": "Login Success",
+		"data":    gin.H{"token": token},
 	})
 }
 
