@@ -38,6 +38,7 @@ export default function ProfileModal (props) {
                     id="inputemail"
                     // aria-describedby="passwordHelpBlock"
                     onChange={handleEmail}
+                    value={props.data.email}
                 />
                 <Form.Label htmlFor="firstname">First Name</Form.Label>
                 <Form.Control

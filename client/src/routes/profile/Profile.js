@@ -5,9 +5,11 @@ import Footer from '../../components/Footer'
 import { dataUser, dataStore } from "../../store/data";
 
 import defaultPics from "../../assets/default_pp.svg"
+import cameraIcon from "../../assets/camera.svg"
 
 import Style from './Profile.module.scss'
 import ProfileModal from "../../components/ProfileModal";
+import PhotoProfileModal from "../../components/PhotoProfileModal";
 
 export default function Profile () {
     const { getUserData} = dataUser()
@@ -16,7 +18,12 @@ export default function Profile () {
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
-    
+
+    const [showPhotoModal, setShowPhotoModal] = useState(false)
+    const handleClosephotoModal = () => setShowPhotoModal(false)
+    const handleShowPhotoModal = () => setShowPhotoModal(true)
+
+
     const [changeData, setChangeData] = useState(false)
     const handleSubmit = () => setChangeData(true)
 
@@ -46,16 +53,38 @@ export default function Profile () {
 
             <ProfileModal show={show} handleClose={handleClose} data={data} handleSubmit={handleSubmit}/>
 
+            <PhotoProfileModal show={showPhotoModal} handleClose={handleClosephotoModal} handleSubmit={handleSubmit} />
+
             <div className="container">
                 <h1>Profile</h1>
                 <hr></hr>
                 <div className="row">
                     <div className="col">
-                        {data.photo ? (
+                        {/* {data.photo ? (
                             <img className={Style['img']} src={data.photo} alt=""/>
                         ) : (
                             <img className={Style['img']} src={defaultPics} alt=""/>
+                        )} */}
+                        {data.photo ? (
+                            <div className={Style["profilepic"]} onClick={handleShowPhotoModal}>
+                            <img className={Style['profilepic__image']} src={data.photo} width="300px" height="300px" alt="Profibild" />
+                            <div className={Style["profilepic__content"]}>
+                                {/* <span class="profilepic__icon"><i class="fas fa-camera"></i></span> */}
+                                <span className={Style['profilepic__icon']}><img src={cameraIcon}/></span>
+                                <span className={Style["profilepic__text"]}>Edit Profile</span>
+                            </div>
+                            </div>
+                        ) : (
+                            <div className={Style["profilepic"]} onClick={handleShowPhotoModal}>
+                            <img className={Style['profilepic__image']} src={defaultPics} width="300px" height="300px" alt="Profibild" />
+                            <div className={Style["profilepic__content"]}>
+                                {/* <span class="profilepic__icon"><i class="fas fa-camera"></i></span> */}
+                                <span className={Style['profilepic__icon']}><img src={cameraIcon}/></span>
+                                <span className={Style["profilepic__text"]}>Edit Profile</span>
+                            </div>
+                            </div>
                         )}
+                        <p className="mt-2"><strong>*Click on image to add profile photo.</strong></p>
                     </div>
                     <div className="col">
                         <div className="col border rounded border-dark p-3">
@@ -76,6 +105,9 @@ export default function Profile () {
                         </div>
                         <div className="mt-3 d-flex gap-3 flex-column">
                             <h3>Additional Settings</h3>
+
+                            {/* Saran utk password jgn pakai modal lagi atau dibalik aja ini pakai modal tapi photo ndak usah */}
+
                             <button type="button" className="btn btn-outline-danger w-50">Change Password</button>
                         </div>
                     </div>

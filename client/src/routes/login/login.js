@@ -45,10 +45,11 @@ export default function Login() {
             navigate('/')
             // console.log('jalan')
         } catch (err) {
-            let error = err.response.data.error
-            if (error === 'USER_NOT_FOUND') {
-                setModalShow(true)
-            }
+            // let error = err.response.data.error
+            // if (error === 'USER_NOT_FOUND') {
+            //     setModalShow(true)
+            // }
+            setModalShow(true)
             console.log(err)
         }
     }
