@@ -26,7 +26,7 @@ export default function Main () {
 
     const handleLogout = async (event) => {
         event.preventDefault();
-
+        console.log('logout')
         try {
             const response = await axios.post('http://localhost:8090/api/v1/auth/logout',token)
             console.log('berhasil logout')
