@@ -49,7 +49,7 @@ func (a *UserHandler) UpdatePassword(c *gin.Context) {
 	var passwordReq payloads.UpdatePasswordRequest
 	if err := c.ShouldBindJSON(&passwordReq); err != nil {
 		c.JSON(400, gin.H{
-			"status":  4001,
+			"status":  400,
 			"message": err.Error(),
 		})
 		return
@@ -72,7 +72,7 @@ func (a *UserHandler) UpdatePassword(c *gin.Context) {
 	err := a.authService.UpdatePassword(id, passwordReq)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  4002,
+			"status":  400,
 			"message": err.Error(),
 		})
 		return
