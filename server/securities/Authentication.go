@@ -44,15 +44,7 @@ func VerifyToken(c *gin.Context) (*jwt.Token, error) {
 }
 
 func ExtractToken(c *gin.Context) string {
-	keys := c.Request.URL.Query()
-	token := keys.Get("token")
 
-	if token != "" {
-		return token
-	}
-
-	// c.Writer.Header()
-	// authHeader := c.GetHeader("Authorization")
 	authHeader := c.Request.Header.Get("Authorization")
 	bearerToken := strings.Split(authHeader, " ")
 
