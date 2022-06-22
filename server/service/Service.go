@@ -33,4 +33,5 @@ type EventService interface {
 	GetAllTypeEvent() ([]entity.Type_Event, error)
 	GetAllModel() ([]entity.Model, error)
 	Search(keyword string) ([]*entity.ListEvent, error)
+	GetByAuthor(id int64) ([]*entity.ListEvent, error)
 }

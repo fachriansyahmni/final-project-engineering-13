@@ -40,16 +40,16 @@ func (eh *EventHandler) Create(c *gin.Context) {
 	var event payloads.EventRequest
 	if err := c.ShouldBindJSON(&event); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 	authorId, err := eh.GetAuthorID(c)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
@@ -58,15 +58,15 @@ func (eh *EventHandler) Create(c *gin.Context) {
 	err = eh.eventService.Create(event)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "success",
+		"status_code": 200,
+		"message":     "success",
 	})
 }
 
@@ -74,8 +74,8 @@ func (eh *EventHandler) Update(c *gin.Context) {
 	var event entity.Event
 	if err := c.ShouldBindJSON(&event); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
@@ -83,15 +83,15 @@ func (eh *EventHandler) Update(c *gin.Context) {
 	err := eh.eventService.Update(event)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "success",
+		"status_code": 200,
+		"message":     "success",
 	})
 }
 
@@ -99,23 +99,23 @@ func (eh *EventHandler) Delete(c *gin.Context) {
 	var event payloads.EventIdRequest
 	if err := c.ShouldBindJSON(&event); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 	err := eh.eventService.Delete(event.ID)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "success deleted",
+		"status_code": 200,
+		"message":     "success deleted",
 	})
 
 }
@@ -131,23 +131,23 @@ func (eh *EventHandler) GetEvent(c *gin.Context) {
 		events, err := eh.eventService.GetByModel(mid2)
 		if events == nil {
 			c.JSON(404, gin.H{
-				"status":  404,
-				"message": "model not found",
+				"status_code": 404,
+				"message":     "model not found",
 			})
 			return
 		}
 		if err != nil {
 			c.JSON(400, gin.H{
-				"status":  400,
-				"message": err.Error(),
+				"status_code": 400,
+				"message":     err.Error(),
 			})
 			return
 		}
 
 		c.JSON(200, gin.H{
-			"status":  200,
-			"message": "success",
-			"data":    events,
+			"status_code": 200,
+			"message":     "success",
+			"data":        events,
 		})
 		return
 	}
@@ -158,23 +158,23 @@ func (eh *EventHandler) GetEvent(c *gin.Context) {
 		events, err := eh.eventService.GetByCategory(cid2)
 		if events == nil {
 			c.JSON(404, gin.H{
-				"status":  404,
-				"message": "category not found",
+				"status_code": 404,
+				"message":     "category not found",
 			})
 			return
 		}
 		if err != nil {
 			c.JSON(400, gin.H{
-				"status":  400,
-				"message": err.Error(),
+				"status_code": 400,
+				"message":     err.Error(),
 			})
 			return
 		}
 
 		c.JSON(200, gin.H{
-			"status":  200,
-			"message": "success",
-			"data":    events,
+			"status_code": 200,
+			"message":     "success",
+			"data":        events,
 		})
 		return
 	}
@@ -185,39 +185,65 @@ func (eh *EventHandler) GetEvent(c *gin.Context) {
 		events, err := eh.eventService.GetByID(idi)
 		if len(events.Title) == 0 {
 			c.JSON(404, gin.H{
-				"status":  404,
-				"message": "event not found",
+				"status_code": 404,
+				"message":     "event not found",
 			})
 			return
 		}
 		if err != nil {
 			c.JSON(400, gin.H{
-				"status":  400,
-				"message": err.Error(),
+				"status_code": 400,
+				"message":     err.Error(),
 			})
 			return
 		}
 
 		c.JSON(200, gin.H{
-			"status":  200,
-			"message": "success",
-			"data":    events,
+			"status_code": 200,
+			"message":     "success",
+			"data":        events,
 		})
 		return
 	}
 	events, err := eh.eventService.GetAll()
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "success",
-		"data":    events,
+		"status_code": 200,
+		"message":     "success",
+		"data":        events,
+	})
+}
+
+func (eh *EventHandler) MyEvents(c *gin.Context) {
+	authorId, err := eh.GetAuthorID(c)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"status_code": 400,
+			"message":     err.Error(),
+		})
+		return
+	}
+
+	events, err := eh.eventService.GetByAuthor(int64(authorId))
+	if err != nil {
+		c.JSON(400, gin.H{
+			"status_code": 400,
+			"message":     err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status_code": 200,
+		"message":     "success",
+		"data":        events,
 	})
 }
 
@@ -225,16 +251,16 @@ func (eh *EventHandler) GetAllCategories(c *gin.Context) {
 	categories, err := eh.eventService.GetAllCategory()
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "success",
-		"data":    categories,
+		"status_code": 200,
+		"message":     "success",
+		"data":        categories,
 	})
 }
 
@@ -242,16 +268,16 @@ func (eh *EventHandler) GetAllModels(c *gin.Context) {
 	models, err := eh.eventService.GetAllModel()
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "success",
-		"data":    models,
+		"status_code": 200,
+		"message":     "success",
+		"data":        models,
 	})
 }
 
@@ -259,16 +285,16 @@ func (eh *EventHandler) GetAllTypes(c *gin.Context) {
 	types, err := eh.eventService.GetAllTypeEvent()
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "success",
-		"data":    types,
+		"status_code": 200,
+		"message":     "success",
+		"data":        types,
 	})
 }
 
@@ -277,23 +303,23 @@ func (eh *EventHandler) SearchEvents(c *gin.Context) {
 	events, err := eh.eventService.Search(keywords)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	if len(events) == 0 {
-		c.JSON(404, gin.H{
-			"status":  404,
-			"message": "events not found",
+		c.JSON(200, gin.H{
+			"status_code": 200,
+			"message":     "events not found",
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "success",
-		"data":    events,
+		"status_code": 200,
+		"message":     "success",
+		"data":        events,
 	})
 }

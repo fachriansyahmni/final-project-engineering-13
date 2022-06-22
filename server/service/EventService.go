@@ -48,7 +48,7 @@ func (e *EventServiceImpl) Validate(event payloads.EventRequest) error {
 func (e *EventServiceImpl) Create(event payloads.EventRequest) error {
 	err := e.Validate(event)
 	if err != nil {
-		return err
+		return errors.New("EVENT_NOT_VALID")
 	}
 
 	err = e.eventRepo.Create(&event)
@@ -140,6 +140,15 @@ func (e *EventServiceImpl) GetByModel(model_id int64) ([]*entity.ListEvent, erro
 	result, err := e.eventRepo.GetByModel(model_id)
 	if err != nil {
 		return nil, errors.New("NOT_FOUND")
+	}
+
+	return result, nil
+}
+
+func (e *EventServiceImpl) GetByAuthor(authorId int64) ([]*entity.ListEvent, error) {
+	result, err := e.eventRepo.GetByAuthor(authorId)
+	if err != nil {
+		return nil, errors.New("EVENT_NOT_FOUND")
 	}
 
 	return result, nil

@@ -26,6 +26,7 @@ type EventRepoInterface interface {
 	ValidateEventUser(eventId, userId int64) error
 	ById(id int64) (entity.Event, error)
 	Search(keyword string) ([]*entity.ListEvent, error)
+	GetByAuthor(id int64) ([]*entity.ListEvent, error)
 }
 
 type CategoryEventRepoInterface interface {
