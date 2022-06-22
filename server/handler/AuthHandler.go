@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rg-km/final-project-engineering-13/payloads"
 	"github.com/rg-km/final-project-engineering-13/service"
+	"github.com/rg-km/final-project-engineering-13/utils"
 )
 
 type AuthHandler struct {
@@ -20,6 +21,16 @@ func (a *AuthHandler) Login(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"status":  400,
 			"message": err.Error(),
+		})
+		return
+	}
+
+	check := utils.ValidationForm(loginReq)
+
+	if check != "" {
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": check,
 		})
 		return
 	}
@@ -47,6 +58,16 @@ func (a *AuthHandler) Register(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"status":  400,
 			"message": err.Error(),
+		})
+		return
+	}
+
+	check := utils.ValidationForm(register)
+
+	if check != "" {
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": check,
 		})
 		return
 	}

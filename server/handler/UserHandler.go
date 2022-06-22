@@ -5,6 +5,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/rg-km/final-project-engineering-13/payloads"
 	"github.com/rg-km/final-project-engineering-13/service"
+	"github.com/rg-km/final-project-engineering-13/utils"
 )
 
 type UserHandler struct {
@@ -50,6 +51,16 @@ func (a *UserHandler) UpdatePassword(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"status":  4001,
 			"message": err.Error(),
+		})
+		return
+	}
+
+	check := utils.ValidationForm(passwordReq)
+
+	if check != "" {
+		c.JSON(400, gin.H{
+			"status":  400,
+			"message": check,
 		})
 		return
 	}
