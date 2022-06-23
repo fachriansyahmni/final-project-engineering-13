@@ -11,8 +11,8 @@ func SetupAuthenticationMiddleware() gin.HandlerFunc {
 
 		if err != nil {
 			c.JSON(403, gin.H{
-				"status":  403,
-				"message": err.Error(),
+				"status_code": 403,
+				"message":     err.Error(),
 			})
 			c.Abort()
 			return

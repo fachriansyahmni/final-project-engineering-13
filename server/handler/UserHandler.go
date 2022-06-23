@@ -5,6 +5,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/rg-km/final-project-engineering-13/payloads"
 	"github.com/rg-km/final-project-engineering-13/service"
+	"github.com/rg-km/final-project-engineering-13/utils"
 )
 
 type UserHandler struct {
@@ -16,11 +17,11 @@ func NewUserHandler(authService service.UserService) *UserHandler {
 }
 
 func (a *UserHandler) UpdateProfile(c *gin.Context) {
-	var userReq payloads.CreateRequest
+	var userReq payloads.UpdateRequest
 	if err := c.ShouldBindJSON(&userReq); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
@@ -32,24 +33,34 @@ func (a *UserHandler) UpdateProfile(c *gin.Context) {
 	err := a.authService.UpdateProfile(userReq, id)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "Update Profile Success",
+		"status_code": 200,
+		"message":     "Update Profile Success",
 	})
 }
 
 func (a *UserHandler) UpdatePassword(c *gin.Context) {
-	var passwordReq string
+	var passwordReq payloads.UpdatePasswordRequest
 	if err := c.ShouldBindJSON(&passwordReq); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
+		})
+		return
+	}
+
+	check := utils.ValidationForm(passwordReq)
+
+	if check != "" {
+		c.JSON(400, gin.H{
+			"status_code": 400,
+			"message":     check,
 		})
 		return
 	}
@@ -61,24 +72,24 @@ func (a *UserHandler) UpdatePassword(c *gin.Context) {
 	err := a.authService.UpdatePassword(id, passwordReq)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "Update Password Success",
+		"status_code": 200,
+		"message":     "Update Password Success",
 	})
 }
 
 func (a *UserHandler) UpdatePhoto(c *gin.Context) {
-	var photoReq string
+	var photoReq payloads.UpdatePhotoRequest
 	if err := c.ShouldBindJSON(&photoReq); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
@@ -90,15 +101,15 @@ func (a *UserHandler) UpdatePhoto(c *gin.Context) {
 	err := a.authService.UpdatePhoto(id, photoReq)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "Update Photo Success",
+		"status_code": 200,
+		"message":     "Update Photo Success",
 	})
 }
 
@@ -110,15 +121,15 @@ func (a *UserHandler) GetProfile(c *gin.Context) {
 	user, err := a.authService.GetProfile(id)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "Get Profile Success",
-		"data":    user,
+		"status_code": 200,
+		"message":     "Get Profile Success",
+		"data":        user,
 	})
 }
