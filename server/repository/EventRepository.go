@@ -111,7 +111,7 @@ func (er *EventRepository) Delete(id int64) error {
 }
 
 func (er *EventRepository) GetAll() ([]*entity.ListEvent, error) {
-	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id")
+	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, e.type_event_id, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id")
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +121,7 @@ func (er *EventRepository) GetAll() ([]*entity.ListEvent, error) {
 	var events []*entity.ListEvent
 	for rows.Next() {
 		var ev entity.ListEvent
-		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent_id, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
 		if err != nil {
 			return nil, err
 		}
@@ -133,7 +133,7 @@ func (er *EventRepository) GetAll() ([]*entity.ListEvent, error) {
 }
 
 func (er *EventRepository) GetByCategory(category_id int64) ([]*entity.ListEvent, error) {
-	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.category_id = ?", category_id)
+	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, e.type_event_id, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.category_id = ?", category_id)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +143,7 @@ func (er *EventRepository) GetByCategory(category_id int64) ([]*entity.ListEvent
 	var events []*entity.ListEvent
 	for rows.Next() {
 		var ev entity.ListEvent
-		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent_id, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
 		if err != nil {
 			return nil, err
 		}
@@ -155,7 +155,7 @@ func (er *EventRepository) GetByCategory(category_id int64) ([]*entity.ListEvent
 }
 
 func (er *EventRepository) GetByModel(model_id int64) ([]*entity.ListEvent, error) {
-	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.model_id = ?", model_id)
+	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, e.type_event_id, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.model_id = ?", model_id)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +165,7 @@ func (er *EventRepository) GetByModel(model_id int64) ([]*entity.ListEvent, erro
 	var events []*entity.ListEvent
 	for rows.Next() {
 		var ev entity.ListEvent
-		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent_id, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
 		if err != nil {
 			return nil, err
 		}
@@ -177,7 +177,7 @@ func (er *EventRepository) GetByModel(model_id int64) ([]*entity.ListEvent, erro
 }
 
 func (er *EventRepository) GetByID(id int64) (*entity.ListEvent, error) {
-	row, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.id = ?", id)
+	row, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, e.type_event_id, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.id = ?", id)
 	if err != nil {
 		return nil, err
 	}
@@ -186,7 +186,7 @@ func (er *EventRepository) GetByID(id int64) (*entity.ListEvent, error) {
 
 	var ev entity.ListEvent
 	for row.Next() {
-		err := row.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		err := row.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent_id, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
 		if err != nil {
 			return nil, err
 		}
@@ -195,7 +195,7 @@ func (er *EventRepository) GetByID(id int64) (*entity.ListEvent, error) {
 }
 
 func (er *EventRepository) GetByAuthor(author_id int64) ([]*entity.ListEvent, error) {
-	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.author_id = ?", author_id)
+	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, e.type_event_id, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.author_id = ?", author_id)
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +205,7 @@ func (er *EventRepository) GetByAuthor(author_id int64) ([]*entity.ListEvent, er
 	var events []*entity.ListEvent
 	for rows.Next() {
 		var ev entity.ListEvent
-		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent_id, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
 		if err != nil {
 			return nil, err
 		}
@@ -227,7 +227,7 @@ func (er *EventRepository) CheckCategory(id int64) (bool, error) {
 }
 
 func (er *EventRepository) Search(keyword string) ([]*entity.ListEvent, error) {
-	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.title LIKE ?", "%"+keyword+"%")
+	rows, err := er.db.Query("SELECT e.id, u.first_name, e.title, e.banner_img, e.content, e.category_id, ce.name , CAST(e.start_time_event as varchar), CAST(e.start_date_event as varchar), e.contact, e.price, e.type_event_id, te.name, me.name, e.location_details, e.register_url FROM events e INNER JOIN users u ON e.author_id = u.id INNER JOIN categories_event ce ON e.category_id = ce.id INNER JOIN models me ON e.model_id = me.id INNER JOIN type_event te ON e.type_event_id = te.id WHERE e.title LIKE ?", "%"+keyword+"%")
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +237,7 @@ func (er *EventRepository) Search(keyword string) ([]*entity.ListEvent, error) {
 	var events []*entity.ListEvent
 	for rows.Next() {
 		var ev entity.ListEvent
-		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
+		err := rows.Scan(&ev.ID, &ev.Author, &ev.Title, &ev.BannerImg, &ev.Content, &ev.Category_id, &ev.Category, &ev.StartTimeEvent, &ev.StartDateEvent, &ev.Contact, &ev.Price, &ev.TypeEvent_id, &ev.TypeEvent, &ev.ModelEvent, &ev.LocationDetails, &ev.RegisterUrl)
 		if err != nil {
 			return nil, err
 		}
