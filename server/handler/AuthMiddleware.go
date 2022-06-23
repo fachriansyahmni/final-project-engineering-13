@@ -10,8 +10,8 @@ func SetupAuthenticationMiddleware() gin.HandlerFunc {
 		err := securities.GetAuthentication(c)
 
 		if err != nil {
-			c.JSON(401, gin.H{
-				"status":  401,
+			c.JSON(403, gin.H{
+				"status":  403,
 				"message": err.Error(),
 			})
 			c.Abort()
@@ -19,22 +19,6 @@ func SetupAuthenticationMiddleware() gin.HandlerFunc {
 		}
 
 		c.Next()
-	}
-}
-
-func AuthMiddlerware(next gin.HandlerFunc) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		err := securities.GetAuthentication(c)
-
-		if err != nil {
-			c.JSON(401, gin.H{
-				"status":  401,
-				"message": err.Error(),
-			})
-			return
-		}
-
-		next(c)
 	}
 }
 
