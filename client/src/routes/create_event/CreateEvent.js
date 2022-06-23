@@ -175,7 +175,11 @@ export default function CreateEvent () {
                         <button onClick={handleSubmit} className="btn btn-outline-success">Submit</button>
                     </div>
                     <div className="col-4">
-                        Buar syarat dan ketentuan
+                        <p className="text-center"><strong>Syarat dan Ketentuan</strong></p>
+                        <ol>
+                            <li>Event yang akan dipublikasikan tidak mengandung sara atau merugikan pihak perorangan maupun kelompok.</li>
+                            <li>Dilarang mempublikasikan <i>fake</i> event</li>
+                        </ol>
                     </div>
                 </div>
             </div>
