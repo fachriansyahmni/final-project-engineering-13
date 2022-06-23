@@ -19,8 +19,8 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	var loginReq payloads.LoginRequest
 	if err := c.ShouldBindJSON(&loginReq); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
@@ -29,8 +29,8 @@ func (a *AuthHandler) Login(c *gin.Context) {
 
 	if check != "" {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": check,
+			"status_code": 400,
+			"message":     check,
 		})
 		return
 	}
@@ -38,17 +38,17 @@ func (a *AuthHandler) Login(c *gin.Context) {
 	token, err := a.authService.Login(loginReq)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.Header("Authorization", "Bearer "+token)
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "Login Success",
-		"data":    gin.H{"token": token},
+		"status_code": 200,
+		"message":     "Login Success",
+		"data":        gin.H{"token": token},
 	})
 }
 
@@ -56,8 +56,8 @@ func (a *AuthHandler) Register(c *gin.Context) {
 	var register payloads.CreateRequest
 	if err := c.ShouldBindJSON(&register); err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
@@ -66,8 +66,8 @@ func (a *AuthHandler) Register(c *gin.Context) {
 
 	if check != "" {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": check,
+			"status_code": 400,
+			"message":     check,
 		})
 		return
 	}
@@ -75,15 +75,15 @@ func (a *AuthHandler) Register(c *gin.Context) {
 	err := a.authService.Register(register)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status":  400,
-			"message": err.Error(),
+			"status_code": 400,
+			"message":     err.Error(),
 		})
 		return
 	}
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "Register Success",
+		"status_code": 200,
+		"message":     "Register Success",
 	})
 }
 
@@ -91,7 +91,7 @@ func (a *AuthHandler) Logout(c *gin.Context) {
 	c.Header("Authorization", "")
 
 	c.JSON(200, gin.H{
-		"status":  200,
-		"message": "Logout Success",
+		"status_code": 200,
+		"message":     "Logout Success",
 	})
 }

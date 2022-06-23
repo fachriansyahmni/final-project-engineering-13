@@ -14,7 +14,7 @@ type UserService interface {
 	UpdateProfile(userReq payloads.UpdateRequest, idUser int) error
 	UpdatePassword(id int, password payloads.UpdatePasswordRequest) error
 	UpdatePhoto(id int, photo payloads.UpdatePhotoRequest) error
-	GetProfile(id int) (entity.User, error)
+	GetProfile(id int) (payloads.ProfileRequest, error)
 }
 
 type EventService interface {

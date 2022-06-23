@@ -29,10 +29,11 @@ func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHan
 
 		ev := api.Group("/event")
 		{
+			ev.Use(handler.SetupAuthenticationMiddleware())
 			ev.GET("/", event.GetEvent)
-			ev.POST("/create", handler.AuthMiddlerware(event.Create))
-			ev.PUT("/update", handler.AuthMiddlerware(event.Update))
-			ev.DELETE("/delete", handler.AuthMiddlerware(event.Delete))
+			ev.POST("/create", event.Create)
+			ev.PUT("/update", event.Update)
+			ev.DELETE("/delete", event.Delete)
 		}
 
 		api.Use(handler.SetupAuthenticationMiddleware())

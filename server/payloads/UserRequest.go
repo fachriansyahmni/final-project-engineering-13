@@ -18,6 +18,15 @@ type UpdateRequest struct {
 	Contact   string `json:"contact"`
 }
 
+type ProfileRequest struct {
+	Username  string `json:"username"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Email     string `json:"email"`
+	Contact   string `json:"contact"`
+	Photo     string `json:"photo"`
+}
+
 type UpdatePasswordRequest struct {
 	OldPassword string `json:"old_password" validate:"required"`
 	NewPassword string `json:"new_password" validate:"required,min=6"`
@@ -43,9 +52,3 @@ type UserDetailClaims struct {
 	Authorize bool   `json:"authorized"`
 	jwt.StandardClaims
 }
-
-// type UserDetail struct {
-// 	ID        string `json:"id"`
-// 	Username  string `json:"username"`
-// 	Authorize string `json:"authorized"`
-// }

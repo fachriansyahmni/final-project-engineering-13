@@ -2,9 +2,7 @@ package service
 
 import (
 	"errors"
-	"log"
 
-	"github.com/rg-km/final-project-engineering-13/entity"
 	"github.com/rg-km/final-project-engineering-13/payloads"
 	"github.com/rg-km/final-project-engineering-13/repository"
 	"github.com/rg-km/final-project-engineering-13/securities"
@@ -45,8 +43,19 @@ func (us *UserServiceImpl) UpdatePhoto(id int, photo payloads.UpdatePhotoRequest
 	return us.userRepo.UpdatePhoto(id, photo.Photo)
 }
 
-func (us *UserServiceImpl) GetProfile(id int) (entity.User, error) {
-	log.Println("GetProfile")
+func (us *UserServiceImpl) GetProfile(id int) (payloads.ProfileRequest, error) {
 	user, err := us.userRepo.GetUserByID(id)
-	return user, err
+	if err != nil {
+		return payloads.ProfileRequest{}, errors.New("USER NOT FOUND")
+	}
+	profileReq := payloads.ProfileRequest{
+		Username:  user.Username,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Email:     user.Email,
+		Contact:   user.Contact,
+		Photo:     user.Photo,
+	}
+
+	return profileReq, nil
 }
