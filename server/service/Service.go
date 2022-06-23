@@ -21,7 +21,14 @@ type EventService interface {
 	Create(event payloads.EventRequest) error
 	GetAuthorID(token string) (int, error)
 	GetAll() ([]*entity.ListEvent, error)
+	GetByCategory(category_id int64) ([]*entity.ListEvent, error)
+	GetByModel(model_id int64) ([]*entity.ListEvent, error)
 	GetByID(id int64) (*entity.ListEvent, error)
 	Delete(id int64) error
 	Update(event entity.Event) error
+	GetAllCategory() ([]entity.Category_Event, error)
+	GetAllTypeEvent() ([]entity.Type_Event, error)
+	GetAllModel() ([]entity.Model, error)
+	Search(keyword string) ([]*entity.ListEvent, error)
+	GetByAuthor(id int64) ([]*entity.ListEvent, error)
 }

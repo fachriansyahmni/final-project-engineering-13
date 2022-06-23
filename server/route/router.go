@@ -26,15 +26,19 @@ func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHan
 			auth.POST("/register", authentication.Register)
 			auth.POST("/logout", authentication.Logout)
 		}
-
 		ev := api.Group("/event")
 		{
-			ev.Use(handler.SetupAuthenticationMiddleware())
 			ev.GET("/", event.GetEvent)
+			ev.Use(handler.SetupAuthenticationMiddleware())
 			ev.POST("/create", event.Create)
 			ev.PUT("/update", event.Update)
 			ev.DELETE("/delete", event.Delete)
+			ev.GET("/my-events", event.MyEvents)
 		}
+
+		api.GET("/models", event.GetAllModels)
+		api.GET("/categories", event.GetAllCategories)
+		api.GET("/types", event.GetAllTypes)
 
 		api.Use(handler.SetupAuthenticationMiddleware())
 		api.GET("/profile", userHandler.GetProfile)
@@ -45,6 +49,10 @@ func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHan
 	}
 
 	return router
+}
+
+func (a *Router) Handler() *gin.Engine {
+	return a.route
 }
 
 func (a *Router) Run(port string) {
