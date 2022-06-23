@@ -51,6 +51,10 @@ func Newrouter(authentication *handler.AuthHandler, userHandler *handler.UserHan
 	return router
 }
 
+func (a *Router) Handler() *gin.Engine {
+	return a.route
+}
+
 func (a *Router) Run(port string) {
 	a.route.Run(port)
 }
