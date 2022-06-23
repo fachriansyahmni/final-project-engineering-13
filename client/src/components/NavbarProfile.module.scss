@@ -1,0 +1,21 @@
+.navbar-profile {
+    background-color: rgb(30, 159, 159);
+    cursor: pointer;
+}
+
+.modal-profile {
+    position: absolute;
+    top: 60px;
+    left: 9px;
+    background-color: cadetblue;
+    & > ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0.5rem;
+        & > li > a {
+            color: white;
+            text-decoration: none;
+            text-align: center;
+        }
+    }
+}
