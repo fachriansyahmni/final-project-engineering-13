@@ -12,10 +12,11 @@ import ProtectedRoute from './routes/protectedRoutes/ProtectedRoute';
 import Profile from './routes/profile/Profile';
 import NotFound from './routes/notfound/NotFound';
 import CreateEvent from './routes/create_event/CreateEvent';
-import axios from 'axios';
+import Seminar from './routes/Seminar/Seminar';
 
 import { dataStore } from './store/data';
 import { useEffect } from 'react';
+import DetailEvent from './routes/detail_event/DetailEvent';
 function App() {
 
   const {token} = dataStore()
@@ -65,6 +66,16 @@ function App() {
         {/* <Route path="/bantuan" element={<Helpdesk />} /> */}
       <Route path='/login' element={<Login />} /> 
       <Route path='/registrasi' element={<Register />} />
+
+      <Route path='/event/seminar'>
+        <Route index element={<Seminar />} />
+        <Route path=':id' element={<DetailEvent />} />
+      </Route>
+      <Route path='/event/beasiswa'>
+        <Route index element={(<><h1>Ini di event list beasiswa</h1></>)} />
+        <Route path=':id' element={(<><h1>Ini dah masuk ke detail event beasiswa</h1></>)} />
+      </Route>
+
       <Route path='/bantuan' element={<Helpdesk />} />
       <Route path='/profile' element={ <ProtectedRoute token={token} child={<Profile />} />}/>
       <Route path='/event/create' element={<ProtectedRoute token={token} child={<CreateEvent />} />} />

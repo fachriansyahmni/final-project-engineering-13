@@ -137,11 +137,12 @@ export default function Main () {
                                 Explore
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Seminar</a></li>
+                                {/* <li><a class="dropdown-item" href="#">Seminar</a></li> */}
+                                <li><NavLink to={'/event/seminar'} className="dropdown-item">Seminar</NavLink></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="#">Beasiswa</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Job Fair</a></li>
+                                {/* <li><hr class="dropdown-divider" /></li> */}
+                                {/* <li><a class="dropdown-item" href="#">Job Fair</a></li> */}
                             </ul>
                             </li>
 

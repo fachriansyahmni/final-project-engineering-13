@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import JoditEditor from "jodit-react";
 
 const config = {
@@ -6,7 +6,8 @@ const config = {
 };
 
 const RichTextEditor = ({ initialValue, getValue }) => {
-  const editor = useRef(null);
+  // const editor = useRef(null);
+  const editor = useState('');
 
   return (
     <JoditEditor

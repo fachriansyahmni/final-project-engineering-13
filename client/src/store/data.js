@@ -48,14 +48,14 @@ const dataUser = create((set) => ({
         // }
 
         //test get event with ip server
-        try {
-            const response = await fetch('http://localhost:8090/api/v1/event/', { mode: 'cors' });
-            const data = await response.json();
-            console.log({ data }, 'get all event from datastore')
-        }
-        catch (e) {
-            console.log(e)
-        }
+    // try {
+    //     const response = await fetch('http://localhost:8090/api/v1/event/', { mode: 'cors' });
+    //     const data = await response.json();
+    //     console.log({ data }, 'get all event from datastore')
+    // }
+    // catch (e) {
+    //     console.log(e)
+    // }
 
         // get data profile
         try {

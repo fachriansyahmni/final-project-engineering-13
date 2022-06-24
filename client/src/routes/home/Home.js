@@ -9,9 +9,10 @@ import PublisherIcon from "../../assets/home/Publisher.svg"
 import ManagementsIcon from "../../assets/home/Managements.svg"
 import PlatformIcon from "../../assets/home/Platform.svg"
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Home () {
+    const navigate = useNavigate()
     return (
         <>
             <Navbar />
@@ -46,7 +47,7 @@ export default function Home () {
                         <div style={{paddingLeft:'100px'}}>
                             <h5 className=" fst-italic fs-1 pt-4" style={{letterSpacing:'0.1em'}}>Seminar</h5>
                             <p className="">Menyediakan event seminar yang kamu butuhkan dari berbagai komunitas</p>
-                            <button type="button" className="btn btn-outline-success ">Click Here</button>
+                            <button type="button" className="btn btn-outline-success " onClick={() => {navigate('/event/seminar')}}>Click Here</button>
                         </div>
                     </div>
                 </div>
