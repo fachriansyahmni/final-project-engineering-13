@@ -15,6 +15,7 @@ import dataDummy from "../../data/dummy";
 
 import './style.scss'
 import Card from "../../components/Card";
+import List from "../../components/ListSearch";
 
 export default function Seminar () {
 
@@ -37,7 +38,8 @@ export default function Seminar () {
     const filter = (kategori, tipe, terbaru, price) => {
         // terbaru disini kalau default tampilkan yang terbaru (di reverse)
         // price juga kalau default diurutkan dari terendah ke tinggi
-        let filtered = [...dataDummy]
+        // let filtered = [...dataDummy]
+        let filtered = [...seminar]
         if (kategori === 'default' && tipe === 'default' && terbaru === 'default' && price === 'default') {
             console.log('masuk return 1')
             return filtered.reverse()
@@ -121,8 +123,14 @@ export default function Seminar () {
         }
     }
 
+    const [query, setQuery] = useState(null)
+
+    const handleQuery = (e) => {
+        setQuery(e.target.value)
+    }
+
     return (
-        <>
+        <div className="position-relative">
             <Navbar />
             <div className="container">
                 <div className="row d-flex flex-row">
@@ -135,9 +143,16 @@ export default function Seminar () {
                     </div>
                 </div>
             </div>
-            <div className="bg-light">
-                <div>
-                    tempat search bar
+            <div className="bg-light position-relative">
+                <div className="d-flex justify-content-center py-2 position-relative">
+                    <div className="position-relative">
+                        <div className="d-flex flex-row gap-2">
+                            <input type="text" class="form-control" placeholder="Search Event" onChange={handleQuery} />
+                            <button className="btn btn-outline-success">Cari</button>
+                            
+                        </div>
+                        <List query={query}/>
+                    </div>
                 </div>
             </div>
             <div className="container">
@@ -226,10 +241,35 @@ export default function Seminar () {
                         </div>
                     </div>
                 </div>
-                <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
-                <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
+                <div className="d-flex flex-wrap gap-3">
+                    {
+                        filteredData.length > 0 && 
+                            filteredData.map((item, index) => (
+                                <Card banner={item.banner_img} id={item.id} price={item.price} title={item.title} key={index}/>
+                            ))
+                    }
+                    {/* <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
+                    
+                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
+                  
+                   
+                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
+                    
+                    
+                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
+                   
+                    
+                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
+                    
+                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
+                    
+                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
+                   
+                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
+                     */}
+                </div>
             </div>
             <Footer />
-        </>
+        </div>
     )
 }

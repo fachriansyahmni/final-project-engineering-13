@@ -6,9 +6,17 @@
 }
 
 .titleEvent {
-    display: block;
+    display: inline;
     position: absolute;
+    background-color: #2f2c2c;
+    color: white;
     bottom: 0;
+    width: 100%;
+    text-align: center;
+    
+    white-space:pre;
+    overflow:hidden;
+    text-overflow: ellipsis;
 }
 
 .free {

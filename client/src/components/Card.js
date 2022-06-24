@@ -13,8 +13,9 @@ export default function Card ({banner, id, price, title}) {
                 <div className="">
                     <img src={banner} />
                 </div>
-                <div className="titleEvent">
-                    <p className="text-center">{title}</p>
+                <div className="titleEvent px-1">
+                    {title}
+                    {/* The 56th MarkPlus Goes to Campus “Entrepreneurial Marketing" */}
                 </div>
             </div>
         </Link>
