@@ -146,27 +146,63 @@ var _ = Describe("Main", func() {
 		}
 	})
 
-	It("Should success login when login with user registered", func() {
-		w := httptest.NewRecorder()
-		bodyReader := strings.NewReader(`{"username": "user_tes", "password": "user123"}`)
-		r, err := http.NewRequest("POST", "/api/v1/auth/login", bodyReader)
-		if err != nil {
-			log.Fatal(err)
-		}
+	Describe("Login credentials are empty", func() {
+		When("Email are empty", func() {
+			It("should return error", func() {
+				w := httptest.NewRecorder()
+				bodyReader := strings.NewReader(`{"email": "", "password": "user123"}`)
+				r, err := http.NewRequest("POST", "/api/v1/auth/login", bodyReader)
+				if err != nil {
+					log.Fatal(err)
+				}
 
-		serve.ServeHTTP(w, r)
-		Expect(w.Code).To(Equal(http.StatusOK))
+				serve.ServeHTTP(w, r)
+				Expect(w.Code).To(Equal(http.StatusBadRequest))
+			})
+		})
+
+		When("Password are empty", func() {
+			It("should return error", func() {
+				w := httptest.NewRecorder()
+				bodyReader := strings.NewReader(`{"email": "user_tes@ruangevent.com", "password": ""}`)
+				r, err := http.NewRequest("POST", "/api/v1/auth/login", bodyReader)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				serve.ServeHTTP(w, r)
+				Expect(w.Code).To(Equal(http.StatusBadRequest))
+			})
+		})
 	})
 
-	It("Should failed login when login with user unregistered", func() {
-		w := httptest.NewRecorder()
-		bodyReader := strings.NewReader(`{"username": "user_unregis", "password": "user123"}`)
-		r, err := http.NewRequest("POST", "/api/v1/auth/login", bodyReader)
-		if err != nil {
-			log.Fatal(err)
-		}
+	Describe("Login credentials are correct", func() {
+		When("Email and Password are correct", func() {
+			It("Should return success", func() {
+				w := httptest.NewRecorder()
+				bodyReader := strings.NewReader(`{"email": "user_tes@ruangevent.com", "password": "user123"}`)
+				r, err := http.NewRequest("POST", "/api/v1/auth/login", bodyReader)
+				if err != nil {
+					log.Fatal(err)
+				}
 
-		serve.ServeHTTP(w, r)
-		Expect(w.Code).To(Equal(http.StatusBadRequest))
+				serve.ServeHTTP(w, r)
+				Expect(w.Code).To(Equal(http.StatusOK))
+			})
+		})
+		When("Email and Password are incorrect", func() {
+			It("Should failed login when login with user unregistered", func() {
+				w := httptest.NewRecorder()
+				bodyReader := strings.NewReader(`{"email": "user_unregis@ruangevent.com", "password": "user123"}`)
+				r, err := http.NewRequest("POST", "/api/v1/auth/login", bodyReader)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				serve.ServeHTTP(w, r)
+				Expect(w.Code).To(Equal(http.StatusBadRequest))
+			})
+		})
 	})
+
 })
