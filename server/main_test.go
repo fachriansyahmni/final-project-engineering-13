@@ -205,4 +205,88 @@ var _ = Describe("Main", func() {
 		})
 	})
 
+	Describe("Register credentials are empty", func() {
+		When("Email are empty", func() {
+			It("should return error", func() {
+				w := httptest.NewRecorder()
+				bodyReader := strings.NewReader(`
+				{
+					"username": "user_tes2",
+					"email": "",
+					"first_name": "user_tes",
+					"last_name": "ruang",
+					"password": "user123"
+				}`)
+				r, err := http.NewRequest("POST", "/api/v1/auth/register", bodyReader)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				serve.ServeHTTP(w, r)
+				Expect(w.Code).To(Equal(http.StatusBadRequest))
+			})
+		})
+		When("Password are empty", func() {
+			It("should return error", func() {
+				w := httptest.NewRecorder()
+				bodyReader := strings.NewReader(`
+				{
+					"username": "user_tes2",
+					"email": "user_tes2@ruangevent.com",
+					"first_name": "user_tes",
+					"last_name": "ruang",
+					"password": ""
+				}`)
+				r, err := http.NewRequest("POST", "/api/v1/auth/register", bodyReader)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				serve.ServeHTTP(w, r)
+				Expect(w.Code).To(Equal(http.StatusBadRequest))
+			})
+		})
+	})
+
+	Describe("Register credentials are correct", func() {
+		When("All credential correct", func() {
+			It("Should return success", func() {
+				w := httptest.NewRecorder()
+				bodyReader := strings.NewReader(`
+				{
+					"username": "user_tes_testing",
+					"email": "user_tes_testing@ruangevent.com",
+					"first_name": "user_tes",
+					"last_name": "ruang",
+					"password": "user123"
+				}`)
+				r, err := http.NewRequest("POST", "/api/v1/auth/register", bodyReader)
+				if err != nil {
+					log.Fatal(err)
+				}
+				serve.ServeHTTP(w, r)
+				Expect(w.Code).To(Equal(http.StatusOK))
+			})
+		})
+		When("Username already registered", func() {
+			It("Should return error code", func() {
+				w := httptest.NewRecorder()
+				bodyReader := strings.NewReader(`
+				{
+					"username": "user_tes",
+					"email": "user_tes@ruangevent.com",
+					"first_name": "user",
+					"last_name": "ruang",
+					"password": "user123"
+				}`)
+				r, err := http.NewRequest("POST", "/api/v1/auth/register", bodyReader)
+				if err != nil {
+					log.Fatal(err)
+				}
+				serve.ServeHTTP(w, r)
+				Expect(w.Code).To(Equal(http.StatusBadRequest))
+			})
+		})
+	})
+
 })
