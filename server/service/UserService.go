@@ -17,6 +17,16 @@ func NewUserService(userRepo repository.UserRepository) UserService {
 }
 
 func (us *UserServiceImpl) UpdateProfile(userReq payloads.UpdateRequest, idUser int) error {
+	user, err := us.userRepo.GetUserByUsername(userReq.Username)
+	if err == nil && user.ID != idUser {
+		return errors.New("USERNAME ALREADY EXIST")
+	}
+
+	user, err = us.userRepo.GetUserByEmail(userReq.Email)
+	if err == nil && user.ID != idUser {
+		return errors.New("EMAIL ALREADY EXIST")
+	}
+
 	return us.userRepo.UpdateUser(userReq, idUser)
 }
 
