@@ -23,6 +23,7 @@ var debe *sql.DB
 var serve *gin.Engine
 
 var _ = Describe("Main", func() {
+	gin.SetMode(gin.ReleaseMode)
 	BeforeEach(func() {
 		db, err := sql.Open("sqlite3", "app_test.db")
 		if err != nil {
