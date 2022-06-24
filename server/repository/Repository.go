@@ -11,19 +11,24 @@ type UserRepository interface {
 	GetUserByUsername(username string) (entity.User, error)
 	GetUserByEmail(email string) (entity.User, error)
 	CreateUser(user payloads.CreateRequest) error
-	UpdateUser(user payloads.CreateRequest, idUser int) error
+	UpdateUser(user payloads.UpdateRequest, idUser int) error
+	UpdatePassword(id int, passwordReq string) error
+	UpdatePhoto(id int, photo string) error
 	DeleteUser(id int) error
 }
 
 type EventRepoInterface interface {
 	GetAll() ([]*entity.ListEvent, error)
 	GetByCategory(category_id int64) ([]*entity.ListEvent, error)
+	GetByModel(model_id int64) ([]*entity.ListEvent, error)
 	GetByID(id int64) (*entity.ListEvent, error)
 	Create(ev *payloads.EventRequest) error
 	Delete(id int64) error
 	Update(id int64, ev *payloads.EventRequest) error
 	ValidateEventUser(eventId, userId int64) error
 	ById(id int64) (entity.Event, error)
+	Search(keyword string) ([]*entity.ListEvent, error)
+	GetByAuthor(id int64) ([]*entity.ListEvent, error)
 }
 
 type CategoryEventRepoInterface interface {

@@ -1,9 +1,8 @@
 package service
 
 import (
-	"log"
+	"errors"
 
-	"github.com/rg-km/final-project-engineering-13/entity"
 	"github.com/rg-km/final-project-engineering-13/payloads"
 	"github.com/rg-km/final-project-engineering-13/repository"
 	"github.com/rg-km/final-project-engineering-13/securities"
@@ -17,55 +16,56 @@ func NewUserService(userRepo repository.UserRepository) UserService {
 	return &UserServiceImpl{userRepo: userRepo}
 }
 
-func (us *UserServiceImpl) UpdateProfile(userReq payloads.CreateRequest, idUser int) error {
+func (us *UserServiceImpl) UpdateProfile(userReq payloads.UpdateRequest, idUser int) error {
+	user, err := us.userRepo.GetUserByUsername(userReq.Username)
+	if err == nil && user.ID != idUser {
+		return errors.New("USERNAME ALREADY EXIST")
+	}
+
+	user, err = us.userRepo.GetUserByEmail(userReq.Email)
+	if err == nil && user.ID != idUser {
+		return errors.New("EMAIL ALREADY EXIST")
+	}
+
 	return us.userRepo.UpdateUser(userReq, idUser)
 }
 
-func (us *UserServiceImpl) UpdatePassword(id int, password string) error {
+func (us *UserServiceImpl) UpdatePassword(id int, passwordReq payloads.UpdatePasswordRequest) error {
 	user, err := us.userRepo.GetUserByID(id)
 	if err != nil {
-		return err
+		return errors.New("USER NOT FOUND")
 	}
 
-	hash, err := securities.HashPassword(password)
+	err = securities.VerifyPassword(user.Password, passwordReq.OldPassword)
 	if err != nil {
-		return err
+		return errors.New("OLD PASSWORD IS WRONG")
 	}
 
-	userReq := payloads.CreateRequest{
+	hash, err := securities.HashPassword(passwordReq.NewPassword)
+	if err != nil {
+		return errors.New("HASHING PASSWORD FAILED")
+	}
+
+	return us.userRepo.UpdatePassword(id, hash)
+}
+
+func (us *UserServiceImpl) UpdatePhoto(id int, photo payloads.UpdatePhotoRequest) error {
+	return us.userRepo.UpdatePhoto(id, photo.Photo)
+}
+
+func (us *UserServiceImpl) GetProfile(id int) (payloads.ProfileRequest, error) {
+	user, err := us.userRepo.GetUserByID(id)
+	if err != nil {
+		return payloads.ProfileRequest{}, errors.New("USER NOT FOUND")
+	}
+	profileReq := payloads.ProfileRequest{
 		Username:  user.Username,
 		FirstName: user.FirstName,
 		LastName:  user.LastName,
 		Email:     user.Email,
-		Password:  hash,
 		Contact:   user.Contact,
 		Photo:     user.Photo,
 	}
 
-	return us.userRepo.UpdateUser(userReq, int(id))
-}
-
-func (us *UserServiceImpl) UpdatePhoto(id int, photo string) error {
-	user, err := us.userRepo.GetUserByID(id)
-	if err != nil {
-		return err
-	}
-
-	userReq := payloads.CreateRequest{
-		Username:  user.Username,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
-		Email:     user.Email,
-		Password:  user.Password,
-		Contact:   user.Contact,
-		Photo:     photo,
-	}
-
-	return us.userRepo.UpdateUser(userReq, int(id))
-}
-
-func (us *UserServiceImpl) GetProfile(id int) (entity.User, error) {
-	log.Println("GetProfile")
-	user, err := us.userRepo.GetUserByID(id)
-	return user, err
+	return profileReq, nil
 }

@@ -1,0 +1,23 @@
+.loginBg{
+    height: 100vh;
+    padding-top: 130px;
+    background-image: url('https://images.rawpixel.com/image_social_landscape/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0yNTUtc2FzaS0yOS1qb2I1OTguanBn.jpg?s=iFGQT6hctfdrClaGpV7dEQOjV8t8m4kVKD9bzOul8UY');
+}
+
+/* .container{
+    padding-top: 200px;
+} */
+
+h2{
+    text-align: center;
+}
+
+.form-control{
+    border: 1%;
+    border-color: black;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}

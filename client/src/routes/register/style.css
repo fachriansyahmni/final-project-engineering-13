@@ -1,0 +1,21 @@
+.registBg{
+    height: 100vh;
+    background-image: url('https://images.rawpixel.com/image_social_landscape/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0yNTUtc2FzaS0yOS1qb2I1OTguanBn.jpg?s=iFGQT6hctfdrClaGpV7dEQOjV8t8m4kVKD9bzOul8UY');
+}
+
+.container{
+    padding-top: 50px;
+}
+
+h2{
+    text-align: center;
+}
+
+.card{
+    border: 5px solid transparent;
+    background-color: transparent;
+}
+
+.card-header{
+    background-color: transparent;
+}

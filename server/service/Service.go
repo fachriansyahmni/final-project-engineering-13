@@ -11,13 +11,10 @@ type AuthService interface {
 }
 
 type UserService interface {
-	UpdateProfile(userReq payloads.CreateRequest, idUser int) error
-	UpdatePassword(id int, password string) error
-	UpdatePhoto(id int, photo string) error
-	GetProfile(id int) (entity.User, error)
-	// GetProfileByUsername(username string) (entity.User, error)
-	// GetAllProfile() ([]entity.User, error)
-	// DeleteProfile(id int64) error
+	UpdateProfile(userReq payloads.UpdateRequest, idUser int) error
+	UpdatePassword(id int, password payloads.UpdatePasswordRequest) error
+	UpdatePhoto(id int, photo payloads.UpdatePhotoRequest) error
+	GetProfile(id int) (payloads.ProfileRequest, error)
 }
 
 type EventService interface {
@@ -25,10 +22,13 @@ type EventService interface {
 	GetAuthorID(token string) (int, error)
 	GetAll() ([]*entity.ListEvent, error)
 	GetByCategory(category_id int64) ([]*entity.ListEvent, error)
+	GetByModel(model_id int64) ([]*entity.ListEvent, error)
 	GetByID(id int64) (*entity.ListEvent, error)
 	Delete(id int64) error
 	Update(event entity.Event) error
 	GetAllCategory() ([]entity.Category_Event, error)
 	GetAllTypeEvent() ([]entity.Type_Event, error)
 	GetAllModel() ([]entity.Model, error)
+	Search(keyword string) ([]*entity.ListEvent, error)
+	GetByAuthor(id int64) ([]*entity.ListEvent, error)
 }
