@@ -48,27 +48,31 @@ const navigate = useNavigate()
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        try {
-            // const response = await axios.post('https://reqres.in/api/register',{email: "eve.holt@reqres.in", password: "pistol"})
-            const form = {
-                "email": email,
-                "username": username,
-                "first_name": firstname,
-                "last_name": lastname,
-                "photo": photo,
-                "password": password,
-                "contact": " "
+        if (password.length < 6) {
+            alert('password minimal 6 karakter')
+        }
+        if (password.length >= 6) {
+            try {
+                // const response = await axios.post('https://reqres.in/api/register',{email: "eve.holt@reqres.in", password: "pistol"})
+                const form = {
+                    "email": email,
+                    "username": username,
+                    "first_name": firstname,
+                    "last_name": lastname,
+                    "photo": photo,
+                    "password": password,
+                    "contact": " "
+                }
+                const response = await axios.post('/api/v1/auth/register',form)
+                console.log(response, 'dari register')
+    
+                navigate('/login')
+                console.log('jalan dari register ke home')
+            } catch(err) {
+                console.log(err.response)
+                console.log(err.request)
+                console.log(err.message)
             }
-            const response = await axios.post('/api/v1/auth/register',form)
-            console.log(response, 'dari register')
-
-            navigate('/login')
-            console.log('jalan dari register ke home')
-        } catch(err) {
-            console.log(err.response)
-            console.log(err.request)
-            console.log(err.message)
         }
     }
 
@@ -104,7 +108,7 @@ const navigate = useNavigate()
                         </div>
                         <div className="mb-3">
                             <label  className="form-label">Password</label>
-                            <input type="password" className="form-control"  placeholder="Password" value={password} onChange={onChangePassword}/>
+                            <input type="password" className="form-control"  placeholder="Password" value={password} onChange={onChangePassword} minLength="6"/>
                         </div>
                         <div className="d-grid gap-2">
                             <button className="btn btn-success" type="button" onClick={handleSubmit}>Registrasi</button>

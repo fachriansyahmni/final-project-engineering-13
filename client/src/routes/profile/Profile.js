@@ -10,6 +10,7 @@ import cameraIcon from "../../assets/camera.svg"
 import Style from './Profile.module.scss'
 import ProfileModal from "../../components/ProfileModal";
 import PhotoProfileModal from "../../components/PhotoProfileModal";
+import axios from "axios";
 
 export default function Profile () {
     const { getUserData} = dataUser()
@@ -30,6 +31,47 @@ export default function Profile () {
 
     const [data, setData] = useState({})
 
+    const [oldPw, setOldPw] = useState('')
+    const [newPw, setNewPw] = useState('')
+
+    const handleOldPw = (e) => {
+        setOldPw(e.target.value)
+    }
+    const handleNewPw = (e) => {
+        setNewPw(e.target.value)
+    }
+
+    const [pwBlock, setPwBlock] = useState(false);
+
+    const setShowPw = () => {
+        if (pwBlock === false) {
+            return `${Style['hidePw']}`;
+        } else {
+            return `${Style['showPw']}`;
+        }
+    }
+    let showPw = setShowPw()
+
+    const handleChangePw = async (event) => {
+        event.preventDefault()
+        try {
+            const response = await axios.put('/api/v1/password', {
+                "old_password": oldPw,
+                "new_password": newPw
+            }, {
+                headers: {
+                    "Authorization": `${token}`
+                }
+            })
+            console.log(response, 'dari pw')
+            setOldPw(' ')
+            setNewPw(' ')
+            setPwBlock(false)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
 
 
@@ -37,7 +79,7 @@ export default function Profile () {
             try {
             const response = await getUserData(token)
             setData(response.data.data)
-            console.log(response, 'dari profile')
+            // console.log(response, 'dari profile')
             } catch (e) {
             // skenario 1 saat token expired dan harus login lagi maka kembali ke home dan set token ke null
             console.log(e)
@@ -97,7 +139,7 @@ export default function Profile () {
                             <p><strong>Last Name</strong></p>
                             <p>{data?.last_name}</p>
                             <p><strong>Contact</strong></p>
-                            <p>{data?.contact === '' ? data.contact : 'Contact not defined yet'}</p>
+                            <p>{data?.contact !== '' ? data.contact : 'Contact not defined yet'}</p>
                             <hr></hr>
                             <div className="d-flex justify-content-center mt-3 mb-1">
                                 <button type="button" className="btn btn-outline-primary" onClick={handleShow}>Update Profile</button>
@@ -108,7 +150,17 @@ export default function Profile () {
 
                             {/* Saran utk password jgn pakai modal lagi atau dibalik aja ini pakai modal tapi photo ndak usah */}
 
-                            <button type="button" className="btn btn-outline-danger w-50">Change Password</button>
+                            <div className={showPw}>
+                                <label className="form-label">Old Password</label>
+                                <input type="password" id="inputpw" className="form-control" onChange={handleOldPw}/>
+                                <label className="form-label">New Password</label>
+                                <input type="password" id="inputpwnew" className="form-control" onChange={handleNewPw}/>
+                                <div className="d-flex flex-row gap-3 mt-2">
+                                    <button className="btn btn-success" onClick={handleChangePw}>Submit</button>
+                                    <button className="btn btn-danger" onClick={() => {setPwBlock(false)}}>Cancel</button>
+                                </div>
+                            </div>
+                            <button type="button" className="btn btn-outline-danger w-50" onClick={() => {setPwBlock(true)}}>Change Password</button>
                         </div>
                     </div>
                 </div>

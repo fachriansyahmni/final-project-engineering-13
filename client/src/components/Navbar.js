@@ -26,7 +26,7 @@ export default function Main () {
 
     const handleLogout = async (event) => {
         event.preventDefault();
-
+        console.log('logout')
         try {
             const response = await axios.post('http://localhost:8090/api/v1/auth/logout',token)
             console.log('berhasil logout')
@@ -137,11 +137,13 @@ export default function Main () {
                                 Explore
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Seminar</a></li>
+                                {/* <li><a class="dropdown-item" href="#">Seminar</a></li> */}
+                                <li><NavLink to={'/event/seminar'} className="dropdown-item">Seminar</NavLink></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Beasiswa</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Job Fair</a></li>
+                                <li><NavLink to={'/event/beasiswa'} className="dropdown-item">Beasiswa</NavLink></li>
+                                {/* <li><a class="dropdown-item" href="#">Beasiswa</a></li> */}
+                                {/* <li><hr class="dropdown-divider" /></li> */}
+                                {/* <li><a class="dropdown-item" href="#">Job Fair</a></li> */}
                             </ul>
                             </li>
 
