@@ -61,7 +61,7 @@ func (e *EventServiceImpl) Create(event payloads.EventRequest) error {
 
 func (e *EventServiceImpl) Update(event payloads.EventUpdateRequest) error {
 	var eventData payloads.EventRequest
-	id := event.TypeEventID
+	id := event.ID
 
 	eventData = payloads.EventRequest{
 		Title:           event.Title,
