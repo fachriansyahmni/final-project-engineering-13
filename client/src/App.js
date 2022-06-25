@@ -17,6 +17,7 @@ import Seminar from './routes/Seminar/Seminar';
 import { dataStore } from './store/data';
 import { useEffect } from 'react';
 import DetailEvent from './routes/detail_event/DetailEvent';
+import Beasiswa from './routes/beasiswa/Beasiswa';
 function App() {
 
   const {token} = dataStore()
@@ -72,8 +73,8 @@ function App() {
         <Route path=':id' element={<DetailEvent />} />
       </Route>
       <Route path='/event/beasiswa'>
-        <Route index element={(<><h1>Ini di event list beasiswa</h1></>)} />
-        <Route path=':id' element={(<><h1>Ini dah masuk ke detail event beasiswa</h1></>)} />
+        <Route index element={<Beasiswa />} />
+        <Route path=':id' element={<DetailEvent />} />
       </Route>
 
       <Route path='/bantuan' element={<Helpdesk />} />

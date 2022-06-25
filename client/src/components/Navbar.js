@@ -140,7 +140,8 @@ export default function Main () {
                                 {/* <li><a class="dropdown-item" href="#">Seminar</a></li> */}
                                 <li><NavLink to={'/event/seminar'} className="dropdown-item">Seminar</NavLink></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Beasiswa</a></li>
+                                <li><NavLink to={'/event/beasiswa'} className="dropdown-item">Beasiswa</NavLink></li>
+                                {/* <li><a class="dropdown-item" href="#">Beasiswa</a></li> */}
                                 {/* <li><hr class="dropdown-divider" /></li> */}
                                 {/* <li><a class="dropdown-item" href="#">Job Fair</a></li> */}
                             </ul>

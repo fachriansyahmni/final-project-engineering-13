@@ -61,7 +61,7 @@ export default function Home () {
                             <div className=" ps-5 pt-5">
                                 <h5 className=" fst-italic fs-1" style={{letterSpacing:'0.1em'}}>Beasiswa</h5>
                                 <p>Mencari informasi dan mengenal berbagai program beasiswa</p>
-                                <button type="button" className="btn btn-outline-success ">Click Here</button>
+                                <button type="button" className="btn btn-outline-success " onClick={() => {navigate('/event/beasiswa')}}>Click Here</button>
                             </div>
                         </div>
                         <div className="col-5 text-center">
