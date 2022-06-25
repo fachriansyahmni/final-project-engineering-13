@@ -59,28 +59,30 @@ func (e *EventServiceImpl) Create(event payloads.EventRequest) error {
 	return nil
 }
 
-func (e *EventServiceImpl) Update(event entity.Event) error {
-	var eventUpdateReq payloads.EventRequest
-	id := event.ID
-	eventUpdateReq.AuthorID = event.AuthorID
-	eventUpdateReq.Title = event.Title
-	eventUpdateReq.BannerImg = event.BannerImg
-	eventUpdateReq.Content = event.Content
-	eventUpdateReq.CategoryID = event.CategoryID
-	eventUpdateReq.StartTimeEvent = event.StartTimeEvent
-	eventUpdateReq.Contact = event.Contact
-	eventUpdateReq.Price = event.Price
-	eventUpdateReq.TypeEventID = event.TypeEventID
-	eventUpdateReq.ModelID = event.ModelID
-	eventUpdateReq.LocationDetails = event.LocationDetails
-	eventUpdateReq.RegisterUrl = event.RegisterUrl
+func (e *EventServiceImpl) Update(event payloads.EventUpdateRequest) error {
+	var eventData payloads.EventRequest
+	id := event.TypeEventID
 
-	err := e.Validate(eventUpdateReq)
+	eventData = payloads.EventRequest{
+		Title:           event.Title,
+		BannerImg:       event.BannerImg,
+		Content:         event.Content,
+		CategoryID:      event.CategoryID,
+		StartTimeEvent:  event.StartTimeEvent,
+		Contact:         event.Contact,
+		Price:           event.Price,
+		TypeEventID:     event.TypeEventID,
+		ModelID:         event.ModelID,
+		LocationDetails: event.LocationDetails,
+		RegisterUrl:     event.RegisterUrl,
+	}
+
+	err := e.Validate(eventData)
 	if err != nil {
 		return err
 	}
 
-	err = e.eventRepo.Update(id, &eventUpdateReq)
+	err = e.eventRepo.Update(id, &event)
 	if err != nil {
 		return errors.New("EVENT_UPDATE_FAILED")
 	}

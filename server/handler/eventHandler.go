@@ -4,7 +4,6 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rg-km/final-project-engineering-13/entity"
 	"github.com/rg-km/final-project-engineering-13/payloads"
 	"github.com/rg-km/final-project-engineering-13/securities"
 	"github.com/rg-km/final-project-engineering-13/service"
@@ -71,7 +70,7 @@ func (eh *EventHandler) Create(c *gin.Context) {
 }
 
 func (eh *EventHandler) Update(c *gin.Context) {
-	var event entity.Event
+	var event payloads.EventUpdateRequest
 	if err := c.ShouldBindJSON(&event); err != nil {
 		c.JSON(400, gin.H{
 			"status_code": 400,

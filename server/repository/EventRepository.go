@@ -78,7 +78,7 @@ func (er *EventRepository) Create(ev *payloads.EventRequest) error {
 	return nil
 }
 
-func (er *EventRepository) Update(id int64, ev *payloads.EventRequest) error {
+func (er *EventRepository) Update(id int64, ev *payloads.EventUpdateRequest) error {
 	_, err := er.db.Exec("UPDATE events SET title = ?, banner_img = ?, content = ?, category_id = ?, start_time_event = ?, start_date_event = ?, contact = ?, price = ?, type_event_id = ?, model_id = ?, location_details = ?, register_url = ?, updated_at = ? WHERE id = ?",
 		ev.Title,
 		ev.BannerImg,
