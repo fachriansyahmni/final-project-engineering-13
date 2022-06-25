@@ -1,3 +1,35 @@
 .kategori {
     cursor: pointer;
 }
+.list-result {
+    position: absolute;
+    display: block;
+    margin: auto;
+    padding: 0;
+    background-color: transparent;
+    & a {
+        text-decoration: none;
+    }
+    & .list-item-result {
+        cursor: pointer;
+        background-color: rgb(199, 207, 204);
+        color: black;
+        white-space:pre;
+        overflow:hidden;
+        text-overflow: ellipsis;
+        & > span {
+            margin-left: 0.5em;
+        }
+    }
+}
+.cat-btn-active {
+    box-shadow: rgba(77, 212, 172, 0.7) 0px 0px 0px 3px;
+}
+
+.icon-search {
+    position: absolute;
+    right: 0;
+    top:50%;
+    transform: translateY(-50%);
+    width: 30px;
+}

@@ -13,12 +13,14 @@ import hyperlink from "../../assets/detail_event/hyperlink.png"
 import mapsIcon from "../../assets/detail_event/maps.png"
 import priceIcon from "../../assets/detail_event/price.png"
 import { useParams } from 'react-router-dom';
+import Card from '../../components/Card';
 
 export default function DetailEvent () {
     
     // id event no 16
     const [content, setContent] = useState('')
     const [data, setData] = useState({})
+    const [category, setCategory] = useState(1)
     const param = useParams()
     let id = param.id
     const getData = async () => {
@@ -27,26 +29,27 @@ export default function DetailEvent () {
             // console.log(response.data.data.content)
             setContent(response.data.data.content)
             setData(response.data.data)
+            setCategory(response.data.data.category_id)
         } catch (e) {
             console.log(e)
         }
     }
 
+    console.log(category)
 
     const [recom, setRecom] = useState([]);
 
-    let cat = 1
-
-    const getDataRecomd = async () => {
+    const getDataRecomd = async (cat_id) => {
         try {
-            const response = await axios.get(`/api/v1/event?category=${cat}`)
+            const response = await axios.get(`/api/v1/event?category=${cat_id}`)
             // console.log(response.data.data, 'recom')
-            let data = response.data.data
-            console.log(data, 'data')
+            let dataInner = response.data.data
+            // console.log(data,'semua recom')
+            // console.log(data, 'data')
             // setContent(response.data.data.content)
-            const filtered = data.filter((item) => item.id !== id)
-            // console.log(filtered, 'filtered')
-            setRecom(...filtered)
+            const filtered = dataInner.filter((item) => item.id !== parseInt(id))
+            // console.log(filtered, 'filterednyaaaa')
+            setRecom(filtered)
         } catch (e) {
             console.log(e)
         }
@@ -55,10 +58,10 @@ export default function DetailEvent () {
 
 
     useEffect(() => {
-    
+
         getData();
-        getDataRecomd();
-    }, [])
+        getDataRecomd(category)
+    }, [category, parseInt(id)])
 
     // console.log(data)
 
@@ -131,6 +134,15 @@ export default function DetailEvent () {
             <hr></hr>
             {parse(content)}
             <p><strong>Recommended</strong></p>
+            <div className='d-flex flex-wrap gap-3'>
+                {
+                    recom.length > 0 &&
+                        recom.map((item, index) => (
+                            <Card banner={item.banner_img} id={item.id} price={item.price} title={item.title} key={index} />
+                        ))
+                }
+            </div>
+
         </div>
         <Footer />
     </>
