@@ -1,0 +1,10 @@
+.result-list {
+    position: absolute;
+    left: -2rem;
+    top: 2.5rem;
+    list-style: none;
+    width: 88%;
+    & > li {
+        background-color: aqua;
+    }
+}

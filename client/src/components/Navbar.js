@@ -8,17 +8,25 @@ import { dataStore, dataUser} from "../store/data";
 import defaultProfilePics from "../assets/default_pp.svg"
 
 import Style from "./NavbarProfile.module.scss"
+import Style2 from "./Navbar.module.scss" 
+
 
 export default function Main () {
 
-    const {token, setToken} = dataStore() 
-    const {name, photo, getUserData} = dataUser()
+    const {token, setToken} = dataStore()
+    
+    const [name, setName] = useState('name')
+    const [photo, setPhoto] = useState(null)
+
+    // console.log(name,photo, 'dari navbarrrr')
+
+    const {getUserData} = dataUser()
     //console.log(name,photo)
     const [show, setShow] = useState(false)
 
     const handleLogout = async (event) => {
         event.preventDefault();
-
+        console.log('logout')
         try {
             const response = await axios.post('http://localhost:8090/api/v1/auth/logout',token)
             console.log('berhasil logout')
@@ -42,18 +50,56 @@ export default function Main () {
 
     let button
 
+    const loadPhoto = (param) => {
+        try {
+            const img = <img className={Style2['img-profile-nav']} src={param} alt="profile_pics"/>
+            return img
+        } catch (e) {
+            return <img className={Style2['img-profile-nav']} src={defaultProfilePics} />
+        }
+    }
+
     useEffect(() => {
-        console.log(token)
-        getUserData(token)
+        //console.log(token)
+        const getData = async () => {
+            try {
+            const response = await getUserData(token)
+            // console.log(response, 'dariii navbar')
+            setName(response?.data?.data?.first_name)
+            setPhoto(response?.data?.data?.photo)
+            } catch (e) {
+                console.log(e)
+            }
+            
+        }
+
+        getData()
     }, [token])    
 
     if (token != 'Bearer null') {
         button = <div className={Style['navbar-profile'] + " ms-lg-2 d-flex flex-column gap-2 rounded p-1 position-relative"} onClick={() => {setShow(!show)}}>
-            <div className={"d-flex flex-row"}>
+            <div className={"d-flex flex-row gap-2"}>
                 <div className="d-none d-lg-flex align-items-center" style={{color: '#fff'}}>
-                    Name
+                    {name}
                 </div>
-                <img src={defaultProfilePics} />
+                {/* <img className={Style2['img-profile-nav']} src={photo === 'link photo' ? defaultProfilePics: photo} /> */}
+                {/* {loadPhoto(photo)} */}
+                {/* <img 
+                    src={photo}
+                    alt="Profile Photo"
+                    onError={event => {
+                        event.onerror = null
+                        event.target.src = "../assets/default_pp.svg"
+                        
+                    }}
+                /> */}
+                {/* <object data={photo} type="image/png"> */}
+                    { photo ? (
+                        <img className={Style2['img-profile-nav']} src={photo}/>
+                    ) : (
+                        <img className={Style2['img-profile-nav']} src={defaultProfilePics}/>
+                    ) }
+                {/* </object> */}
             </div>
             <div className={Style['modal-profile'] + profileModal + " rounded"}>
                 <ul className="d-flex gap-1 flex-column"> 
@@ -91,11 +137,13 @@ export default function Main () {
                                 Explore
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Seminar</a></li>
+                                {/* <li><a class="dropdown-item" href="#">Seminar</a></li> */}
+                                <li><NavLink to={'/event/seminar'} className="dropdown-item">Seminar</NavLink></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Beasiswa</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Job Fair</a></li>
+                                <li><NavLink to={'/event/beasiswa'} className="dropdown-item">Beasiswa</NavLink></li>
+                                {/* <li><a class="dropdown-item" href="#">Beasiswa</a></li> */}
+                                {/* <li><hr class="dropdown-divider" /></li> */}
+                                {/* <li><a class="dropdown-item" href="#">Job Fair</a></li> */}
                             </ul>
                             </li>
 

@@ -26,10 +26,10 @@ const dataStore = create(persist((set) => ({
 }), { name: "jwt" }))
 
 const dataUser = create((set) => ({
-    username: 'name',
-    name: 'name',
-    email: 'example@gmail.com',
-    photo: 'default',
+    // username: 'name',
+    // name: 'name',
+    // email: 'example@gmail.com',
+    // photo: 'default',
     getUserData: async (token) => {
         // try {
         //     const response = await axios.get('/api/v1/profile', {
@@ -48,14 +48,14 @@ const dataUser = create((set) => ({
         // }
 
         //test get event with ip server
-        try {
-            const response = await fetch('http://localhost:8090/api/v1/event/', { mode: 'cors' });
-            const data = await response.json();
-            console.log({ data })
-        }
-        catch (e) {
-            console.log(e)
-        }
+    // try {
+    //     const response = await fetch('http://localhost:8090/api/v1/event/', { mode: 'cors' });
+    //     const data = await response.json();
+    //     console.log({ data }, 'get all event from datastore')
+    // }
+    // catch (e) {
+    //     console.log(e)
+    // }
 
         // get data profile
         try {
@@ -64,7 +64,8 @@ const dataUser = create((set) => ({
                     'Authorization': `${token}`
                 }
             })
-            console.log(response, 'profile dari datastore')
+            // console.log(response, 'profile dari datastore')
+            return response
         }
         catch (e) {
             console.log(e)

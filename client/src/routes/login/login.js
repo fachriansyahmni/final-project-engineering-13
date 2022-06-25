@@ -32,24 +32,30 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:8090/api/v1/auth/login',
-                {
-                    username: username,
-                    password: password
-                }
-            )
-            // console.log(response.data, 'kalau brhsl')
-            console.log(response, 'dari login')
-            setToken(response.data.data.token)
-            navigate('/')
-            // console.log('jalan')
-        } catch (err) {
-            let error = err.response.data.error
-            if (error === 'USER_NOT_FOUND') {
+        if (password.length < 6) {
+            alert('Password minimal 6 karakter');
+        }
+        if (password.length >= 6) {
+            try {
+                const response = await axios.post('http://localhost:8090/api/v1/auth/login',
+                    {
+                        email: username,
+                        password: password
+                    }
+                )
+                // console.log(response.data, 'kalau brhsl')
+                console.log(response, 'dari login')
+                setToken(response.data.data.token)
+                navigate('/')
+                // console.log('jalan')
+            } catch (err) {
+                // let error = err.response.data.error
+                // if (error === 'USER_NOT_FOUND') {
+                //     setModalShow(true)
+                // }
                 setModalShow(true)
+                console.log(err)
             }
-            console.log(err)
         }
     }
 
@@ -62,12 +68,12 @@ export default function Login() {
                     </div>
                     <div className="card-body">
                         <div className="mb-3">
-                            <label className="form-label">Username</label>
+                            <label className="form-label">Email</label>
                             <input type="text" className="form-control" placeholder="Email" value={username} onChange={onChangeEmail} />
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Password</label>
-                            <input type="password" className="form-control" placeholder="Password" value={password} onChange={onChangePassword} />
+                            <input type="password" className="form-control" placeholder="Password" value={password} onChange={onChangePassword} minlength="8"/>
                         </div>
                         <div className="d-grid gap-2">
                             <button className="btn btn-success" type="button" onClick={handleSubmit}>Sign In</button>

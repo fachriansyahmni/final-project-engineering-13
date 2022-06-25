@@ -43,11 +43,11 @@ export default function Main () {
                     </div>
                 </div>
 
-                <div class="card-footer d-flex justify-content-evenly" style={{backgroundColor: '#4DD4AC'}}>
-                    <div className="text-muted">
+                <div class="card-footer position-relative d-flex flex-row justify-content-center" style={{backgroundColor: '#4DD4AC'}}>
+                    <div className=" text-center">
                         Copyright © 2022-PRESENT, Ruang Event Teams
                     </div>
-                    <div >
+                    <div className="position-absolute" style={{right: "2em"}}>
                         Kebijakan Privasi | Syarat dan Ketentuan
                     </div>
                 </div>

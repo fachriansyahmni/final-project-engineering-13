@@ -9,7 +9,10 @@ import PublisherIcon from "../../assets/home/Publisher.svg"
 import ManagementsIcon from "../../assets/home/Managements.svg"
 import PlatformIcon from "../../assets/home/Platform.svg"
 
+import { NavLink, useNavigate } from "react-router-dom";
+
 export default function Home () {
+    const navigate = useNavigate()
     return (
         <>
             <Navbar />
@@ -21,7 +24,8 @@ export default function Home () {
                                 <h5 className=" fst-italic text-primary fs-1" style={{letterSpacing:'0.205em'}}>Make Your</h5>
                                 <h5 className=" fst-italic text-primary fs-1" style={{letterSpacing:'0.205em'}}>Events</h5>
                                 <p className="">Mengadakan acara luar biasa, bagikan pengetahuan, bangun dan kembangkan komunitas Anda, ciptakan peluang</p>
-                                <button type="button" className="btn btn-outline-success ">Create Event</button>
+                                {/* <button type="button" className="btn btn-outline-success ">Create Event</button> */}
+                                <NavLink className={'btn btn-outline-success'} to={'/event/create'}>Create Event</NavLink>
                             </div>
                         </div>
                         <div className="col-5 text-center" >
@@ -43,7 +47,7 @@ export default function Home () {
                         <div style={{paddingLeft:'100px'}}>
                             <h5 className=" fst-italic fs-1 pt-4" style={{letterSpacing:'0.1em'}}>Seminar</h5>
                             <p className="">Menyediakan event seminar yang kamu butuhkan dari berbagai komunitas</p>
-                            <button type="button" className="btn btn-outline-success ">Click Here</button>
+                            <button type="button" className="btn btn-outline-success " onClick={() => {navigate('/event/seminar')}}>Click Here</button>
                         </div>
                     </div>
                 </div>
@@ -57,7 +61,7 @@ export default function Home () {
                             <div className=" ps-5 pt-5">
                                 <h5 className=" fst-italic fs-1" style={{letterSpacing:'0.1em'}}>Beasiswa</h5>
                                 <p>Mencari informasi dan mengenal berbagai program beasiswa</p>
-                                <button type="button" className="btn btn-outline-success ">Click Here</button>
+                                <button type="button" className="btn btn-outline-success " onClick={() => {navigate('/event/beasiswa')}}>Click Here</button>
                             </div>
                         </div>
                         <div className="col-5 text-center">
