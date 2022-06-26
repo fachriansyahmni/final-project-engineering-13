@@ -18,6 +18,8 @@ import { dataStore } from './store/data';
 import { useEffect } from 'react';
 import DetailEvent from './routes/detail_event/DetailEvent';
 import Beasiswa from './routes/beasiswa/Beasiswa';
+import Dashboard from './routes/Dashboard/Dashboard';
+import UpdateEvent from './routes/update_event/UpdateEvent';
 function App() {
 
   const {token} = dataStore()
@@ -78,7 +80,9 @@ function App() {
       </Route>
 
       <Route path='/bantuan' element={<Helpdesk />} />
-      <Route path='/profile' element={ <ProtectedRoute token={token} child={<Profile />} />}/>
+      <Route path='/profile' element={ <ProtectedRoute token={token} child={<Profile />} />} />
+      <Route path='/dashboard' element={<ProtectedRoute token={token} child={<Dashboard />} />} />
+      <Route path='/dashboard/update/:id' element={<ProtectedRoute token={token} child={<UpdateEvent />} /> }/>
       <Route path='/event/create' element={<ProtectedRoute token={token} child={<CreateEvent />} />} />
       <Route path='*' element={<NotFound />} />
     </Routes>

@@ -176,9 +176,11 @@ export default function CreateEvent () {
                     </div>
                     <div className="col-4">
                         <p className="text-center"><strong>Syarat dan Ketentuan</strong></p>
+                        <p>Sebelum melakukan daftarkan event, pastikan Anda telah membaca syarat dan ketentuan berikut:</p>
                         <ol>
                             <li>Event yang akan dipublikasikan tidak mengandung sara atau merugikan pihak perorangan maupun kelompok.</li>
                             <li>Dilarang mempublikasikan <i>fake</i> event</li>
+                            <li>Dapat mendaftarkan event berbayar dengan mencantumkan harga dan jika FREE dapat diisi dengan 0 dalam form harga.</li>
                         </ol>
                     </div>
                 </div>

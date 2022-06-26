@@ -103,6 +103,7 @@ export default function Main () {
             </div>
             <div className={Style['modal-profile'] + profileModal + " rounded"}>
                 <ul className="d-flex gap-1 flex-column"> 
+                    <li><NavLink to={'/dashboard'} className="navLink-profile">Dashboard</NavLink></li>
                     <li><NavLink to={'/profile'} className="navLink-profile">Profile</NavLink></li>
                     <li><button onClick={handleLogout}>Logout</button></li>
                 </ul>

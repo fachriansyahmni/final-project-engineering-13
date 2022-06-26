@@ -1,0 +1,46 @@
+
+.block-btn {
+    position: absolute;
+    top: 0.1rem;
+    right: 0.1rem;
+    padding: 0;
+    & > button {
+        padding: 0;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.card {
+    & > div > img {
+        width: 200px;
+        height: 300px;
+    }
+}
+
+.titleEvent {
+    display: inline;
+    position: absolute;
+    background-color: #2f2c2c;
+    color: white;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    // transform: translateX(-50%);
+    
+    white-space:pre;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.free {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: .6);
+    color: white;
+    padding: 7px;
+}
+.falseDisplay {
+    display: none;
+}
