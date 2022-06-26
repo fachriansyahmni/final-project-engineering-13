@@ -227,7 +227,7 @@ export default function Beasiswa () {
                 <div className="d-flex justify-content-center py-2 position-relative">
                     <div className="search-section position-relative" style={{width: "500px"}}>
                         <div className="d-flex flex-row gap-2 position-relative">
-                            <input type="text" class="form-control" placeholder="Search Event" onChange={handleQuery} />
+                            <input type="text" className="form-control" placeholder="Search Event" onChange={handleQuery} />
                             <img className="icon-search" src={searchIcon}/>
                         </div>
                       
@@ -237,8 +237,8 @@ export default function Beasiswa () {
                                 {
                                     searchData.length > 0 && 
                                         searchData.map((item, index) => (
-                                            <Link to={`/event/seminar/${item.id}`}>
-                                                <div className="list-item-result py-1 rounded" key={index}>
+                                            <Link to={`/event/seminar/${item.id}`} key={index}>
+                                                <div className="list-item-result py-1 rounded">
                                                     <span>{item.title}</span>
                                                 </div>
                                             </Link>
@@ -295,11 +295,11 @@ export default function Beasiswa () {
 
                         <div className="d-flex flex-column justify-content-center">
                             <h6 className="text-center">Tanggal Ditambahkan</h6>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="dropdown">
+                                <button className="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     {placeHolderTerbaru}
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><button className="dropdown-item" onClick={() => {setTerbaru('default'); setplaceHolderTerbaru('Terbaru')}}>Terbaru</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setTerbaru('terlama'); setplaceHolderTerbaru('terlama')}}>Terlama</button></li>
                                 </ul>
@@ -308,11 +308,11 @@ export default function Beasiswa () {
 
                         <div className="d-flex flex-column justify-content-center">
                             <h6 className="text-center">Tipe Seminar</h6>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="dropdown">
+                                <button className="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     {placeHolderTipe}
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><button className="dropdown-item" onClick={() => {setTipe('default'); setplaceHolderTipe('Default')}}>Default</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setTipe(1); setplaceHolderTipe('Online')}}>Online</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setTipe(2); setplaceHolderTipe('Offline')}}>Offline</button></li>
@@ -322,11 +322,11 @@ export default function Beasiswa () {
 
                         <div className="d-flex flex-column justify-content-center">
                             <h6 className="text-center">Harga</h6>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="dropdown">
+                                <button className="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     {placeHolderHarga}
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><button className="dropdown-item" onClick={() => {setPrice('default'); setplaceHolderHarga('Default')}}>Default</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setPrice('ascending'); setplaceHolderHarga('Harga terendah')}}>Harga terendah</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setPrice('descending'); setplaceHolderHarga('Harga tertinggi')}}>Harga tertinggi</button></li>
@@ -344,17 +344,17 @@ export default function Beasiswa () {
                     }
                 </div>
                 <div className="d-flex justify-content-center mt-4">
-                    <ul class="pagination d-flex gap-2 ">
-                        <li class="page-item btn-prev page-link border border-dark rounded" onClick={handlePrevBtn}>Previous</li>
+                    <ul className="pagination d-flex gap-2 ">
+                        <li className="page-item btn-prev page-link border border-dark rounded" onClick={handlePrevBtn}>Previous</li>
                         {
                             pageNumber.map((number, idx) => {
                                if (number === parseInt(currentPage)) {
-                                return (<li class="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>)
+                                return (<li className="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>)
                                } 
-                               return (<li class="page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>
+                               return (<li className="page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>
                             )})
                         }
-                        <li class="page-item btn-prev page-link border border-dark rounded" onClick={handleNextBtn}>Next</li>
+                        <li className="page-item btn-prev page-link border border-dark rounded" onClick={handleNextBtn}>Next</li>
                     </ul>
                 </div>
             </div>

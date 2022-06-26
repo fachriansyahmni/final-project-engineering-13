@@ -3,19 +3,21 @@ import './style.css';
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from "axios";
 
-import dataStore from '../../store/data';
+import { dataStore } from '../../store/data';
+
+import swal from 'sweetalert'
 
 const Register = () => {
-const [username,setUsername] = useState('');
-const [firstname,setFirstname] = useState('');
-const [lastname,setLastname] = useState('');
-const [photo, setPhoto] = useState(null)
-const [email,setEmail] = useState('');
-const [password,setPassword] = useState('');
+    const [username,setUsername] = useState('');
+    const [firstname,setFirstname] = useState('');
+    const [lastname,setLastname] = useState('');
+    const [photo, setPhoto] = useState(null)
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
 
+    const { setToken } = dataStore()
 
-
-const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const onChangeUsername = (e) => {
         const value = e.target.value
@@ -63,8 +65,27 @@ const navigate = useNavigate()
                     "contact": " "
                 }
                 const response = await axios.post('/api/v1/auth/register',form)
-    
-                navigate('/login')
+                
+                // login section
+
+                try {
+                    const response = await axios.post('http://localhost:8090/api/v1/auth/login',
+                        {
+                            email: email,
+                            password: password
+                        }
+                    )
+                    setToken(response.data.data.token)
+                    swal("Akun berhasil ditambahkan", "Anda akan dialihkan ke halaman home", "success")
+                    .then((value) => {
+                        navigate('/')
+                    })
+                } catch (e) {
+                    swal("Action gagal", "error")   
+                    console.log(e)
+                }
+
+                // login end
             } catch(err) {
                 console.log(err.response)
                 console.log(err.request)

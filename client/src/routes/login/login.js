@@ -66,7 +66,7 @@ export default function Login() {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Password</label>
-                            <input type="password" className="form-control" placeholder="Password" value={password} onChange={onChangePassword} minlength="8"/>
+                            <input type="password" className="form-control" placeholder="Password" value={password} onChange={onChangePassword}/>
                         </div>
                         <div className="d-grid gap-2">
                             <button className="btn btn-success" type="button" onClick={handleSubmit}>Sign In</button>
