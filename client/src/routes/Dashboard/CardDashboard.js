@@ -19,7 +19,7 @@ export default function CardDashboard ({banner, id, price, title, model}) {
     const navigate = useNavigate()
     
     const deleteEvent = async (id) => {
-        console.log(id, 'about deleted')
+        
         try {
             // some axios await api here
             // const response = await axios.delete('/api/v1/event/delete', {headers,data})
@@ -31,9 +31,8 @@ export default function CardDashboard ({banner, id, price, title, model}) {
                     id: id 
                   }
             })
-            // const response = await axios.delete('/api/v1/event/delete', { data: { id: 0 }, headers: { "Authorization": `${token}` } });
 
-            console.log(response)
+          
             swal({
                 title: "Event telah dihapus",
                 icon: "success",
@@ -61,9 +60,6 @@ export default function CardDashboard ({banner, id, price, title, model}) {
             if (willdelete) {
                 deleteEvent(id)
             } 
-            // else {
-            //     swal({title: "Event batal dihapus"})
-            // }
         })
     }
     
@@ -80,13 +76,11 @@ export default function CardDashboard ({banner, id, price, title, model}) {
                 </div>
                 <div className={Style["titleEvent"] + ' px-1'}>
                     {title}
-                    {/* The 56th MarkPlus Goes to Campus “Entrepreneurial Marketing" */}
                 </div>
                 
             </div>
         </Link>
             <div className={Style['block-btn'] + ' d-flex gap-2'}>
-                    {/* bisa diganti pakai logo aja biar kecil */}
                     <button className={'btn btn-success'} onClick={() => {navigate(`/dashboard/update/${id}`)}}><span><img src={editIcon} width="20px" height="20px"/></span></button>
                     <button className={'btn btn-danger'} onClick={onDeleteValidate}><span><img src={trashIcon} width="20px" height="20px"/></span></button>
             </div>
@@ -102,13 +96,13 @@ export default function CardDashboard ({banner, id, price, title, model}) {
                 </div>
                 <div className={Style["titleEvent"] + ' px-1'}>
                     {title}
-                    {/* The 56th MarkPlus Goes to Campus “Entrepreneurial Marketing" */}
+                    
                 </div>
                 
             </div>
         </Link>
             <div className={Style['block-btn'] + ' d-flex gap-2'}>
-                    {/* bisa diganti pakai logo aja biar kecil */}
+                   
                     <button className={'btn btn-success'} onClick={() => {navigate(`/dashboard/update/${id}`)}} ><span><img src={editIcon} width="20px" height="20px"/></span></button>
                     <button className={'btn btn-danger'} onClick={onDeleteValidate}><span><img src={trashIcon} width="20px" height="20px"/></span></button>
             </div>

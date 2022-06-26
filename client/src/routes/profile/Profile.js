@@ -63,7 +63,7 @@ export default function Profile () {
                     "Authorization": `${token}`
                 }
             })
-            console.log(response, 'dari pw')
+            
             setOldPw(' ')
             setNewPw(' ')
             setPwBlock(false)
@@ -79,7 +79,7 @@ export default function Profile () {
             try {
             const response = await getUserData(token)
             setData(response.data.data)
-            // console.log(response, 'dari profile')
+           
             } catch (e) {
             // skenario 1 saat token expired dan harus login lagi maka kembali ke home dan set token ke null
             console.log(e)

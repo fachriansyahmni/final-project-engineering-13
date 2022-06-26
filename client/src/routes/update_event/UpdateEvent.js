@@ -28,24 +28,22 @@ export default function UpdateEvent () {
 
     const [form, setForm] = useState({})
     const [content, setContent] = useState('')
-    // const [model_id, setModel] = useState('')
+ 
 
     const getData = async () => {
         try {
             const response = await axios.get(`/api/v1/event?id=${id}`)
-            console.log(response.data.data)
             const data = response.data.data
-            // setData(data)
+            
             delete data.author
             delete data.category
             delete data.type_event
-            // setModel(data.model)
+            
             setForm({
                 ...data,
                 'model_id': 'event seminar' ? 1 : 2
             })
-            // setTitle(data.title)
-            // setBanner(data.banner_img) 
+           
         } catch (e) {
             console.log(e)
         }
@@ -77,16 +75,12 @@ export default function UpdateEvent () {
                     "Authorization": `${token}`
                 }
             })
-            // tambahi kalau berhali alert update event
-            console.log(response)
-            console.log('akan diupdae')
-            // swal("Event telah diupdate", "Anda akan dialihkan ke halaman dashboard.", "success");
             swal("Event telah diperbarui", "Anda akan dialihkan ke halaman dashboard.", "success")
             .then((value) => {
                 navigate('/dashboard')
             });
         } catch (e) {
-            // tamnbahi aler gagal update event
+           
             swal("Event gagal diperbarui", "error")
         }
     }
@@ -108,12 +102,6 @@ export default function UpdateEvent () {
     useEffect(() => {
         getData()
     }, [])
-
-    // console.log(data, 'isi dari datanya')
-    console.log(form, 'sisi form')
-    console.log(content, 'isi dari content')
-    // console.log(title, 'isi judul')
-    // console.log(banner, 'isi banner')
 
     return (
         <div>

@@ -95,9 +95,6 @@ export default function CreateEvent () {
             const response = await axios.post('/api/v1/event/create',data, {
                 headers: {
                     'Authorization': `${token}`
-                    // 'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NTU4OTk2MjcsImlkIjoxMSwidXNlcm5hbWUiOiJha3VuZGVtbyJ9.XTyXu0BWGha7vO71LAKak1vjZKfsmxJIb47DaDUUvHY`
-                    // 'Authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NTU4OTc2NzAsImlkIjoxMSwidXNlcm5hbWUiOiJha3VuZGVtbyJ9.W4GIT-eFi4gxmkWxSkapd-z8xO0xdBH2lh4lDCrknUM"
-                    // 'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NTU4OTkwMDEsImlkIjoxLCJ1c2VybmFtZSI6InVzZXIifQ.4-svfRG0ahrEYVwukvOflWAdzaBqyBFYgX830sYc4Bw`
                 }
             })
           

@@ -27,22 +27,22 @@ export default function Seminar () {
     const loadSeminar = async () => {
         try {
             const response = await axios.get('/api/v1/event?model=1')
-            // console.log(response.data.data, 'isi event seminar')
+           
             setSeminar(response.data.data)
         } catch (e) {
             console.log(e)
         }
     }
-    // console.log(seminar)
+    
 
     const filter = (kategori, tipe, terbaru, price) => {
      
         let filtered = [...seminar]
         if (kategori === 'default' && tipe === 'default' && terbaru === 'default' && price === 'default') {
-            // console.log('masuk return 1')
+           
             return filtered.reverse()
         }
-        // console.log('diluar ret 1')
+        
         if (kategori !== 'default') {
             filtered = filtered.filter((item) => item.category_id === kategori)
         }
@@ -71,13 +71,13 @@ export default function Seminar () {
 
         // coming soon pengurutan berdasarkan price
         if (price === 'ascending') {
-            // console.log('price ascending jalan')
+            
             filtered = filtered.sort(function(a, b) {
                 return parseFloat(a.price) - parseFloat(b.price);
             });
         }
         if (price === 'descending') {
-            // console.log('price descending jalan')
+            
             filtered = filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
         }
         return filtered
@@ -207,7 +207,6 @@ export default function Seminar () {
             setCurr(curr)
         } 
     }
-    // console.log(currentPage, 'page saat ini')
 
     // displaying current item
     const indexLastItem = currentPage * itemPerPages
@@ -360,7 +359,7 @@ export default function Seminar () {
                         <li class="page-item btn-prev page-link border border-dark rounded" onClick={handlePrevBtn}>Previous</li>
                         {
                             pageNumber.map((number, idx) => {
-                                console.log(number, currentPage)
+                               
                                if (number === parseInt(currentPage)) {
                                 return (<li class="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>)
                                } 

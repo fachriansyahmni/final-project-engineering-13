@@ -53,7 +53,6 @@ const navigate = useNavigate()
         }
         if (password.length >= 6) {
             try {
-                // const response = await axios.post('https://reqres.in/api/register',{email: "eve.holt@reqres.in", password: "pistol"})
                 const form = {
                     "email": email,
                     "username": username,
@@ -64,10 +63,8 @@ const navigate = useNavigate()
                     "contact": " "
                 }
                 const response = await axios.post('/api/v1/auth/register',form)
-                console.log(response, 'dari register')
     
                 navigate('/login')
-                console.log('jalan dari register ke home')
             } catch(err) {
                 console.log(err.response)
                 console.log(err.request)
