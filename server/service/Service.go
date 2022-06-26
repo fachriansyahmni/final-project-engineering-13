@@ -25,7 +25,7 @@ type EventService interface {
 	GetByModel(model_id int64) ([]*entity.ListEvent, error)
 	GetByID(id int64) (*entity.ListEvent, error)
 	Delete(id int64) error
-	Update(event entity.Event) error
+	Update(event payloads.EventUpdateRequest) error
 	GetAllCategory() ([]entity.Category_Event, error)
 	GetAllTypeEvent() ([]entity.Type_Event, error)
 	GetAllModel() ([]entity.Model, error)

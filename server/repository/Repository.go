@@ -24,7 +24,7 @@ type EventRepoInterface interface {
 	GetByID(id int64) (*entity.ListEvent, error)
 	Create(ev *payloads.EventRequest) error
 	Delete(id int64) error
-	Update(id int64, ev *payloads.EventRequest) error
+	Update(id int64, ev *payloads.EventUpdateRequest) error
 	ValidateEventUser(eventId, userId int64) error
 	ById(id int64) (entity.Event, error)
 	Search(keyword string) ([]*entity.ListEvent, error)
