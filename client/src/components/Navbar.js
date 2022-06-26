@@ -148,12 +148,10 @@ export default function Main () {
                             </ul>
                             </li>
 
-                            <li class="nav-item">
-                            <a class="nav-link" href="#">Tentang Kami</a>
-                            </li>
+                            
 
                             <li class="nav-item">
-                                <NavLink to={'/bantuan'} className="nav-link">Bantuan</NavLink>
+                                <NavLink to={'/tentangkami'} className="nav-link">Tentang Kami</NavLink>
                             </li>
                         </ul>
                         {button}
