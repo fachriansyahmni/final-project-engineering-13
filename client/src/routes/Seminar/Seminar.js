@@ -203,6 +203,46 @@ export default function Seminar () {
     const [placeHolderTipe, setplaceHolderTipe] = useState('Default')
     const [placeHolderHarga, setplaceHolderHarga] = useState('Default')
 
+    // pagination logic start
+
+    const [currentPage, setCurr] = useState(1)
+    const [itemPerPages, setItemPerPages] = useState(8)
+    
+    const handlePageClicked = (e) => {
+        setCurr(e.target.id)
+    }
+    const handlePrevBtn = () => {
+        if (currentPage > 1){
+            const curr = currentPage - 1
+            setCurr(curr)
+        } 
+    }
+    const handleNextBtn = () => {
+        if (currentPage < pageNumber.length){
+            const curr = currentPage + 1
+            setCurr(curr)
+        } 
+    }
+    console.log(currentPage, 'page saat ini')
+
+    // displaying current item
+    const indexLastItem = currentPage * itemPerPages
+    const indexFirstItem = indexLastItem - itemPerPages
+    const currentItem = filteredData.slice(indexFirstItem, indexLastItem)
+    console.log(currentItem)
+
+    const pageNumber = [];
+    
+    for (let i = 1; i <= Math.ceil(filteredData.length / itemPerPages); i++) {
+        pageNumber.push(i);
+    }
+
+    // const renderPage = () => {
+    //     for (let i = 0; i < pageNumber.length; i++) {
+            
+    //     }
+    // }
+    
     return (
         <div className="position-relative">
             <Navbar />
@@ -336,9 +376,15 @@ export default function Seminar () {
                     </div>
                 </div>
                 <div className="d-flex flex-wrap gap-3">
-                    {
+                    {/* {
                         filteredData.length > 0 && 
                             filteredData.map((item, index) => (
+                                <Card banner={item.banner_img} id={item.id} price={item.price} title={item.title} key={index}/>
+                            ))
+                    } */}
+                    {
+                        currentItem.length > 0 && 
+                            currentItem.map((item, index) => (
                                 <Card banner={item.banner_img} id={item.id} price={item.price} title={item.title} key={index}/>
                             ))
                     }
@@ -361,6 +407,30 @@ export default function Seminar () {
                    
                     <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
                      */}
+                </div>
+                <div className="d-flex justify-content-center mt-4">
+                    <ul class="pagination d-flex gap-2 ">
+                        <li class="page-item btn-prev page-link border border-dark rounded" onClick={handlePrevBtn}>Previous</li>
+                        {/* <li class="page-item btn-prev page-link" id={1} onClick={handlePageClicked}>1</li>
+                        <li class="page-item btn-prev page-link" id={2} onClick={handlePageClicked}>2</li>
+                        <li class="page-item btn-prev page-link" id={3} onClick={handlePageClicked}>3</li> */}
+                        {/* {
+                            pageNumber.map((number, idx) => (
+                                <li class="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>
+                            ))
+                        }
+                         */}
+                        {
+                            pageNumber.map((number, idx) => {
+                                console.log(number, currentPage)
+                               if (number === parseInt(currentPage)) {
+                                return (<li class="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>)
+                               } 
+                               return (<li class="page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>
+                            )})
+                        }
+                        <li class="page-item btn-prev page-link border border-dark rounded" onClick={handleNextBtn}>Next</li>
+                    </ul>
                 </div>
             </div>
             <Footer />
