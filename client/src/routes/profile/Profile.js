@@ -81,7 +81,6 @@ export default function Profile () {
             setData(response.data.data)
            
             } catch (e) {
-            // skenario 1 saat token expired dan harus login lagi maka kembali ke home dan set token ke null
             console.log(e)
             }
         }
@@ -102,16 +101,11 @@ export default function Profile () {
                 <hr></hr>
                 <div className="row">
                     <div className="col">
-                        {/* {data.photo ? (
-                            <img className={Style['img']} src={data.photo} alt=""/>
-                        ) : (
-                            <img className={Style['img']} src={defaultPics} alt=""/>
-                        )} */}
                         {data.photo ? (
                             <div className={Style["profilepic"]} onClick={handleShowPhotoModal}>
                             <img className={Style['profilepic__image']} src={data.photo} width="300px" height="300px" alt="Profibild" />
                             <div className={Style["profilepic__content"]}>
-                                {/* <span class="profilepic__icon"><i class="fas fa-camera"></i></span> */}
+                              
                                 <span className={Style['profilepic__icon']}><img src={cameraIcon}/></span>
                                 <span className={Style["profilepic__text"]}>Edit Profile</span>
                             </div>
@@ -120,7 +114,7 @@ export default function Profile () {
                             <div className={Style["profilepic"]} onClick={handleShowPhotoModal}>
                             <img className={Style['profilepic__image']} src={defaultPics} width="300px" height="300px" alt="Profibild" />
                             <div className={Style["profilepic__content"]}>
-                                {/* <span class="profilepic__icon"><i class="fas fa-camera"></i></span> */}
+                              
                                 <span className={Style['profilepic__icon']}><img src={cameraIcon}/></span>
                                 <span className={Style["profilepic__text"]}>Edit Profile</span>
                             </div>
@@ -148,7 +142,7 @@ export default function Profile () {
                         <div className="mt-3 d-flex gap-3 flex-column">
                             <h3>Additional Settings</h3>
 
-                            {/* Saran utk password jgn pakai modal lagi atau dibalik aja ini pakai modal tapi photo ndak usah */}
+                           
 
                             <div className={showPw}>
                                 <label className="form-label">Old Password</label>
