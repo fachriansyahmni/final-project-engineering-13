@@ -6,9 +6,9 @@ import './Card.scss'
 
 export default function Card ({banner, id, price, title, model}) {
     let free = (price === 0 ? 'free' : 'falseDisplay')
-    if (model === 'seminar') {
+    if (model === 'beasiswa') {
     return (
-        <Link to={`/event/seminar/${id}`}>
+        <Link to={`/event/beasiswa/${id}`}>
             <div className="card d-inline-block position-relative">
                 <p className={free}>Free</p>
                 <div className="">
@@ -22,7 +22,7 @@ export default function Card ({banner, id, price, title, model}) {
         </Link>
     )} else {
         return (
-        <Link to={`/event/beasiswa/${id}`}>
+        <Link to={`/event/seminar/${id}`}>
             <div className="card d-inline-block position-relative">
                 <p className={free}>Free</p>
                 <div className="">
