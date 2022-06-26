@@ -10,6 +10,8 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { dataStore } from "../../store/data";
 
+import swal from 'sweetalert'
+
 export default function CreateEvent () {
 
     const {token} = dataStore()
@@ -17,18 +19,30 @@ export default function CreateEvent () {
     const [title, setTitle] = useState("");
     const [banner, setBanner] = useState("");
     const [model, setModel] = useState(1);
-    const [category, setCategory] = useState(0);
+    const [category, setCategory] = useState(1);
     const [content, setContent] = useState("");
     const [urlReg, setUrlReg] = useState("");
     const [loc, setLoc] = useState("");
     const [contact, setContact] = useState("");
     const [price, setPrice] = useState(0);
-    const [type, setType] = useState(0);
-    const [date, setDate] = useState(new Date());
+    const [type, setType] = useState(1);
+    const [date, setDate] = useState('');
     const [time, setTime] = useState('');
 
-    console.log(content)
-    console.log(typeof(content), 'tipenya')
+    const reset = () => {
+        setTitle("");
+        setBanner("")
+        setModel(1)
+        setCategory(1);
+        setContent("");
+        setUrlReg("");
+        setLoc("");
+        setContact("")
+        setPrice(0);
+        setType(1);
+        setDate('');
+        setTime('');
+    }
 
     const getValue = (value) => {
         setContent(value);
@@ -73,11 +87,10 @@ export default function CreateEvent () {
         "location_details": loc,
         "register_url": urlReg
     }
-    console.log(token, 'token di createevent')
-    console.log(data)
+   
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log('jaan')
+      
         try {
             const response = await axios.post('/api/v1/event/create',data, {
                 headers: {
@@ -87,20 +100,23 @@ export default function CreateEvent () {
                     // 'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NTU4OTkwMDEsImlkIjoxLCJ1c2VybmFtZSI6InVzZXIifQ.4-svfRG0ahrEYVwukvOflWAdzaBqyBFYgX830sYc4Bw`
                 }
             })
-            console.log(response)
+          
+            swal("Event telah berhasil dibuat", "success")
+            reset()
         } catch (e) {
             console.log(e)
+            swal("Event gagal dibuat", "error")
         }
     }
 
     return (
         <>
             <Navbar />
-            <div className="container">
+            <form className="container">
                 <div className="row">
                     <div className="bg-light col-8 border border-dark rounded p-3">
                         <p><strong>Title</strong></p>
-                        <input type="text" class="form-control mb-2" placeholder="Title" onChange={getTitle}/>
+                        <input value={title} type="text" class="form-control mb-2" placeholder="Title" onChange={getTitle} required/>
 
                         {/* <div className="d-flex flex-column  mb-2">
                             <p><strong>Model</strong></p>
@@ -115,18 +131,18 @@ export default function CreateEvent () {
                         </div>                         */}
                         <p><strong>Model</strong></p>
                         <div class="list-group mb-3">
-                            <button type="button" className={`${active1} list-group-item list-group-item-action`} onClick={() => {setModel(1)}}>Event Seminar</button>
-                            <button type="button" className={`${active2} list-group-item list-group-item-action`} onClick={() => {setModel(2)}}>Event Beasiswa</button>
+                            <button  type="button" className={`${active1} list-group-item list-group-item-action`} onClick={() => {setModel(1)}}>Event Seminar</button>
+                            <button  type="button" className={`${active2} list-group-item list-group-item-action`} onClick={() => {setModel(2)}}>Event Beasiswa</button>
                         </div>
 
                         <p><strong>Banner</strong></p>
-                        <input type="text" className="form-control mb-2" placeholder="Banner Image Link" onChange={getBanner}/>
+                        <input value={banner} type="text" className="form-control mb-2" placeholder="Banner Image Link" onChange={getBanner}/>
 
                         {/* <p><strong>Deskripsi</strong></p>
                         <input type="text" class="form-control mb-2" placeholder="Title" /> */}
 
                         <p><strong>Content</strong></p>
-                        <RichTextEditor initialValue="" getValue={getValue} />
+                        <RichTextEditor initialValue={content} getValue={getValue} />
 
                         <p><strong>Kategori</strong></p>
                         <Form.Select aria-label="Default select example" onChange={(e) => setCategory(parseInt(e.target.value))}>
@@ -138,7 +154,7 @@ export default function CreateEvent () {
                         </Form.Select>
 
                         <p className="mt-3"><strong>Register URL</strong></p>
-                        <input type="text" class="form-control mb-2" placeholder="Register URL" onChange={getRegisterUrl}/>
+                        <input value={urlReg} type="text" class="form-control mb-2" placeholder="Register URL" onChange={getRegisterUrl}/>
 
                         {/* <div className="d-flex flex-column">
                             <p><strong>Tipe</strong></p>
@@ -158,21 +174,21 @@ export default function CreateEvent () {
                         </div>
 
                         <p className="mt-3"><strong>Location</strong></p>
-                        <input type="text" class="form-control mb-2" placeholder="Maps" onChange={getLocation}/>
+                        <input  value={loc} type="text" class="form-control mb-2" placeholder="Maps" onChange={getLocation}/>
 
                         <p className="mt-3"><strong>Contact</strong></p>
-                        <input type="text" class="form-control mb-2" placeholder="Phone Number" onChange={getContact}/>
+                        <input value={contact} type="text" class="form-control mb-2" placeholder="Phone Number" onChange={getContact}/>
 
                         <p className="mt-3"><strong>Price</strong></p>
-                        <input type="number" class="form-control mb-2" placeholder="Price" onChange={getPrice}/>
+                        <input value={price} type="number" class="form-control mb-2" placeholder="Price" onChange={getPrice}/>
 
                         <p><strong>Tanggal Event</strong></p>
                         {/* <DatePicker selected={date} onChange={(date) => setDate(date)}/> */}
-                        <input className="d-block mb-3" type="date" min="2022-01-01" onChange={(date) => setDate(date.target.value)}></input>
+                        <input value={date} className="d-block mb-3" type="date" min="2022-01-01" onChange={(date) => setDate(date.target.value)}></input>
 
                         <p><strong>Waktu</strong></p>
-                        <input className="d-block mb-3" type="time" id="appt" name="appt" onChange={(time) => setTime(time.target.value)} required></input>
-                        <button onClick={handleSubmit} className="btn btn-outline-success">Submit</button>
+                        <input value={time} className="d-block mb-3" type="time" id="appt" name="appt" onChange={(time) => setTime(time.target.value)} required></input>
+                        <button type="submit" onClick={handleSubmit} className="btn btn-outline-success">Submit</button>
                     </div>
                     <div className="col-4">
                         <p className="text-center"><strong>Syarat dan Ketentuan</strong></p>
@@ -184,7 +200,7 @@ export default function CreateEvent () {
                         </ol>
                     </div>
                 </div>
-            </div>
+            </form>
             <Footer />
         </>
     )
