@@ -29,7 +29,10 @@ export default function Dashboard () {
                 }
             })
             // console.log(response, 'allevent i post')
-            setMyevent(response.data.data)
+            if (response.data.data !== null) {
+                setMyevent(response.data.data)
+            }
+            // console.log(response.data, 'ini eventnya')
         } catch (e) {
             console.log(e)
         }
@@ -49,7 +52,7 @@ export default function Dashboard () {
         getMyEvent()
     }, [])
 
-    console.log(myEvent)
+    console.log(myEvent, 'event bersangkutan')
 
     return (
     <>
