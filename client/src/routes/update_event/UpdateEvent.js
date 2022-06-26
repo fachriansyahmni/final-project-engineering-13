@@ -81,12 +81,13 @@ export default function UpdateEvent () {
             console.log(response)
             console.log('akan diupdae')
             // swal("Event telah diupdate", "Anda akan dialihkan ke halaman dashboard.", "success");
-            swal("Event telah diupdate", "Anda akan dialihkan ke halaman dashboard.", "success")
+            swal("Event telah diperbarui", "Anda akan dialihkan ke halaman dashboard.", "success")
             .then((value) => {
                 navigate('/dashboard')
             });
         } catch (e) {
             // tamnbahi aler gagal update event
+            swal("Event gagal diperbarui", "error")
         }
     }
 
