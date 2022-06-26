@@ -237,8 +237,8 @@ export default function Seminar () {
                                 {
                                     searchData.length > 0 && 
                                         searchData.map((item, index) => (
-                                            <Link to={`/event/seminar/${item.id}`}>
-                                                <div className="list-item-result py-1 rounded" key={index}>
+                                            <Link to={`/event/seminar/${item.id}`} key={index}>
+                                                <div className="list-item-result py-1 rounded" >
                                                     <span>{item.title}</span>
                                                 </div>
                                             </Link>
