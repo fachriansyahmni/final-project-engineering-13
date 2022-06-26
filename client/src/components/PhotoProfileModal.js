@@ -10,7 +10,7 @@ export default function PhotoProfileModal (props) {
     const {token} = dataStore()
 
     const [link, setLink] = useState(null)
-    // console.log('dari photo')
+   
     const handleLink = (event) => {
         setLink(event.target.value)
         console.log(link)
@@ -18,7 +18,7 @@ export default function PhotoProfileModal (props) {
 
     const handleSubmit = async (event) => {
         try {
-            // api goes here
+        
             event.preventDefault()
             const response = await axios.put('/api/v1/photo', {
                 'photo': link
@@ -27,7 +27,7 @@ export default function PhotoProfileModal (props) {
                     'Authorization': `${token}` 
                 }
             })
-            // console.log(response,' dari photo')
+           
             props.handleSubmit()
             props.handleClose()
         } catch (e) {

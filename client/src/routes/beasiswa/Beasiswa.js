@@ -15,6 +15,8 @@ import axios from "axios";
 
 import { Link } from "react-router-dom";
 
+import './style.scss'
+
 export default function Beasiswa () {
     const [beasiswa, setBeasiswa] = useState([])
 
@@ -29,10 +31,10 @@ export default function Beasiswa () {
     const filter = (kategori, tipe, terbaru, price) => {
         let filtered = [...beasiswa]
         if (kategori === 'default' && tipe === 'default' && terbaru === 'default' && price === 'default') {
-            // console.log('masuk return 1')
+            
             return filtered.reverse()
         }
-        // console.log('diluar ret 1')
+       
         if (kategori !== 'default') {
             filtered = filtered.filter((item) => item.category_id === kategori)
         }
@@ -50,7 +52,7 @@ export default function Beasiswa () {
         }
         
         if (terbaru === 'default') {
-            // console.log('terlama jalan')
+        
             let rev = []
             for (let i = filtered.length - 1; i >= 0 ; i--) {
                 rev.push(filtered[i])
@@ -60,15 +62,15 @@ export default function Beasiswa () {
             filtered = [...rev]
         }
 
-        // coming soon pengurutan berdasarkan price
+      
         if (price === 'ascending') {
-            // console.log('price ascending jalan')
+           
             filtered = filtered.sort(function(a, b) {
                 return parseFloat(a.price) - parseFloat(b.price);
             });
         }
         if (price === 'descending') {
-            // console.log('price descending jalan')
+           
             filtered = filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
         }
         return filtered
@@ -85,7 +87,7 @@ export default function Beasiswa () {
         loadBeasiswa()
     }, [])
 
-    console.log(beasiswa, 'isi beasiswa')
+   
     const displayCategory = () => {
         if (kategori === 'default') {
             return (<h4 className="my-3">Menampilkan Kategori: Semua</h4>)
@@ -105,7 +107,7 @@ export default function Beasiswa () {
     const handleQuery = (e) => {
         setQuery(e.target.value)
     }
-    // console.log(query,' isi query')
+   
 
     const [searchData, setSearch] = useState([])
 
@@ -118,7 +120,7 @@ export default function Beasiswa () {
                 q = null
             }
             const response = await axios.get(`/api/v1/event?search=${q}`)
-            // console.log(response, 'hasil pencarian')
+        
 
              setSearch(response.data?.data)
              if (response.data.data === undefined) {
@@ -177,6 +179,36 @@ export default function Beasiswa () {
     const [placeHolderTipe, setplaceHolderTipe] = useState('Default')
     const [placeHolderHarga, setplaceHolderHarga] = useState('Default')
 
+    const [currentPage, setCurr] = useState(1)
+    const [itemPerPages, setItemPerPages] = useState(18)
+    
+    const handlePageClicked = (e) => {
+        setCurr(e.target.id)
+    }
+    const handlePrevBtn = () => {
+        if (currentPage > 1){
+            const curr = currentPage - 1
+            setCurr(curr)
+        } 
+    }
+    const handleNextBtn = () => {
+        if (currentPage < pageNumber.length){
+            const curr = currentPage + 1
+            setCurr(curr)
+        } 
+    }
+
+    const indexLastItem = currentPage * itemPerPages
+    const indexFirstItem = indexLastItem - itemPerPages
+    const currentItem = filteredData.slice(indexFirstItem, indexLastItem)
+    
+
+    const pageNumber = [];
+    
+    for (let i = 1; i <= Math.ceil(filteredData.length / itemPerPages); i++) {
+        pageNumber.push(i);
+    }
+
     return (
         <div className="position-relative">
             <Navbar />
@@ -196,18 +228,12 @@ export default function Beasiswa () {
                     <div className="search-section position-relative" style={{width: "500px"}}>
                         <div className="d-flex flex-row gap-2 position-relative">
                             <input type="text" class="form-control" placeholder="Search Event" onChange={handleQuery} />
-                            {/* <button className="btn btn-outline-success">Cari</button> */}
                             <img className="icon-search" src={searchIcon}/>
                         </div>
-                        {/* <List query={query}/> */}
+                      
                         <div className="list-result container">
                             <div className="d-flex gap-2 p-2 flex-column">
-                                {/* <div className="list-item-result py-1" onClick={() => {console.log('halo')}}>
-                                    <span>Judul 1</span>
-                                </div>
-                                <div className="list-item-result">
-                                    <span>Judul 2</span>
-                                </div> */}
+                               
                                 {
                                     searchData.length > 0 && 
                                         searchData.map((item, index) => (
@@ -311,11 +337,25 @@ export default function Beasiswa () {
                 </div>
                 <div className="d-flex flex-wrap gap-3">
                     {
-                        filteredData.length > 0 && 
-                            filteredData.map((item, index) => (
+                        currentItem.length > 0 && 
+                            currentItem.map((item, index) => (
                                 <Card banner={item.banner_img} id={item.id} price={item.price} title={item.title} key={index} model={'beasiswa'} />
                             ))
                     }
+                </div>
+                <div className="d-flex justify-content-center mt-4">
+                    <ul class="pagination d-flex gap-2 ">
+                        <li class="page-item btn-prev page-link border border-dark rounded" onClick={handlePrevBtn}>Previous</li>
+                        {
+                            pageNumber.map((number, idx) => {
+                               if (number === parseInt(currentPage)) {
+                                return (<li class="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>)
+                               } 
+                               return (<li class="page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>
+                            )})
+                        }
+                        <li class="page-item btn-prev page-link border border-dark rounded" onClick={handleNextBtn}>Next</li>
+                    </ul>
                 </div>
             </div>
             <Footer />

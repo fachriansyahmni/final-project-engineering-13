@@ -6,7 +6,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { dataStore } from "../store/data";
 
 export default function ProfileModal (props) {
-    // console.log(props.data, 'ini yg ke props')
+  
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [first_name, setFirstname] = useState('');
@@ -22,7 +22,7 @@ export default function ProfileModal (props) {
         "email": email,
         "contact": contact  
     }
-    // console.log(data, 'dari modal')
+  
 
     const handleUsername = (event) => {
         setUsername(event.target.value)
@@ -46,13 +46,13 @@ export default function ProfileModal (props) {
 
     const handleSubmit = () => {
         try {
-            // put to api
+          
             const response = axios.put('/api/v1/profile', data, {
                 headers: {
                     'Authorization': `${token}`
                 }
             })
-            // console.log('data dah berubah')
+         
             props.handleSubmit()
             props.handleClose()
         } catch (e) {
@@ -60,7 +60,7 @@ export default function ProfileModal (props) {
         }
     }
     
-    // console.log(props, 'data ke props modal')
+  
     return (
         <Modal
         show={props.show}
@@ -79,7 +79,7 @@ export default function ProfileModal (props) {
                 <Form.Control
                     type="email"
                     id="inputemail"
-                    // aria-describedby="passwordHelpBlock"
+                 
                     onChange={handleEmail}
                     value={email}
                 />
@@ -87,25 +87,25 @@ export default function ProfileModal (props) {
                 <Form.Control
                     type="text"
                     id="inputusername"
-                    // aria-describedby="passwordHelpBlock"
+                
                     onChange={handleUsername}
-                    // value={props.data.username}
+          
                 />
                 <Form.Label htmlFor="firstname">First Name</Form.Label>
                 <Form.Control
                     type="text"
                     id="firstname"
-                    // aria-describedby="passwordHelpBlock"
+                   
                     onChange={handleFirstname}
-                    // value={props.data.first_name}
+                   
                 />
                 <Form.Label htmlFor="lastname">Last Name</Form.Label>
                 <Form.Control
                     type="text"
                     id="lastname"
-                    // aria-describedby="passwordHelpBlock"
+                 
                     onChange={handleLastname}
-                    // value={props.data.last_name}
+                   
                 />
                 <Form.Label htmlFor="phone">Phone Number</Form.Label>
                 <Form.Control
@@ -115,7 +115,7 @@ export default function ProfileModal (props) {
                     pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                     aria-describedby="phoneHelpBlock"
                     onChange={handleContact}
-                    // value={props.data?.contact}
+                  
                 />
                 <Form.Text id="phoneHelpBlock" muted>
                     Contoh : 082136846231

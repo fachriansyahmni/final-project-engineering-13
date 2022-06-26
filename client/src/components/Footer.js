@@ -7,8 +7,7 @@ import yt from "../assets/footer/youtube.svg"
 
 
 
-// import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
-// import bootstrap from 'bootstrap'
+
 
 export default function Main () {
     return (

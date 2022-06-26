@@ -82,24 +82,12 @@ export default function Main () {
                 <div className="d-none d-lg-flex align-items-center" style={{color: '#fff'}}>
                     {name}
                 </div>
-                {/* <img className={Style2['img-profile-nav']} src={photo === 'link photo' ? defaultProfilePics: photo} /> */}
-                {/* {loadPhoto(photo)} */}
-                {/* <img 
-                    src={photo}
-                    alt="Profile Photo"
-                    onError={event => {
-                        event.onerror = null
-                        event.target.src = "../assets/default_pp.svg"
-                        
-                    }}
-                /> */}
-                {/* <object data={photo} type="image/png"> */}
                     { photo ? (
                         <img className={Style2['img-profile-nav']} src={photo}/>
                     ) : (
                         <img className={Style2['img-profile-nav']} src={defaultProfilePics}/>
                     ) }
-                {/* </object> */}
+                
             </div>
             <div className={Style['modal-profile'] + profileModal + " rounded"}>
                 <ul className="d-flex gap-1 flex-column"> 
@@ -142,9 +130,6 @@ export default function Main () {
                                 <li><NavLink to={'/event/seminar'} className="dropdown-item">Seminar</NavLink></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><NavLink to={'/event/beasiswa'} className="dropdown-item">Beasiswa</NavLink></li>
-                                {/* <li><a class="dropdown-item" href="#">Beasiswa</a></li> */}
-                                {/* <li><hr class="dropdown-divider" /></li> */}
-                                {/* <li><a class="dropdown-item" href="#">Job Fair</a></li> */}
                             </ul>
                             </li>
 
