@@ -116,7 +116,7 @@ export default function Main () {
     return (
         <>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container">
+                <div class="container p-0">
                     <a class="navbar-brand" href="/">Ruang Event</a>
                     <div className="d-flex flex-row gap-2">
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
