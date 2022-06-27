@@ -216,7 +216,7 @@ export default function Beasiswa () {
                 <div className="row d-flex flex-row">
                     <div className="col-6">
                         <h1>Event Beasiswa</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                        <p>Menawarkan informasi untuk menemukan beasiswa yang kamu inginkan.</p>
                     </div>
                     <div className="col-6">
                         <img src={BeasiswaIcon} width="400px" className="img-fluid rounded d-block mx-auto"/>

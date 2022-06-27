@@ -227,7 +227,7 @@ export default function Seminar () {
                 <div className="row d-flex flex-row">
                     <div className="col-6">
                         <h1>Event Seminar</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                        <p>Menambahkan wawasan dan pengalaman baru dengan mengikuti berbagai event yang seru!</p>
                     </div>
                     <div className="col-6">
                         <img src={seminarIcon} width="400px" className="img-fluid rounded d-block mx-auto"/>
