@@ -40,7 +40,7 @@ function App() {
         <Route path=':id' element={<DetailEvent />} />
       </Route>
 
-      <Route path='/bantuan' element={<Helpdesk />} />
+      <Route path='/tentangkami' element={<Helpdesk />} />
       <Route path='/profile' element={ <ProtectedRoute token={token} child={<Profile />} />} />
       <Route path='/dashboard' element={<ProtectedRoute token={token} child={<Dashboard />} />} />
       <Route path='/dashboard/update/:id' element={<ProtectedRoute token={token} child={<UpdateEvent />} /> }/>

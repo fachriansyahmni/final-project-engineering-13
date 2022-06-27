@@ -5,6 +5,8 @@ import { Modal, Button, Form } from "react-bootstrap";
 
 import { dataStore } from "../store/data";
 
+import swal from "sweetalert"
+
 export default function PhotoProfileModal (props) {
 
     const {token} = dataStore()
@@ -28,9 +30,13 @@ export default function PhotoProfileModal (props) {
                 }
             })
            
-            props.handleSubmit()
-            props.handleClose()
+            swal("Foto profil berhasil diperbarui", "Success", "success")
+            .then((value) => {
+                props.handleSubmit()
+                props.handleClose()
+            })
         } catch (e) {
+            swal("Foto profil gagal diperbarui", "gagal", "error")
             console.log(e)
         }
     }

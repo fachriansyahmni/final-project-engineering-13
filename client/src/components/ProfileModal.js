@@ -5,14 +5,19 @@ import { Modal, Button, Form } from "react-bootstrap";
 
 import { dataStore } from "../store/data";
 
+import { useNavigate } from "react-router-dom";
+
+import swal from 'sweetalert'
+
 export default function ProfileModal (props) {
-  
+    const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [first_name, setFirstname] = useState('');
     const [last_name, setLastname] = useState('');
     const [contact, setContact] = useState('');
-
+    // setLastname('ini anu')
+    // console.log(props.data, 'isi data')
     const {token} = dataStore()
 
     const data = {
@@ -22,6 +27,7 @@ export default function ProfileModal (props) {
         "email": email,
         "contact": contact  
     }
+   
   
 
     const handleUsername = (event) => {
@@ -44,18 +50,23 @@ export default function ProfileModal (props) {
         setContact(event.target.value)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         try {
-          
-            const response = axios.put('/api/v1/profile', data, {
+            const response = await axios.put('/api/v1/profile', data, {
                 headers: {
                     'Authorization': `${token}`
                 }
             })
-         
-            props.handleSubmit()
-            props.handleClose()
+            // if (!response)
+            console.log(response)
+            swal("Profile berhasil diperbarui","anda berhasil memperbarui data profil", "success")
+            .then((value) => {
+                props.handleSubmit()
+                props.handleClose()
+            })
         } catch (e) {
+            // console.log('jalan ke sini kah ')
+            swal("Profile gagal diperbarui","Silahkan periksa koneksi atau format data yang dilampirkan" ,"error")
             console.log(e)
         }
     }
@@ -89,7 +100,7 @@ export default function ProfileModal (props) {
                     id="inputusername"
                 
                     onChange={handleUsername}
-          
+                    value={username}
                 />
                 <Form.Label htmlFor="firstname">First Name</Form.Label>
                 <Form.Control
@@ -97,7 +108,7 @@ export default function ProfileModal (props) {
                     id="firstname"
                    
                     onChange={handleFirstname}
-                   
+                   value={first_name}
                 />
                 <Form.Label htmlFor="lastname">Last Name</Form.Label>
                 <Form.Control
@@ -105,17 +116,16 @@ export default function ProfileModal (props) {
                     id="lastname"
                  
                     onChange={handleLastname}
-                   
+                   value={last_name}
                 />
                 <Form.Label htmlFor="phone">Phone Number</Form.Label>
                 <Form.Control
-                    type="tel" 
+                    type="text" 
                     id="phone" 
                     name="phone" 
-                    pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                     aria-describedby="phoneHelpBlock"
                     onChange={handleContact}
-                  
+                    value={contact}
                 />
                 <Form.Text id="phoneHelpBlock" muted>
                     Contoh : 082136846231

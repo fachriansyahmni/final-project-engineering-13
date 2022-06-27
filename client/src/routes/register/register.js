@@ -81,15 +81,18 @@ const Register = () => {
                         navigate('/')
                     })
                 } catch (e) {
-                    swal("Action gagal", "error")   
+                    swal("Action gagal", " " ,"error")   
                     console.log(e)
                 }
 
                 // login end
             } catch(err) {
-                console.log(err.response)
-                console.log(err.request)
-                console.log(err.message)
+                if (err.response.data.message === "USER_ALREADY_EXIST") {
+                    swal("Gagal registrast", "Akun dengan username yang ada sudah dipakai, coba username yang lain", 'error')
+                }
+                // console.log(err.response.data.message, 'ini errornya')
+                // console.log(err.request)
+                // console.log(err.message)
             }
         }
     }

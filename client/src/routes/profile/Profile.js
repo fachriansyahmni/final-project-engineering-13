@@ -4,6 +4,8 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import { dataUser, dataStore } from "../../store/data";
 
+import swal from "sweetalert"
+
 import defaultPics from "../../assets/default_pp.svg"
 import cameraIcon from "../../assets/camera.svg"
 
@@ -63,11 +65,12 @@ export default function Profile () {
                     "Authorization": `${token}`
                 }
             })
-            
-            setOldPw(' ')
-            setNewPw(' ')
+            swal("Password berhasil diperbarui", "success")
+            setOldPw('')
+            setNewPw('')
             setPwBlock(false)
         } catch (e) {
+            swal("Password gagal diperbarui", "error")
             console.log(e)
         }
     }
@@ -146,12 +149,12 @@ export default function Profile () {
 
                             <div className={showPw}>
                                 <label className="form-label">Old Password</label>
-                                <input type="password" id="inputpw" className="form-control" onChange={handleOldPw}/>
+                                <input value={oldPw} type="password" id="inputpw" className="form-control" onChange={handleOldPw}/>
                                 <label className="form-label">New Password</label>
-                                <input type="password" id="inputpwnew" className="form-control" onChange={handleNewPw}/>
+                                <input value={newPw} type="password" id="inputpwnew" className="form-control" onChange={handleNewPw}/>
                                 <div className="d-flex flex-row gap-3 mt-2">
                                     <button className="btn btn-success" onClick={handleChangePw}>Submit</button>
-                                    <button className="btn btn-danger" onClick={() => {setPwBlock(false)}}>Cancel</button>
+                                    <button className="btn btn-danger" onClick={() => {setPwBlock(false); setOldPw(''); setNewPw('')}}>Cancel</button>
                                 </div>
                             </div>
                             <button type="button" className="btn btn-outline-danger w-50" onClick={() => {setPwBlock(true)}}>Change Password</button>

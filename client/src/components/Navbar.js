@@ -133,12 +133,12 @@ export default function Main () {
                             </ul>
                             </li>
 
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                             <a className="nav-link" href="#">Tentang Kami</a>
-                            </li>
+                            </li> */}
 
                             <li className="nav-item">
-                                <NavLink to={'/bantuan'} className="nav-link">Bantuan</NavLink>
+                                <NavLink to={'/tentangkami'} className="nav-link">Tentang Kami</NavLink>
                             </li>
                         </ul>
                         {button}
