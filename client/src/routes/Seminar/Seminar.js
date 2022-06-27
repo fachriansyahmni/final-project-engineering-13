@@ -22,31 +22,27 @@ import { Link } from "react-router-dom";
 export default function Seminar () {
 
     const [seminar, setSeminar] = useState([])
-    // const [cat, setCategory] = useState(0)
-
-    // mungkin kasih tombol buat reset
+  
 
     const loadSeminar = async () => {
         try {
             const response = await axios.get('/api/v1/event?model=1')
-            // console.log(response.data.data, 'isi event seminar')
+           
             setSeminar(response.data.data)
         } catch (e) {
             console.log(e)
         }
     }
-    // console.log(seminar)
+    
 
     const filter = (kategori, tipe, terbaru, price) => {
-        // terbaru disini kalau default tampilkan yang terbaru (di reverse)
-        // price juga kalau default diurutkan dari terendah ke tinggi
-        // let filtered = [...dataDummy]
+     
         let filtered = [...seminar]
         if (kategori === 'default' && tipe === 'default' && terbaru === 'default' && price === 'default') {
-            // console.log('masuk return 1')
+           
             return filtered.reverse()
         }
-        // console.log('diluar ret 1')
+        
         if (kategori !== 'default') {
             filtered = filtered.filter((item) => item.category_id === kategori)
         }
@@ -55,41 +51,33 @@ export default function Seminar () {
         }
 
         if (terbaru === 'terlama') {
-            // console.log('terlama jalan')
+        
             let rev = []
             for (let i = 0; i < filtered.length; i++) {
                 rev.push(filtered[i])
             }
-            
-            // console.log(rev, 'rev')
-            // filtered = rev.reverse()
-            // console.log(filtered, 'inside terlama')
+        
             filtered = [...rev]
-            // console.log(filtered.reverse(), 'didalem terlama')
+          
         }
         
         if (terbaru === 'default') {
-            // console.log('terlama jalan')
             let rev = []
             for (let i = filtered.length - 1; i >= 0 ; i--) {
                 rev.push(filtered[i])
             }
-            
-            // console.log(rev, 'rev')
-            // filtered = rev.reverse()
-            // console.log(filtered, 'inside terlama')
             filtered = [...rev]
         }
 
         // coming soon pengurutan berdasarkan price
         if (price === 'ascending') {
-            // console.log('price ascending jalan')
+            
             filtered = filtered.sort(function(a, b) {
                 return parseFloat(a.price) - parseFloat(b.price);
             });
         }
         if (price === 'descending') {
-            // console.log('price descending jalan')
+            
             filtered = filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
         }
         return filtered
@@ -100,12 +88,10 @@ export default function Seminar () {
     const [tipe, setTipe] = useState('default')
     const [price, setPrice] = useState('default')
 
-    // const n = filter(2,'default','default','descending')
-    // console.log(n, 'ini dah difiler') // oke filter now work
-    // console.log(terbaru)
+    
 
     const filteredData = filter(kategori,tipe,terbaru,price);
-    // console.log(filteredData,'data yg difilter')
+   
 
     useEffect(() => {
         loadSeminar()
@@ -130,7 +116,7 @@ export default function Seminar () {
     const handleQuery = (e) => {
         setQuery(e.target.value)
     }
-    // console.log(query,' isi query')
+    
 
     const [searchData, setSearch] = useState([])
 
@@ -143,7 +129,6 @@ export default function Seminar () {
                     q = null
                 }
                 const response = await axios.get(`/api/v1/event?search=${q}`)
-                // console.log(response, 'hasil pencarian')
 
                  setSearch(response.data?.data)
                  if (response.data.data === undefined) {
@@ -153,7 +138,6 @@ export default function Seminar () {
                 console.log(e)
             }
     }
-    // console.log(searchData, 'hasil pencarian')
 
     const [catButton, setCatButton] = useState('all')
 
@@ -206,7 +190,7 @@ export default function Seminar () {
     // pagination logic start
 
     const [currentPage, setCurr] = useState(1)
-    const [itemPerPages, setItemPerPages] = useState(8)
+    const [itemPerPages, setItemPerPages] = useState(18)
     
     const handlePageClicked = (e) => {
         setCurr(e.target.id)
@@ -223,25 +207,18 @@ export default function Seminar () {
             setCurr(curr)
         } 
     }
-    console.log(currentPage, 'page saat ini')
 
     // displaying current item
     const indexLastItem = currentPage * itemPerPages
     const indexFirstItem = indexLastItem - itemPerPages
     const currentItem = filteredData.slice(indexFirstItem, indexLastItem)
-    console.log(currentItem)
+    
 
     const pageNumber = [];
     
     for (let i = 1; i <= Math.ceil(filteredData.length / itemPerPages); i++) {
         pageNumber.push(i);
     }
-
-    // const renderPage = () => {
-    //     for (let i = 0; i < pageNumber.length; i++) {
-            
-    //     }
-    // }
     
     return (
         <div className="position-relative">
@@ -261,19 +238,13 @@ export default function Seminar () {
                 <div className="d-flex justify-content-center py-2 position-relative">
                     <div className="search-section position-relative" style={{width: "500px"}}>
                         <div className="d-flex flex-row gap-2 position-relative">
-                            <input type="text" class="form-control" placeholder="Search Event" onChange={handleQuery} />
-                            {/* <button className="btn btn-outline-success">Cari</button> */}
+                            <input type="text" className="form-control" placeholder="Search Event" onChange={handleQuery}/>
+                         
                             <img className="icon-search" src={searchIcon}/>
                         </div>
                         {/* <List query={query}/> */}
                         <div className="list-result container">
                             <div className="d-flex gap-2 p-2 flex-column">
-                                {/* <div className="list-item-result py-1" onClick={() => {console.log('halo')}}>
-                                    <span>Judul 1</span>
-                                </div>
-                                <div className="list-item-result">
-                                    <span>Judul 2</span>
-                                </div> */}
                                 {
                                     searchData.length > 0 && 
                                         searchData.map((item, index) => (
@@ -335,11 +306,11 @@ export default function Seminar () {
 
                         <div className="d-flex flex-column justify-content-center">
                             <h6 className="text-center">Tanggal Ditambahkan</h6>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="dropdown">
+                                <button className="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     {placeHolderTerbaru}
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><button className="dropdown-item" onClick={() => {setTerbaru('default'); setplaceHolderTerbaru('Terbaru')}}>Terbaru</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setTerbaru('terlama'); setplaceHolderTerbaru('terlama')}}>Terlama</button></li>
                                 </ul>
@@ -348,11 +319,11 @@ export default function Seminar () {
 
                         <div className="d-flex flex-column justify-content-center">
                             <h6 className="text-center">Tipe Seminar</h6>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="dropdown">
+                                <button className="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     {placeHolderTipe}
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><button className="dropdown-item" onClick={() => {setTipe('default'); setplaceHolderTipe('Default')}}>Default</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setTipe(1); setplaceHolderTipe('Online')}}>Online</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setTipe(2); setplaceHolderTipe('Offline')}}>Offline</button></li>
@@ -362,11 +333,11 @@ export default function Seminar () {
 
                         <div className="d-flex flex-column justify-content-center">
                             <h6 className="text-center">Harga</h6>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="dropdown">
+                                <button className="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     {placeHolderHarga}
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><button className="dropdown-item" onClick={() => {setPrice('default'); setplaceHolderHarga('Default')}}>Default</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setPrice('ascending'); setplaceHolderHarga('Harga terendah')}}>Harga terendah</button></li>
                                     <li><button className="dropdown-item" onClick={() => {setPrice('descending'); setplaceHolderHarga('Harga tertinggi')}}>Harga tertinggi</button></li>
@@ -376,60 +347,26 @@ export default function Seminar () {
                     </div>
                 </div>
                 <div className="d-flex flex-wrap gap-3">
-                    {/* {
-                        filteredData.length > 0 && 
-                            filteredData.map((item, index) => (
-                                <Card banner={item.banner_img} id={item.id} price={item.price} title={item.title} key={index}/>
-                            ))
-                    } */}
                     {
                         currentItem.length > 0 && 
                             currentItem.map((item, index) => (
                                 <Card banner={item.banner_img} id={item.id} price={item.price} title={item.title} key={index}/>
                             ))
                     }
-                    {/* <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
-                    
-                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
-                  
-                   
-                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
-                    
-                    
-                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
-                   
-                    
-                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
-                    
-                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
-                    
-                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={1} price={0} title={"Event 1"} />
-                   
-                    <Card banner={'https://eventkampus.com/data/event/poster/21/_thumbnail/600x600/4253-virtual-job-fair-jogja-2022.jpeg'} id={2} price={1000} title={"Event 2"} />
-                     */}
                 </div>
                 <div className="d-flex justify-content-center mt-4">
-                    <ul class="pagination d-flex gap-2 ">
-                        <li class="page-item btn-prev page-link border border-dark rounded" onClick={handlePrevBtn}>Previous</li>
-                        {/* <li class="page-item btn-prev page-link" id={1} onClick={handlePageClicked}>1</li>
-                        <li class="page-item btn-prev page-link" id={2} onClick={handlePageClicked}>2</li>
-                        <li class="page-item btn-prev page-link" id={3} onClick={handlePageClicked}>3</li> */}
-                        {/* {
-                            pageNumber.map((number, idx) => (
-                                <li class="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>
-                            ))
-                        }
-                         */}
+                    <ul className="pagination d-flex gap-2 ">
+                        <li className="page-item btn-prev page-link border border-dark rounded" onClick={handlePrevBtn}>Previous</li>
                         {
                             pageNumber.map((number, idx) => {
-                                console.log(number, currentPage)
+                               
                                if (number === parseInt(currentPage)) {
-                                return (<li class="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>)
+                                return (<li className="pgn-active page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>)
                                } 
-                               return (<li class="page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>
+                               return (<li className="page-item btn-prev page-link border border-dark rounded" id={number} onClick={handlePageClicked} key={idx}>{number}</li>
                             )})
                         }
-                        <li class="page-item btn-prev page-link border border-dark rounded" onClick={handleNextBtn}>Next</li>
+                        <li className="page-item btn-prev page-link border border-dark rounded" onClick={handleNextBtn}>Next</li>
                     </ul>
                 </div>
             </div>

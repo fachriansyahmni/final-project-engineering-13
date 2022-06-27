@@ -43,16 +43,9 @@ export default function Login() {
                         password: password
                     }
                 )
-                // console.log(response.data, 'kalau brhsl')
-                console.log(response, 'dari login')
                 setToken(response.data.data.token)
                 navigate('/')
-                // console.log('jalan')
             } catch (err) {
-                // let error = err.response.data.error
-                // if (error === 'USER_NOT_FOUND') {
-                //     setModalShow(true)
-                // }
                 setModalShow(true)
                 console.log(err)
             }
@@ -73,7 +66,7 @@ export default function Login() {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Password</label>
-                            <input type="password" className="form-control" placeholder="Password" value={password} onChange={onChangePassword} minlength="8"/>
+                            <input type="password" className="form-control" placeholder="Password" value={password} onChange={onChangePassword}/>
                         </div>
                         <div className="d-grid gap-2">
                             <button className="btn btn-success" type="button" onClick={handleSubmit}>Sign In</button>

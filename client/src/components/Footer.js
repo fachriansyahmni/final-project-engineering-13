@@ -7,15 +7,14 @@ import yt from "../assets/footer/youtube.svg"
 
 
 
-// import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
-// import bootstrap from 'bootstrap'
+
 
 export default function Main () {
     return (
         <>              
             {/* Footer start */}
-            <div class="card mt-5 pt-4" style={{backgroundColor: '#343A40'}}>
-                <div class="card-header d-flex justify-content-between text-light" style={{backgroundColor:'transparent'}}>
+            <div className="card mt-5 pt-4" style={{backgroundColor: '#343A40'}}>
+                <div className="card-header d-flex justify-content-between text-light" style={{backgroundColor:'transparent'}}>
                     <div className="text-start fs-2 ps-5">
                         Ruang Event
                     </div>
@@ -25,7 +24,7 @@ export default function Main () {
                 </div>
 
                 <div className="container p-0">
-                    <div class="card-body d-flex flex-column flex-start flex-row-reverse justify-content-lg-between">
+                    <div className="card-body d-flex flex-column flex-start flex-row-reverse justify-content-lg-between">
                         <div className="d-flex flex-row-reverse gap-5 mt-3 mt-lg-0 py-4">
                             <div style={{backgroundColor: '#4DD4AC'}} className="d-flex align-items-center p-1 rounded">   
                                 <img src={ig} width="20px" className="img-fluid"/>
@@ -43,7 +42,7 @@ export default function Main () {
                     </div>
                 </div>
 
-                <div class="card-footer position-relative d-flex flex-row justify-content-center" style={{backgroundColor: '#4DD4AC'}}>
+                <div className="card-footer position-relative d-flex flex-row justify-content-center" style={{backgroundColor: '#4DD4AC'}}>
                     <div className=" text-center">
                         Copyright © 2022-PRESENT, Ruang Event Teams
                     </div>

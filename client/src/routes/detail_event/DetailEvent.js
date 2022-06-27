@@ -17,7 +17,7 @@ import Card from '../../components/Card';
 
 export default function DetailEvent () {
     
-    // id event no 16
+    
     const [content, setContent] = useState('')
     const [data, setData] = useState({})
     const [category, setCategory] = useState(1)
@@ -26,7 +26,7 @@ export default function DetailEvent () {
     const getData = async () => {
         try {
             const response = await axios.get(`/api/v1/event?id=${id}`)
-            // console.log(response.data.data.content)
+            
             setContent(response.data.data.content)
             setData(response.data.data)
             setCategory(response.data.data.category_id)
@@ -35,26 +35,23 @@ export default function DetailEvent () {
         }
     }
 
-    console.log(category)
+   
 
     const [recom, setRecom] = useState([]);
 
     const getDataRecomd = async (cat_id) => {
         try {
             const response = await axios.get(`/api/v1/event?category=${cat_id}`)
-            // console.log(response.data.data, 'recom')
+          
             let dataInner = response.data.data
-            // console.log(data,'semua recom')
-            // console.log(data, 'data')
-            // setContent(response.data.data.content)
             const filtered = dataInner.filter((item) => item.id !== parseInt(id))
-            // console.log(filtered, 'filterednyaaaa')
+      
             setRecom(filtered)
         } catch (e) {
             console.log(e)
         }
     }
-    console.log(recom, 'recom')
+   
 
 
     useEffect(() => {
@@ -63,7 +60,7 @@ export default function DetailEvent () {
         getDataRecomd(category)
     }, [category, parseInt(id)])
 
-    // console.log(data)
+    
 
     return (
     <>

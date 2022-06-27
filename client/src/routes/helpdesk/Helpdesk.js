@@ -9,7 +9,7 @@ import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
 
 export default function Helpdesk () {
-    const [window, setWindow] = useState('faq')
+    const [window, setWindow] = useState('aboutUs')
     let view
     let faq
     let aboutUs

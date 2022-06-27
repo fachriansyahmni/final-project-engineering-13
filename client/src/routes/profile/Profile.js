@@ -4,6 +4,8 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import { dataUser, dataStore } from "../../store/data";
 
+import swal from "sweetalert"
+
 import defaultPics from "../../assets/default_pp.svg"
 import cameraIcon from "../../assets/camera.svg"
 
@@ -63,11 +65,12 @@ export default function Profile () {
                     "Authorization": `${token}`
                 }
             })
-            console.log(response, 'dari pw')
-            setOldPw(' ')
-            setNewPw(' ')
+            swal("Password berhasil diperbarui", "success")
+            setOldPw('')
+            setNewPw('')
             setPwBlock(false)
         } catch (e) {
+            swal("Password gagal diperbarui", "error")
             console.log(e)
         }
     }
@@ -79,9 +82,8 @@ export default function Profile () {
             try {
             const response = await getUserData(token)
             setData(response.data.data)
-            // console.log(response, 'dari profile')
+           
             } catch (e) {
-            // skenario 1 saat token expired dan harus login lagi maka kembali ke home dan set token ke null
             console.log(e)
             }
         }
@@ -102,16 +104,11 @@ export default function Profile () {
                 <hr></hr>
                 <div className="row">
                     <div className="col">
-                        {/* {data.photo ? (
-                            <img className={Style['img']} src={data.photo} alt=""/>
-                        ) : (
-                            <img className={Style['img']} src={defaultPics} alt=""/>
-                        )} */}
                         {data.photo ? (
                             <div className={Style["profilepic"]} onClick={handleShowPhotoModal}>
                             <img className={Style['profilepic__image']} src={data.photo} width="300px" height="300px" alt="Profibild" />
                             <div className={Style["profilepic__content"]}>
-                                {/* <span class="profilepic__icon"><i class="fas fa-camera"></i></span> */}
+                              
                                 <span className={Style['profilepic__icon']}><img src={cameraIcon}/></span>
                                 <span className={Style["profilepic__text"]}>Edit Profile</span>
                             </div>
@@ -120,7 +117,7 @@ export default function Profile () {
                             <div className={Style["profilepic"]} onClick={handleShowPhotoModal}>
                             <img className={Style['profilepic__image']} src={defaultPics} width="300px" height="300px" alt="Profibild" />
                             <div className={Style["profilepic__content"]}>
-                                {/* <span class="profilepic__icon"><i class="fas fa-camera"></i></span> */}
+                              
                                 <span className={Style['profilepic__icon']}><img src={cameraIcon}/></span>
                                 <span className={Style["profilepic__text"]}>Edit Profile</span>
                             </div>
@@ -148,16 +145,16 @@ export default function Profile () {
                         <div className="mt-3 d-flex gap-3 flex-column">
                             <h3>Additional Settings</h3>
 
-                            {/* Saran utk password jgn pakai modal lagi atau dibalik aja ini pakai modal tapi photo ndak usah */}
+                           
 
                             <div className={showPw}>
                                 <label className="form-label">Old Password</label>
-                                <input type="password" id="inputpw" className="form-control" onChange={handleOldPw}/>
+                                <input value={oldPw} type="password" id="inputpw" className="form-control" onChange={handleOldPw}/>
                                 <label className="form-label">New Password</label>
-                                <input type="password" id="inputpwnew" className="form-control" onChange={handleNewPw}/>
+                                <input value={newPw} type="password" id="inputpwnew" className="form-control" onChange={handleNewPw}/>
                                 <div className="d-flex flex-row gap-3 mt-2">
                                     <button className="btn btn-success" onClick={handleChangePw}>Submit</button>
-                                    <button className="btn btn-danger" onClick={() => {setPwBlock(false)}}>Cancel</button>
+                                    <button className="btn btn-danger" onClick={() => {setPwBlock(false); setOldPw(''); setNewPw('')}}>Cancel</button>
                                 </div>
                             </div>
                             <button type="button" className="btn btn-outline-danger w-50" onClick={() => {setPwBlock(true)}}>Change Password</button>

@@ -3,19 +3,21 @@ import './style.css';
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from "axios";
 
-import dataStore from '../../store/data';
+import { dataStore } from '../../store/data';
+
+import swal from 'sweetalert'
 
 const Register = () => {
-const [username,setUsername] = useState('');
-const [firstname,setFirstname] = useState('');
-const [lastname,setLastname] = useState('');
-const [photo, setPhoto] = useState(null)
-const [email,setEmail] = useState('');
-const [password,setPassword] = useState('');
+    const [username,setUsername] = useState('');
+    const [firstname,setFirstname] = useState('');
+    const [lastname,setLastname] = useState('');
+    const [photo, setPhoto] = useState(null)
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
 
+    const { setToken } = dataStore()
 
-
-const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const onChangeUsername = (e) => {
         const value = e.target.value
@@ -53,7 +55,6 @@ const navigate = useNavigate()
         }
         if (password.length >= 6) {
             try {
-                // const response = await axios.post('https://reqres.in/api/register',{email: "eve.holt@reqres.in", password: "pistol"})
                 const form = {
                     "email": email,
                     "username": username,
@@ -64,14 +65,34 @@ const navigate = useNavigate()
                     "contact": " "
                 }
                 const response = await axios.post('/api/v1/auth/register',form)
-                console.log(response, 'dari register')
-    
-                navigate('/login')
-                console.log('jalan dari register ke home')
+                
+                // login section
+
+                try {
+                    const response = await axios.post('http://localhost:8090/api/v1/auth/login',
+                        {
+                            email: email,
+                            password: password
+                        }
+                    )
+                    setToken(response.data.data.token)
+                    swal("Akun berhasil ditambahkan", "Anda akan dialihkan ke halaman home", "success")
+                    .then((value) => {
+                        navigate('/')
+                    })
+                } catch (e) {
+                    swal("Action gagal", " " ,"error")   
+                    console.log(e)
+                }
+
+                // login end
             } catch(err) {
-                console.log(err.response)
-                console.log(err.request)
-                console.log(err.message)
+                if (err.response.data.message === "USER_ALREADY_EXIST") {
+                    swal("Gagal registrast", "Akun dengan username yang ada sudah dipakai, coba username yang lain", 'error')
+                }
+                // console.log(err.response.data.message, 'ini errornya')
+                // console.log(err.request)
+                // console.log(err.message)
             }
         }
     }

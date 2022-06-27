@@ -5,7 +5,6 @@ import './styleList.scss'
 
 export default function List ({query}) {
 
-    // mungkin pakai method onfocus sama nggak kyknya
 
     const [data, setData] = useState([])
     console.log(query, 'isiqurer')
