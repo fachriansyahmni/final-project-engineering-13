@@ -2,6 +2,7 @@ import React from "react";
 import img from "../../assets/helpdesk/about-us.svg";
 
 import be1 from "../../assets/helpdesk/fahri.jpg"
+import be2 from "../../assets/helpdesk/anril.jpg"
 import fe1 from "../../assets/helpdesk/fahrezi.jpg"
 import fe2 from "../../assets/helpdesk/umar.jpg"
 
@@ -41,7 +42,7 @@ export default function AboutUs () {
                     <p className="text-center mt-3">Putra Prassiesa Abimanyu</p>
                 </div>
                 <div>
-                    <img src={be1} className="img-fluid rounded-circle" width="200px"/>
+                    <img src={be2} className="img-fluid rounded-circle" width="200px"/>
                     <p className="text-center mt-3">Anril Pratama Drawira</p>
                 </div>
             </div>

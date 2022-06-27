@@ -3,18 +3,21 @@ import './style.css';
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from "axios";
 
-import dataStore from '../../store/data';
+import { dataStore } from '../../store/data';
+
+import swal from 'sweetalert'
 
 const Register = () => {
-const [username,setUsername] = useState('');
-const [firstname,setFirstname] = useState('');
-const [lastname,setLastname] = useState('');
-const [email,setEmail] = useState('');
-const [password,setPassword] = useState('');
+    const [username,setUsername] = useState('');
+    const [firstname,setFirstname] = useState('');
+    const [lastname,setLastname] = useState('');
+    const [photo, setPhoto] = useState(null)
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
 
+    const { setToken } = dataStore()
 
-
-const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const onChangeUsername = (e) => {
         const value = e.target.value
@@ -40,29 +43,57 @@ const navigate = useNavigate()
         setPassword(value)
     }
 
+    const onChangePhoto = (e) => {
+        const value = e.target.value
+        setPhoto(value)
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        try {
-            // const response = await axios.post('https://reqres.in/api/register',{email: "eve.holt@reqres.in", password: "pistol"})
-            const form = {
-                "email": email,
-                "username": username,
-                "first_name": firstname,
-                "last_name": lastname,
-                "photo": "link photo",
-                "password": password,
-                "contact": " "
-            }
-            const response = await axios.post('/api/v1/auth/register',form)
-            console.log(response, 'dari register')
+        if (password.length < 6) {
+            alert('password minimal 6 karakter')
+        }
+        if (password.length >= 6) {
+            try {
+                const form = {
+                    "email": email,
+                    "username": username,
+                    "first_name": firstname,
+                    "last_name": lastname,
+                    "photo": photo,
+                    "password": password,
+                    "contact": " "
+                }
+                const response = await axios.post('/api/v1/auth/register',form)
+                
+                // login section
 
-            navigate('/login')
-            console.log('jalan dari register ke home')
-        } catch(err) {
-            console.log(err.response)
-            console.log(err.request)
-            console.log(err.message)
+                try {
+                    const response = await axios.post('http://localhost:8090/api/v1/auth/login',
+                        {
+                            email: email,
+                            password: password
+                        }
+                    )
+                    setToken(response.data.data.token)
+                    swal("Akun berhasil ditambahkan", "Anda akan dialihkan ke halaman home", "success")
+                    .then((value) => {
+                        navigate('/')
+                    })
+                } catch (e) {
+                    swal("Action gagal", " " ,"error")   
+                    console.log(e)
+                }
+
+                // login end
+            } catch(err) {
+                if (err.response.data.message === "USER_ALREADY_EXIST") {
+                    swal("Gagal registrast", "Akun dengan username yang ada sudah dipakai, coba username yang lain", 'error')
+                }
+                // console.log(err.response.data.message, 'ini errornya')
+                // console.log(err.request)
+                // console.log(err.message)
+            }
         }
     }
 
@@ -88,13 +119,17 @@ const navigate = useNavigate()
                             <label  className="form-label">Last Name</label>
                             <input type="text" className="form-control"  placeholder="Last Name" value={lastname} onChange={onChangeLastname}/>
                         </div>
+                        {/* <div className="mb-3">
+                            <label  className="form-label">Photo URL</label>
+                            <input type="text" className="form-control"  placeholder="Photo url" value={photo} onChange={onChangePhoto}/>
+                        </div> */}
                         <div className="mb-3">
                             <label  className="form-label">Email</label>
                             <input type="email" className="form-control"  placeholder="Email" value={email} onChange={onChangeEmail}/>
                         </div>
                         <div className="mb-3">
                             <label  className="form-label">Password</label>
-                            <input type="password" className="form-control"  placeholder="Password" value={password} onChange={onChangePassword}/>
+                            <input type="password" className="form-control"  placeholder="Password" value={password} onChange={onChangePassword} minLength="6"/>
                         </div>
                         <div className="d-grid gap-2">
                             <button className="btn btn-success" type="button" onClick={handleSubmit}>Registrasi</button>

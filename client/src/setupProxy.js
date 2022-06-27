@@ -22,4 +22,19 @@ module.exports = app => {
             changeOrigin: true
         })
     )
+    app.use(
+        createProxyMiddleware('/api/v1/profile',
+        {
+            target: "http://localhost:8090",
+            changeOrigin: true
+        })
+    )
+    app.use(
+        createProxyMiddleware('/api/v1/event/create',
+        {
+            target: "http://localhost:8090",
+            changeOrigin: true
+        })
+    )
+    
 }
